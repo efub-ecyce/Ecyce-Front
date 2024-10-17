@@ -5,7 +5,7 @@
 
 #### 커밋 컨벤션
 
-- `gitmoji + commit type + commit message (한글)`
+- `gitmoji + commit message (한글)`
 
     - ✨ feat : 새로운 기능 추가
     - 🐛 fix : 버그 수정
