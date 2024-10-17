@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# 🌳KARMA : 의류 업사이클링 중개 플랫폼
+> EFUB 2학기 토이프로젝트 팀 이끼끼 프론트 레포지토리
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🧩 규칙
 
-## Available Scripts
+#### 커밋 컨벤션
 
-In the project directory, you can run:
+- `gitmoji + commit message (한글)`
 
-### `npm start`
+    - ✨ feat : 새로운 기능 추가
+    - 🐛 fix : 버그 수정
+    - 🎨 style : 코드 구조 및 형태 개선
+    - 💄 Design : UI, 스타일 관련 파일 추가 및 업데이트
+    - 🔥 Remove : 코드 or 파일 삭제
+    - 🛠️ build : 빌드 관련 수정
+    - 📝 docs : 문서 파일 추가 및 업데이트
+    - ♻️ refactor : 코드 리팩토링
+    - ✅ test : 테스트 코드 추가/업데이트 또는 테스트 통과
+    - 🔖 release : 버전 릴리즈
+    - 🔧 chore : 패키지 매니저 수정, 그 외 기타 수정
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### PR 템플릿
 
-### `npm test`
+```
+# 구현 기능
+  - 구현한 기능을 요약하여 정리합니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 구현 상태 (선택)
+  - img, gif, video...
+  - 혹은 내용 정리
 
-### `npm run build`
+# Resolve
+  - 이슈 태그(ex: #7)
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### issue 규칙
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 각 기능에 맞는 이슈 템플릿 작성 (작업 및 변경사항 확인용)
+- to-do에 구현해야할 기능을 작성하고, 구현이 끝나면 체크표시
 
-### `npm run eject`
+<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### branch 규칙
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 브랜치 네이밍 규칙: `feat/#{issue 번호}`
+- - 이슈 생성후, branch에서 추가할 내용(ex. feat, design, refactor, ...)과 이슈번호를 branch 이름으로 생성
+  - 예시: `feat/#12`, `design/#27`
+- `feat -> dev -> main` 순으로 merge
+- `feat` : 각 기능을 개발하는 브랜치
+- `dev` : 각 기능의 개발을 완료하고 테스트 완료 후 병합하는 브랜치
+- `main` : 배포 브랜치
