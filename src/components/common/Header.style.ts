@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
   height: 3.5rem;
   display: flex;
   align-items: center;
+  background-color: var(--white02);
 `;
 
 export const Title = styled.div`
