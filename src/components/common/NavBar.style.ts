@@ -3,6 +3,7 @@ import * as font from '../../styles/font';
 
 export const NavBarContainer = styled.div`
     width: 27rem;
+    box-sizing: border-box;
 
     @media only screen and (max-width: 768px) {
         body {
@@ -16,7 +17,7 @@ export const NavBarContainer = styled.div`
     border-top-right-radius: 10px;
     display: flex;
     justify-content: space-between;
-    padding: 1rem 2.5rem 1rem 2.5rem;
+    padding: 0.7rem 2.5rem 1rem 2.5rem;
     box-shadow: 0px -3px 4px 3px rgba(163, 163, 163, 0.2);
 `;
 
