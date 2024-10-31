@@ -12,6 +12,7 @@ body {
   width: 100%;
   min-width: 100%;
   overflow-x: hidden;
+  background-color: #fafafb;
 }
 
 #root {
