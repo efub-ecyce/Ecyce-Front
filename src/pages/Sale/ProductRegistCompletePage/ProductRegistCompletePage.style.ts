@@ -28,7 +28,9 @@ export const Title = styled.div`
   font-size: 2rem;
 `;
 
-export const LogoWrapper = styled.div``;
+export const LogoWrapper = styled.div`
+  animation-duration: 1.2s;
+`;
 
 export const ButtonWrapper = styled.div`
   width: calc(100% - 2.5625rem);
