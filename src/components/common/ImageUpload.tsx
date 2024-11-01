@@ -4,6 +4,7 @@ import { ReactComponent as CameraIcon } from '../../assets/common/ImageUploadCom
 import { ReactComponent as DeleteIcon } from '../../assets/common/ImageUploadComponent/delete.svg';
 
 interface ImageUploadProps {
+  id: string;
   imageNum: number;
   imgFile: File[];
   setImgFile: React.Dispatch<React.SetStateAction<File[]>>;
@@ -12,6 +13,7 @@ interface ImageUploadProps {
 } // 사진 업로드 방식 물어보기
 
 export const ImageUpload = ({
+  id,
   imageNum,
   imgFile,
   setImgFile,
@@ -45,7 +47,7 @@ export const ImageUpload = ({
     setImgFile(prev => prev.filter((_, idx) => idx !== id));
 
     const inputElement = document.getElementById(
-      'image-upload',
+      `image-upload-${id}`,
     ) as HTMLInputElement | null;
 
     if (inputElement) {
@@ -57,11 +59,11 @@ export const ImageUpload = ({
     <S.Container>
       <input
         type='file'
-        id='image-upload'
+        id={`image-upload-${id}`}
         onChange={handleImgUpload}
         style={{ display: 'none' }}
       />
-      <S.UploadButton htmlFor='image-upload'>
+      <S.UploadButton htmlFor={`image-upload-${id}`}>
         <CameraIcon />
         <S.ImageNum>{`${imgPreview.length}/${imageNum}`}</S.ImageNum>
       </S.UploadButton>

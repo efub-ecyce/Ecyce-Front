@@ -11,7 +11,7 @@ export const Container = styled.div`
   overflow-x: auto;
 
   width: 100%;
-  min-height: 8rem;
+  min-height: 6.5rem;
 `;
 
 export const UploadButton = styled.label`
