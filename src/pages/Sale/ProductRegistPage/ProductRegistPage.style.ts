@@ -28,6 +28,8 @@ export const Subtitle = styled.div`
   ${font.regular}
   font-size: 1.2rem;
   color: var(--gray01);
+
+  margin-bottom: 0.38rem;
 `;
 
 export const TextInput = styled.input`

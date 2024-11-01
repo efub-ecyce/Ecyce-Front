@@ -14,8 +14,11 @@ export interface Option {
 
 const ProductRegistPage = () => {
   const [isAllFilled, setIsAllFilled] = useState<boolean>(true); //추후 수정
-  const [imgFile, setImgFile] = useState<File[]>([]);
-  const [imgPreview, setImgPreview] = useState<string[]>([]);
+  const [productImgFile, setProductImgFile] = useState<File[]>([]);
+  const [productImgPreview, setProductImgPreview] = useState<string[]>([]);
+  const [materialImgFile, setMaterialImgFile] = useState<File[]>([]);
+  const [materialImgPreview, setMaterialImgPreview] = useState<string[]>([]);
+
   const [options, setOptions] = useState<Option[]>([]);
 
   const navigate = useNavigate();
@@ -41,11 +44,12 @@ const ProductRegistPage = () => {
       <Header title='등록하기' />
       <S.Title>기본 정보</S.Title>
       <ImageUpload
+        id='product'
         imageNum={5}
-        imgFile={imgFile}
-        setImgFile={setImgFile}
-        imgPreview={imgPreview}
-        setImgPreview={setImgPreview}
+        imgFile={productImgFile}
+        setImgFile={setProductImgFile}
+        imgPreview={productImgPreview}
+        setImgPreview={setProductImgPreview}
       />
       <S.TextInput type='text' placeholder='상품명' />
       <S.TextArea placeholder='업사이클링 상품에 대해 소개해주세요!' />
@@ -60,15 +64,26 @@ const ProductRegistPage = () => {
 
       <S.Title>추가 정보</S.Title>
       <S.TextInput type='text' placeholder='구매자가 보내야 하는 소재' />
-      {/* <S.Subtitle>소재 예시 사진</S.Subtitle>
-      <ImageUpload imageNum={}/> */}
-      <S.Subtitle>제작 소요 기간</S.Subtitle>
-      <S.DaysContainer>
-        <S.TextBox></S.TextBox>
-        <S.Title>일 ~ </S.Title>
-        <S.TextBox></S.TextBox>
-        <S.Title>일</S.Title>
-      </S.DaysContainer>
+      <div>
+        <S.Subtitle>소재 예시 사진</S.Subtitle>
+        <ImageUpload
+          id='material'
+          imageNum={5}
+          imgFile={materialImgFile}
+          setImgFile={setMaterialImgFile}
+          imgPreview={materialImgPreview}
+          setImgPreview={setMaterialImgPreview}
+        />
+      </div>
+      <div>
+        <S.Subtitle>제작 소요 기간</S.Subtitle>
+        <S.DaysContainer>
+          <S.TextBox type='number' />
+          <S.Title>일 ~ </S.Title>
+          <S.TextBox type='number' />
+          <S.Title>일</S.Title>
+        </S.DaysContainer>
+      </div>
 
       <S.TextArea placeholder='구매자에게 안내해야 할 사항이 있다면 적어주세요. (ex. 소재를 배송 보낼 때 주의할 점 등)' />
       <S.ButtonWrapper onClick={onClickButton}>
