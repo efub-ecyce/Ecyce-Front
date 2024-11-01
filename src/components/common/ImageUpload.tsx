@@ -1,7 +1,7 @@
 import * as S from './ImageUpload.style';
 import React, { useEffect } from 'react';
-import { ReactComponent as CameraIcon } from '../../assets/ImageUploadComponent/camera.svg';
-import { ReactComponent as DeleteIcon } from '../../assets/ImageUploadComponent/delete.svg';
+import { ReactComponent as CameraIcon } from '../../assets/common/ImageUploadComponent/camera.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/common/ImageUploadComponent/delete.svg';
 
 interface ImageUploadProps {
   imageNum: number;
