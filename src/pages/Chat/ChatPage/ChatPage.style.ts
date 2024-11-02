@@ -75,7 +75,6 @@ export const MyChat = styled.div`
 `;
 
 export const YourChat = styled.div`
-  flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: flex-start;
