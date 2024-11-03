@@ -4,9 +4,12 @@ import * as S from './ReviewWritePage.style';
 import { ReactComponent as StarYellow } from '../../../assets/ReviewWritePage/karma-logo-yellow.svg';
 import { ReactComponent as StarGray } from '../../../assets/ReviewWritePage/karma-logo-gray.svg';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ImageUpload } from '../../../components/common/ImageUpload';
 
 const ReviewWritePage = () => {
+  const navigate = useNavigate();
+
   const [stars, setStars] = useState<boolean[]>([
     false,
     false,
@@ -18,10 +21,16 @@ const ReviewWritePage = () => {
   const [imgFile, setImgFile] = useState<File[]>([]);
   const [imgPreview, setImgPreview] = useState<string[]>([]);
 
-  const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
+  const [isAllFilled, setIsAllFilled] = useState<boolean>(true);
 
   const handleStars = (id: number) => {
     setStars(stars.map((_, index) => index <= id));
+  };
+
+  const onClickButton = () => {
+    if (isAllFilled) {
+      navigate('./complete');
+    }
   };
 
   return (
@@ -52,7 +61,7 @@ const ReviewWritePage = () => {
           setImgPreview={setImgPreview}
         />
         <S.ReviewText placeholder='구매하신 상품에 대한 리뷰를 남겨주세요' />
-        <S.ButtonWrapper>
+        <S.ButtonWrapper onClick={onClickButton}>
           <Button isActive={isAllFilled} text='등록하기' color='mint' />
         </S.ButtonWrapper>
       </S.ContentContainer>

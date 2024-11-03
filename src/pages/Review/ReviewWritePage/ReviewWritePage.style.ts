@@ -94,5 +94,5 @@ export const ReviewText = styled.textarea`
 export const ButtonWrapper = styled.div`
   width: 100%;
   margin-top: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
