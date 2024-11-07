@@ -1,15 +1,15 @@
-import * as S from './ProductRegistCompletePage.style';
+import * as S from './ReviewCompletePage.style';
 import { ReactComponent as Logo } from '../../../assets/ProductRegistPage/karma-logo.svg';
 import { Button } from '../../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import 'animate.css';
 
-const ProductRegistCompletePage = () => {
+const ReviewCompletePage = () => {
   const navigate = useNavigate();
 
   return (
     <S.Container>
-      <S.Title>상품이 등록되었습니다!</S.Title>
+      <S.Title>후기가 등록되었습니다!</S.Title>
       <S.LogoWrapper className='animate__animated animate__flipInY'>
         <Logo />
       </S.LogoWrapper>
@@ -20,4 +20,4 @@ const ProductRegistCompletePage = () => {
   );
 };
 
-export default ProductRegistCompletePage;
+export default ReviewCompletePage;
