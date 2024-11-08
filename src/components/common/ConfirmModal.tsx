@@ -4,7 +4,9 @@ interface ModalProps {
   modalHandler: (
     event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
   ) => void;
-  yesFunction: () => void; //나중에 타입 수정 필요할듯..
+  yesFunction: (
+    event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
+  ) => void; //나중에 타입 수정 필요할듯..
   question: string;
   yes?: string;
   no?: string;
