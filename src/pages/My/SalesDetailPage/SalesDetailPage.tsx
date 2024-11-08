@@ -25,6 +25,10 @@ const DummyDetail = {
   price: 40000,
   shipping: 4000,
   totalPrice: 44000,
+  sellerName: '김승자',
+  sellerNum: '010-1234-4567',
+  sellerAddress: '서울 서대문구 어쩌구 주소',
+  sellerPostcode: 12345,
 };
 
 export interface SalesDetail {
@@ -45,6 +49,10 @@ export interface SalesDetail {
   price: number;
   shipping: number;
   totalPrice: number;
+  sellerName: string;
+  sellerNum: string;
+  sellerAddress: string;
+  sellerPostcode: number;
 }
 
 export const SalesDetailState = atom<SalesDetail>({

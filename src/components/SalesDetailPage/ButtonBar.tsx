@@ -7,7 +7,6 @@ import {
   RejectModal,
   StartModal,
 } from './CustomConfirmModal';
-import { SalesDetail } from '../../pages/My/SalesDetailPage/SalesDetailPage';
 import { useRecoilState } from 'recoil';
 import { SalesDetailState } from '../../pages/My/SalesDetailPage/SalesDetailPage';
 

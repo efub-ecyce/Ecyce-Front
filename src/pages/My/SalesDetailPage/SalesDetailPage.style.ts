@@ -3,7 +3,7 @@ import * as font from '../../../styles/font';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@ export const Section = styled.div`
   width: 100%;
 
   padding: 1.25rem;
-  padding-bottom: 0.65rem;
+  //padding-bottom: 0.65rem;
   box-sizing: border-box;
 `;
 
@@ -164,4 +164,60 @@ export const SaveButton = styled(ChatButton)`
   color: var(--white00);
 
   margin: auto 0 auto 0.44rem;
+`;
+
+export const AlertMessage = styled.div`
+  ${font.bold}
+  font-size: 1.5rem;
+  color: var(--black00);
+`;
+
+export const AlertDesc = styled.div`
+  ${font.regular}
+  font-size: 1rem;
+  color: var(--gray01);
+`;
+
+export const InfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.7rem;
+
+  width: 100%;
+  padding: 0.6rem;
+  box-sizing: border-box;
+  margin-top: 0.75rem;
+
+  border-radius: 0.625rem;
+  border: 2px solid var(--mint02);
+  background: var(--white00);
+`;
+
+export const Content = styled.div`
+  ${font.regular}
+  font-size: 1rem;
+  color: var(--black00);
+`;
+
+export const SellerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+`;
+
+export const OpenTab = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 3.375rem;
+`;
+
+export const TabName = styled.div`
+  ${font.semibold}
+  font-size: 1.25rem;
+  color: var(--black00);
 `;
