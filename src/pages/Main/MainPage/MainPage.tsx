@@ -1,5 +1,6 @@
 import NavBar from '../../../components/common/NavBar';
 import ProductComponent1 from '../../../components/common/ProductComponent1';
+import Header from '../../../components/MainPage/Header';
 
 const MainPage = () => {
   const productData = {
@@ -12,6 +13,7 @@ const MainPage = () => {
 
   return (
     <div>
+      <Header />
       <ProductComponent1
         title={productData.title}
         term={productData.term}
