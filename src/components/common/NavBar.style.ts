@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import * as font from '../../styles/font';
 
 export const NavBarContainer = styled.div`
-    width: 27rem;
+    width: 100%;
     box-sizing: border-box;
 
-    @media only screen and (max-width: 768px) {
-        body {
-            width: 100%;
-        }
+    @media only screen and (min-width: 768px) {
+        width: 768px;
+        margin: 0 auto;
     }
 
     height: 80px;
