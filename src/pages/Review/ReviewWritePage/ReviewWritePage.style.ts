@@ -5,19 +5,15 @@ export const Container = styled.div`
   width: 100%;
   height: 100vh;
   background-color: var(--white02);
+
+  display: flex;
+  flex-direction: column;
+
   @media only screen and (min-width: 768px) {
     width: 768px;
     margin: 0 auto;
   }
-`;
 
-export const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  width: 100%;
-  height: calc(100vh - 3.5rem);
   padding: 0 1.25rem;
   box-sizing: border-box;
 `;

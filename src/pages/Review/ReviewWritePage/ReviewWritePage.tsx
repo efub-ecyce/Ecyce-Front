@@ -36,35 +36,34 @@ const ReviewWritePage = () => {
   return (
     <S.Container>
       <Header title='후기 작성' />
-      <S.ContentContainer>
-        <S.ProductInfo>
-          <S.Image />
-          <S.TextInfo>
-            <S.Name>텀블러 가방</S.Name>
-            <S.Options>옵션1, 옵션2</S.Options>
-          </S.TextInfo>
-        </S.ProductInfo>
-        <S.Text>구매하신 상품은 어떠셨나요?</S.Text>
-        <S.StarContainer>
-          {stars.map((it, index) => (
-            <S.Star onClick={() => handleStars(index)}>
-              {it ? <StarYellow /> : <StarGray />}
-            </S.Star>
-          ))}
-        </S.StarContainer>
-        <ImageUpload
-          id='review'
-          imageNum={5}
-          imgFile={imgFile}
-          setImgFile={setImgFile}
-          imgPreview={imgPreview}
-          setImgPreview={setImgPreview}
-        />
-        <S.ReviewText placeholder='구매하신 상품에 대한 리뷰를 남겨주세요' />
-        <S.ButtonWrapper onClick={onClickButton}>
-          <Button isActive={isAllFilled} text='등록하기' color='mint' />
-        </S.ButtonWrapper>
-      </S.ContentContainer>
+
+      <S.ProductInfo>
+        <S.Image />
+        <S.TextInfo>
+          <S.Name>텀블러 가방</S.Name>
+          <S.Options>옵션1, 옵션2</S.Options>
+        </S.TextInfo>
+      </S.ProductInfo>
+      <S.Text>구매하신 상품은 어떠셨나요?</S.Text>
+      <S.StarContainer>
+        {stars.map((it, index) => (
+          <S.Star onClick={() => handleStars(index)}>
+            {it ? <StarYellow /> : <StarGray />}
+          </S.Star>
+        ))}
+      </S.StarContainer>
+      <ImageUpload
+        id='review'
+        imageNum={5}
+        imgFile={imgFile}
+        setImgFile={setImgFile}
+        imgPreview={imgPreview}
+        setImgPreview={setImgPreview}
+      />
+      <S.ReviewText placeholder='구매하신 상품에 대한 리뷰를 남겨주세요' />
+      <S.ButtonWrapper onClick={onClickButton}>
+        <Button isActive={isAllFilled} text='등록하기' color='mint' />
+      </S.ButtonWrapper>
     </S.Container>
   );
 };
