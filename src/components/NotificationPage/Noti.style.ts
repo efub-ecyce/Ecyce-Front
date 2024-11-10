@@ -4,7 +4,7 @@ import * as font from '../../styles/font';
 export const Container = styled.div<{ $isRead: boolean }>`
   display: flex;
 
-  width: 100%;
+  width: 98%;
   height: 7.25rem;
   padding: 1.15rem;
   box-sizing: border-box;
@@ -19,7 +19,7 @@ export const Container = styled.div<{ $isRead: boolean }>`
 
 export const IconWrapper = styled.div`
   margin: auto 0;
-  margin-right: 2rem;
+  margin-right: 1rem;
 `;
 
 export const InfoContainer = styled.div`
