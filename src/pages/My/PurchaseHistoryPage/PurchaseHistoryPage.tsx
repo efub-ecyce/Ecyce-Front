@@ -4,6 +4,7 @@ import Header from '../../../components/common/Header';
 import { FilterBar } from '../../../components/HistoryPage/FilterBar';
 import { DatePickerBar } from '../../../components/HistoryPage/DatePickerBar';
 import { History } from '../../../components/HistoryPage/History';
+import NavBar from '../../../components/common/NavBar';
 
 const filterList = ['전체', '진행중', '완료'];
 
@@ -33,27 +34,32 @@ const PurchaseHistoryPage = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date());
 
   return (
-    <S.Container>
-      <Header title='구매 내역' />
-      <FilterBar
-        filterList={filterList}
-        activeFilter={activeFilter}
-        handleFiltering={handleFiltering}
-      />
-      <DatePickerBar
-        startDate={startDate}
-        endDate={endDate}
-        setStartDate={setStartDate}
-        setEndDate={setEndDate}
-      />
-      <S.HistoryContainer>
-        <History {...dummyHistory} />
-        <History {...dummyHistory} />
-        <History {...dummyHistory} />
-        <History {...dummyHistory} />
-        <History {...dummyHistory} />
-      </S.HistoryContainer>
-    </S.Container>
+    <>
+      <S.Container>
+        <Header title='구매 내역' />
+        <FilterBar
+          filterList={filterList}
+          activeFilter={activeFilter}
+          handleFiltering={handleFiltering}
+        />
+        <DatePickerBar
+          startDate={startDate}
+          endDate={endDate}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+        />
+        <S.HistoryContainer>
+          <History {...dummyHistory} />
+          <History {...dummyHistory} />
+          <History {...dummyHistory} />
+          <History {...dummyHistory} />
+          <History {...dummyHistory} />
+        </S.HistoryContainer>
+      </S.Container>
+      <S.NavWrapper>
+        <NavBar />
+      </S.NavWrapper>
+    </>
   );
 };
 

@@ -69,7 +69,9 @@ const SalesDetailPage = () => {
 
   return (
     <S.Container>
-      <Header title='판매 내역' />
+      <S.HeaderWrapper>
+        <Header title='판매 내역' />
+      </S.HeaderWrapper>
       <SectionOne />
       <S.Bar />
       <SectionTwo />

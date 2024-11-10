@@ -5,6 +5,9 @@ export const Container = styled.div`
   width: 100%;
   height: 100vh;
 
+  display: flex;
+  flex-direction: column;
+
   background-color: var(--white02);
 
   @media only screen and (min-width: 768px) {
@@ -24,6 +27,8 @@ export const FilterBar = styled.div`
   height: 3.75rem;
 
   margin-bottom: 1rem;
+
+  flex-shrink: 0;
 `;
 
 export const Filter = styled.div<{ $isActive: boolean }>`
@@ -46,4 +51,13 @@ export const ProductContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  overflow-y: scroll;
+  margin-bottom: 90px;
+`;
+
+export const NavWrapper = styled.div`
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 `;

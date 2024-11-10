@@ -43,69 +43,74 @@ const MyPage = () => {
   };
 
   return (
-    <S.Container>
-      {isSOModalOpen && (
-        <ConfirmModal
-          modalHandler={soModalHandler}
-          question='정말 탈퇴하시겠습니까?'
-          yesFunction={SignOut}
-          yes='탈퇴하기'
-          no='취소하기'
-        />
-      )}
+    <>
+      <S.Container>
+        {isSOModalOpen && (
+          <ConfirmModal
+            modalHandler={soModalHandler}
+            question='정말 탈퇴하시겠습니까?'
+            yesFunction={SignOut}
+            yes='탈퇴하기'
+            no='취소하기'
+          />
+        )}
 
-      {isLOModalOpen && (
-        <ConfirmModal
-          modalHandler={loModalHandler}
-          question='로그아웃 하시겠습니까?'
-          yesFunction={LogOut}
-        />
-      )}
+        {isLOModalOpen && (
+          <ConfirmModal
+            modalHandler={loModalHandler}
+            question='로그아웃 하시겠습니까?'
+            yesFunction={LogOut}
+          />
+        )}
 
-      <Header title='내 정보' />
+        <Header title='내 정보' />
 
-      <S.ProfileBar>
-        <S.ProfImg />
-        <S.Name>이끼끼</S.Name>
-        <S.EditButton onClick={() => navigate('./edit')}>
-          프로필 수정
-        </S.EditButton>
-      </S.ProfileBar>
+        <S.ProfileBar>
+          <S.ProfImg />
+          <S.Name>이끼끼</S.Name>
+          <S.EditButton onClick={() => navigate('./edit')}>
+            프로필 수정
+          </S.EditButton>
+        </S.ProfileBar>
 
-      <S.Group>
-        <S.Title>판매</S.Title>
-        <S.Menu onClick={() => navigate('./manage')}>
-          <StoreIcon /> 내 상품 관리
-        </S.Menu>
-        <S.Menu onClick={() => navigate('/sales')}>
-          <WonIcon />
-          판매 내역
-        </S.Menu>
-      </S.Group>
+        <S.Group>
+          <S.Title>판매</S.Title>
+          <S.Menu onClick={() => navigate('./manage')}>
+            <StoreIcon /> 내 상품 관리
+          </S.Menu>
+          <S.Menu onClick={() => navigate('/sales')}>
+            <WonIcon />
+            판매 내역
+          </S.Menu>
+        </S.Group>
 
-      <S.Group>
-        <S.Title>구매</S.Title>
-        <S.Menu onClick={() => navigate('/bookmark')}>
-          <BookmarkIcon />
-          북마크
-        </S.Menu>
-        <S.Menu onClick={() => navigate('/purchase')}>
-          <ShoppingIcon />
-          구매 내역
-        </S.Menu>
-      </S.Group>
-      <S.Line />
-      <S.Group>
-        <S.Menu onClick={loModalHandler}>
-          <LogoutIcon />
-          로그아웃
-        </S.Menu>
-        <S.Menu onClick={soModalHandler}>
-          <SignoutIcon />
-          회원 탈퇴
-        </S.Menu>
-      </S.Group>
-    </S.Container>
+        <S.Group>
+          <S.Title>구매</S.Title>
+          <S.Menu onClick={() => navigate('/bookmark')}>
+            <BookmarkIcon />
+            북마크
+          </S.Menu>
+          <S.Menu onClick={() => navigate('/purchase')}>
+            <ShoppingIcon />
+            구매 내역
+          </S.Menu>
+        </S.Group>
+        <S.Line />
+        <S.Group>
+          <S.Menu onClick={loModalHandler}>
+            <LogoutIcon />
+            로그아웃
+          </S.Menu>
+          <S.Menu onClick={soModalHandler}>
+            <SignoutIcon />
+            회원 탈퇴
+          </S.Menu>
+        </S.Group>
+      </S.Container>
+      <S.NavWrapper>
+        <NavBar />
+      </S.NavWrapper>
+    </>
   );
 };
 

@@ -23,8 +23,14 @@ export const HistoryContainer = styled.div`
   flex-direction: column;
   gap: 0.62rem;
 
-  margin-bottom: 1.62rem;
+  margin-bottom: 90px;
   width: 100%;
 
-  overflow-y: auto;
+  overflow-y: scroll;
+`;
+
+export const NavWrapper = styled.div`
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 `;

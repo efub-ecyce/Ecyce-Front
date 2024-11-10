@@ -48,7 +48,10 @@ const PurchaseDetailPage = () => {
 
   return (
     <S.Container>
-      <Header title='구매 내역' />
+      <S.HeaderWrapper>
+        <Header title='구매 내역' />
+      </S.HeaderWrapper>
+
       <SectionOne />
       <S.Bar />
       {['제작 대기중', '제작중', '제작 완료', '배송중', '배송 완료'].includes(

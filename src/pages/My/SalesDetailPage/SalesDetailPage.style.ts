@@ -16,6 +16,12 @@ export const Container = styled.div`
   }
 `;
 
+export const HeaderWrapper = styled.div`
+  width: 100%;
+  padding: 0 1.25rem;
+  box-sizing: border-box;
+`;
+
 export const Section = styled.div`
   display: flex;
   flex-direction: column;

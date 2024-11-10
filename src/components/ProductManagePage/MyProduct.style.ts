@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: center;
 
   width: 48%;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 export const ProductImage = styled.img`

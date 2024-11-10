@@ -80,3 +80,9 @@ export const Line = styled.div`
   width: 100%;
   border-top: 1px solid var(--gray02);
 `;
+
+export const NavWrapper = styled.div`
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+`;
