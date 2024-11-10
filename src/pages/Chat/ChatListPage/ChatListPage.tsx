@@ -51,10 +51,11 @@ const ChatListPage = () => {
           message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
           unread={1}
         />
+      
+        <S.NavBarWrapper>
+          <NavBar />
+        </S.NavBarWrapper>
       </S.ChatList>
-      <S.NavBarWrapper>
-        <NavBar />
-      </S.NavBarWrapper>
     </S.Container>
   );
 };

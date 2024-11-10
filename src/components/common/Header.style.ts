@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import * as font from '../../styles/font';
 
 export const Wrapper = styled.div`
-  width: 27rem;
+  width: 100%;
+    box-sizing: border-box;
 
-  @media only screen and (max-width: 768px) {
-    body {
-      width: 100%;
-    }
+    @media only screen and (min-width: 768px) {
+        width: 768px;
+        margin: 0 auto;
   }
 
   height: 3.5rem;
@@ -20,7 +20,14 @@ export const Title = styled.div`
   ${font.regular}
   color: var(--black02);
   font-size: 25px;
-  margin-left: 8.63rem; // 이게 맞는숫잔가 하....
+  text-align: center;
+  width: 70%;
+    box-sizing: border-box;
+
+    @media only screen and (min-width: 537px) {
+        width: 537px;
+        margin: 0 auto;
+  }
 `;
 
 export const Btn = styled.div`
