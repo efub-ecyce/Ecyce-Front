@@ -12,6 +12,8 @@ export const ScreenWrapper = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+
+  z-index: 5;
 `;
 
 export const ModalContainer = styled.div`
