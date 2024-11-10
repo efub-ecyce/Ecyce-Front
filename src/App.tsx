@@ -23,6 +23,7 @@ import PaymentPage from './pages/Product/PaymentPage/PaymentPage';
 import ProductDetailPage from './pages/Product/ProductDetailPage/ProductDetailPage';
 import ReviewPage from './pages/Review/ReviewPage/ReviewPage';
 import ReviewWritePage from './pages/Review/ReviewWritePage/ReviewWritePage';
+import ReviewCompletePage from './pages/Review/ReviewCompletePage/ReviewCompletePage';
 import ProductRegistCompletePage from './pages/Sale/ProductRegistCompletePage/ProductRegistCompletePage';
 import ProductRegistPage from './pages/Sale/ProductRegistPage/ProductRegistPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -57,6 +58,7 @@ function App() {
 
       <Route path='/review/:productId' element={<ReviewPage />} />
       <Route path='/review' element={<ReviewWritePage />} />
+      <Route path='/review/complete' element={<ReviewCompletePage />} />
 
       <Route path='/post' element={<ProductRegistPage />} />
       <Route path='/post/complete' element={<ProductRegistCompletePage />} />

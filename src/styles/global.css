@@ -26,13 +26,14 @@ button {
 :root {
   /* color */
   --black: #181818;
+  --black02: #3d4946;
   --gray01: #a3a3a3;
   --gray02: #c1d1d1;
   --gray03: #f3f3f3;
   --white00: #ffffff;
   --white01: #f0fef9;
   --white02: #fafafb;
-  --red: #e46769;
+  --red01: #e46769;
   --mint01: #00e5ba;
   --mint02: #66bfb7;
   --mint03: #8fc9cb;
