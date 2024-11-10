@@ -3,17 +3,15 @@ import * as font from '../../styles/font';
 
 export const Wrapper = styled.div`
   width: 100%;
-    box-sizing: border-box;
-
-    @media only screen and (min-width: 768px) {
-        width: 768px;
-        margin: 0 auto;
-  }
+  box-sizing: border-box;
 
   height: 3.5rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: var(--white02);
+
+  position: relative;
 `;
 
 export const Title = styled.div`
@@ -21,15 +19,9 @@ export const Title = styled.div`
   color: var(--black02);
   font-size: 25px;
   text-align: center;
-  width: 70%;
-    box-sizing: border-box;
-
-    @media only screen and (min-width: 537px) {
-        width: 537px;
-        margin: 0 auto;
-  }
 `;
 
 export const Btn = styled.div`
-  margin-left: 0.7rem;
+  position: absolute;
+  left: 0;
 `;
