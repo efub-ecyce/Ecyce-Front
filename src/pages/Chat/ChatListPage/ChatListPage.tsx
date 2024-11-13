@@ -20,43 +20,86 @@ const ChatListPage = () => {
   };
 
   return (
-    <S.Container>
-      <S.Header>채팅</S.Header>
-      <S.TopNav>
-        {filterList.map((it, index) => (
-          <S.Filter
-            $isActive={filter === index}
-            onClick={() => handleFiltering(index)}
-          >
-            {it}
-          </S.Filter>
-        ))}
-      </S.TopNav>
-      <S.ChatList>
-        <ChatPreview
-          profileImage={null}
-          name='박서연'
-          message='나나나나나나나나나나나나난'
-          unread={1}
-        />
-        <ChatPreview
-          profileImage={null}
-          name='ㅁㅁ'
-          message='ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ'
-          unread={2}
-        />
-        <ChatPreview
-          profileImage={null}
-          name='히히'
-          message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
-          unread={1}
-        />
-      
-        <S.NavBarWrapper>
-          <NavBar />
-        </S.NavBarWrapper>
-      </S.ChatList>
-    </S.Container>
+    <>
+      <S.Container>
+        <S.Header>채팅</S.Header>
+        <S.TopNav>
+          {filterList.map((it, index) => (
+            <S.Filter
+              $isActive={filter === index}
+              onClick={() => handleFiltering(index)}
+            >
+              {it}
+            </S.Filter>
+          ))}
+        </S.TopNav>
+        <S.ChatList>
+          <ChatPreview
+            profileImage={null}
+            name='박서연'
+            message='나나나나나나나나나나나나난'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='ㅁㅁ'
+            message='ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ'
+            unread={2}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+          <ChatPreview
+            profileImage={null}
+            name='히히'
+            message='ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ'
+            unread={1}
+          />
+        </S.ChatList>
+      </S.Container>
+      <S.NavBarWrapper>
+        <NavBar />
+      </S.NavBarWrapper>
+    </>
   );
 };
 

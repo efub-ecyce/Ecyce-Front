@@ -3,9 +3,12 @@ import * as font from '../../../styles/font';
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 
   background-color: var(--white02);
+
+  display: flex;
+  flex-direction: column;
 
   @media only screen and (min-width: 768px) {
     width: 768px;
@@ -50,10 +53,13 @@ export const ChatList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  overflow-y: scroll;
+  margin-bottom: 90px;
 `;
 
 export const NavBarWrapper = styled.div`
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
 `;
