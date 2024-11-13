@@ -1,7 +1,6 @@
 import NavBar from '../../../components/common/NavBar';
 import ProductComponent1 from '../../../components/common/ProductComponent1';
 import Header from '../../../components/common/Header';
-import Filter from '../../../components/MainPage/Filter';
 import { useNavigate } from 'react-router-dom';
 import * as S from './BookmarkPage.style';
 
