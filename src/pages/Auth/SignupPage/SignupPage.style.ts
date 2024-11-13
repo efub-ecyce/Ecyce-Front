@@ -97,8 +97,20 @@ export const PostcodeButton = styled.div`
   cursor: pointer;
 `;
 
+export const PostcodeWindow = styled.div`
+  position: absolute;
+  z-index: 100;
+  background: var(--white00);
+  padding: 20px;
+  border: 1px solid #dddddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ButtonWrapper = styled.div`
   width: 100%;
-  margin-top: 6.1875rem;
-  margin-bottom: 1rem;
+  margin-top: 2.5;
+  margin-bottom: 2rem;
 `;

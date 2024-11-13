@@ -1,9 +1,10 @@
 import * as S from './SignupPage.style';
 import basicProfile from '../../../assets/SignupPage/basic_profile.svg';
 import cameraIcon from '../../../assets/SignupPage/profile_upload_camera.svg';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/common/Button';
+import DaumPostcode from 'react-daum-postcode';
 
 const SignupPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -12,12 +13,54 @@ const SignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
 
+  const [profileImage, setProfileImage] = useState<string>(basicProfile);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+          // 업로드된 이미지로 업데이트
+          setProfileImage(reader.result as string);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const handleProfileImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   const [emailMsg, setEmailMsg] = useState<string | null>(null);
   const [emailValid, setEmailValid] = useState(false);
   const [nicknameMsg, setNicknameMsg] = useState<string>('최소 3자 ~ 최대 10자');
   const [nicknameValid, setNicknameValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState<string | null>(null);
   const [confirmPasswordMsg, setConfirmPasswordMsg] = useState<string | null>(null);
+
+  const [postcodeOpen, setPostcodeOpen] = useState<boolean>(false);
+  const [postcode, setPostcode] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [detailAddress, setDetailAddress] = useState<string>('');
+
+  const handlePostcodeComplete = (data: any) => {
+    // 우편번호 & 주소 업데이트
+    setPostcode(data.zonecode);
+    setAddress(data.address);
+    setPostcodeOpen(false);
+  };
+
+  const handlePostcodeSearch = () => {
+    setPostcodeOpen(true);
+  };
+
+  const handlePostcodeClose = () => {
+    setPostcodeOpen(false);
+  };
 
   const navigate = useNavigate();
 
@@ -97,9 +140,16 @@ const SignupPage = () => {
   return (
     <S.Container>
       <S.ProfileWrapper>
-        <S.ProfileImage src={basicProfile} />
-        <S.CameraIcon src={cameraIcon} />
+        <S.ProfileImage src={profileImage} alt="Profile" onClick={handleProfileImageClick}/>
+        <S.CameraIcon src={cameraIcon} alt="Upload Icon" />
       </S.ProfileWrapper>
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleImageUpload}
+      />
       <S.TextInput type="text" placeholder="이름" />
       <S.TextInput
         type="text"
@@ -141,11 +191,41 @@ const SignupPage = () => {
         </S.TextWrapper>
       )}
       <S.PostcodeWrapper>
-        <S.TextInput type="text" placeholder="우편번호" />
-        <S.PostcodeButton>우편번호 검색</S.PostcodeButton>
+        <S.TextInput
+          type="text"
+          placeholder="우편번호"
+          value={postcode}
+          readOnly
+        />
+        <S.PostcodeButton onClick={handlePostcodeSearch}>우편번호 검색</S.PostcodeButton>
       </S.PostcodeWrapper>
-      <S.TextInput type="text" placeholder="주소" />
-      <S.TextInput type="text" placeholder="상세주소" />
+      <S.TextInput
+        type="text"
+        placeholder="주소"
+        value={address}
+        readOnly
+      />
+      <S.TextInput
+        type="text"
+        placeholder="상세주소"
+        value={detailAddress}
+        // 상세주소는 readonly 아님. 사용자 입력 가능
+        onChange={(e) => setDetailAddress(e.target.value)}
+      />
+
+      {/* 우편번호 검색창 */}
+      {postcodeOpen && (
+        <S.PostcodeWindow>
+          <DaumPostcode
+            onComplete={handlePostcodeComplete}
+            autoClose={false}
+            defaultQuery=""
+          />
+          <button 
+          style={{ background: 'none', padding: '10px', border: '1px solid #ddd', borderRadius: '10px' }}
+          onClick={handlePostcodeClose}>닫기</button>
+        </S.PostcodeWindow>
+      )}
       <S.TextInput
         type="password"
         placeholder="비밀번호"
