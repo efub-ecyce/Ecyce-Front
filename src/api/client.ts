@@ -20,6 +20,8 @@ export const client = axios.create({
   withCredentials: true,
 });
 
+let isReissuingToken = false;
+
 client.interceptors.response.use(
   response => response,
   async error => {
@@ -34,19 +36,25 @@ client.interceptors.response.use(
       case 401:
         switch (data.error) {
           case 'Token Expired':
-            try {
-              await postAccessTokenReissue();
-              const token = localStorage.getItem('token');
-              const parsedToken = token ? JSON.parse(token) : null;
-              client.defaults.headers.Authoriztion = `${parsedToken.grantType} ${parsedToken.accessToken}`;
+            if (!isReissuingToken) {
+              isReissuingToken = true;
+              try {
+                await postAccessTokenReissue();
+                const token = localStorage.getItem('token');
+                const parsedToken = token ? JSON.parse(token) : null;
+                client.defaults.headers.Authorization = `${parsedToken.grantType} ${parsedToken.accessToken}`;
 
-              config.headers.Authorization = `${parsedToken.grantType} ${parsedToken.accessToken}`;
-              return client(config);
-            } catch (error) {
-              localStorage.removeItem('token');
-              window.location.href = '/login';
-              return Promise.reject(error);
+                config.headers.Authorization = `${parsedToken.grantType} ${parsedToken.accessToken}`;
+                isReissuingToken = false;
+                return client(config);
+              } catch (reissueError) {
+                isReissuingToken = false;
+                localStorage.removeItem('token');
+                //window.location.href = '/login';
+                return Promise.reject(reissueError);
+              }
             }
+            return Promise.reject(error);
           case 'Invalid Token':
             localStorage.removeItem('token');
             window.location.href = '/login';
