@@ -4,51 +4,77 @@ import { ReactComponent as BackIcon } from '../../../assets/ChatPage/back.svg';
 import { ReactComponent as MoreIcon } from '../../../assets/ChatPage/more_vert.svg';
 import { ReactComponent as SendIcon } from '../../../assets/ChatPage/send.svg';
 import { ChatModal } from '../../../components/ChatPage/ChatModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MessageList } from '../../../components/ChatPage/MessageList';
-import { timeStamp } from 'console';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getChatHistory } from '../../../api/chat';
 
-interface Message {
-  senderId: number;
-  text: string;
-  timestamp: string; //추후 수정 (format 함수 만들기..)
+export interface Message {
+  messageId: number;
+  sender: string;
+  content: string;
+  timestamp: string;
 }
 
 const DummyMessages: Message[] = [
   {
-    senderId: 0,
-    text: '안녕하세요',
-    timestamp: '10:00',
+    messageId: 1,
+    sender: '이끼끼79619',
+    content: 'Hello, this is a message.',
+    timestamp: '2024-11-12T10:49:25.026594',
   },
   {
-    senderId: 1,
-    text: '네 안녕하세요',
-    timestamp: '10:00',
+    messageId: 2,
+    sender: '이끼끼79619',
+    content: '테스트중입니다',
+    timestamp: '2024-11-12T10:50:24.570453',
   },
   {
-    senderId: 1,
-    text: '내 식탁에 누가 손을 올려 감히 내 허락이 없이는 Ain’t nobody 원하는 건 다 내 손안에 Get it 뒤로 기대 Lean 떨어 떨어 다리 털끝 하나 건들다간 Runnin’ like a dog, shhh Face down Don’t get caught, jeez 난 뺏긴 적이 없지 매번 독식 그저 Teeth and claw로 Notice',
-    timestamp: '10:00',
+    messageId: 3,
+    sender: '나',
+    content: '테스트중입니다',
+    timestamp: '2024-11-12T10:50:24.570453',
   },
   {
-    senderId: 0,
-    text: 'Yeah don’t you dare dare dare 선을 넘는 순간 Maybe just one time 무너뜨려 Knock down It’s so perfect 커져 가는 이 Thrillin’ And you know that you’re feedin’ my appetite',
-    timestamp: '10:02',
+    messageId: 4,
+    sender: '나',
+    content: '테스트중입니다',
+    timestamp: '2024-11-12T10:50:24.570453',
   },
   {
-    senderId: 1,
-    text: '난 입을 벌렸다면 I bite that If you take a bite then I Bite Back Bite Back Bite Back Bite Back Bite Back',
-    timestamp: '10:08',
+    messageId: 5,
+    sender: '이끼끼79619',
+    content: '테스트중입니다',
+    timestamp: '2024-11-12T10:50:24.570453',
   },
   {
-    senderId: 0,
-    text: '내 것을 탐한다면 (Uh) I like that (I like that) If you take a bite then I Bite Back Bite Back Bite Back Bite Back Bite Back',
-    timestamp: '10:08',
+    messageId: 6,
+    sender: '나',
+    content: '테스트중입니다',
+    timestamp: '2024-11-12T10:52:24.570453',
   },
 ];
 
 const ChatPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [chatHistory, setChatHistory] = useState<Message[]>([]);
+
+  const navigate = useNavigate();
+  const roomId = Number(useParams().roomId);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      try {
+        const res = await getChatHistory(roomId);
+        setChatHistory(res);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getHistory();
+    //setChatHistory(DummyMessages);
+  }, []);
 
   const modalHandler = (e: React.MouseEvent<HTMLDivElement>, type: string) => {
     if (type === 'open') {
@@ -64,7 +90,7 @@ const ChatPage = () => {
   return (
     <S.Container onClick={e => modalHandler(e, 'close')}>
       <S.Header>
-        <S.IconWrapper>
+        <S.IconWrapper onClick={() => navigate(-1)}>
           <BackIcon />
         </S.IconWrapper>
         <S.Name>홍홍</S.Name>
@@ -73,11 +99,8 @@ const ChatPage = () => {
         </S.IconWrapper>
         {isModalOpen && <ChatModal />}
       </S.Header>
-      <MessageList messages={DummyMessages} />
+      <MessageList messages={chatHistory} />
       <S.InputBar>
-        <S.IconWrapper>
-          <AddIcon />
-        </S.IconWrapper>
         <S.TextInput />
         <S.IconWrapper>
           <SendIcon />

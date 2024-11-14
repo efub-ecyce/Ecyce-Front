@@ -37,7 +37,7 @@ function App() {
       <Route path='/login/oauth2/kakao' element={<OAuthRedirectPage />} />
 
       <Route path='/chatlist' element={<ChatListPage />} />
-      <Route path='/chat' element={<ChatPage />} />
+      <Route path='/chat/:roomId' element={<ChatPage />} />
 
       <Route path='/bookmark' element={<BookmarkPage />} />
       <Route path='/' element={<MainPage />} />
