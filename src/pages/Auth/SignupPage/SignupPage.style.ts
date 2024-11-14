@@ -32,6 +32,7 @@ export const ProfileImage = styled.img`
   width: 5.5625rem;
   height: 5.5625rem;
   flex-shrink: 0;
+  object-fit: cover;
   cursor: pointer;
 `;
 

@@ -9,18 +9,18 @@ import { postNewUser } from '../../../api/user';
 
 const SignupPage = () => {
   const [name, setName] = useState<string>('');
-  //const [email, setEmail] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
-  //const [password, setPassword] = useState<string>('');
-  //const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
 
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const [profileImage, setProfileImage] = useState<string>(basicProfile);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      setProfileImageFile(e.target.files[0]);
+
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result) {
@@ -38,15 +38,9 @@ const SignupPage = () => {
     }
   };
 
-  //const [emailMsg, setEmailMsg] = useState<string | null>(null);
-  //const [emailValid, setEmailValid] = useState(false);
   const [nicknameMsg, setNicknameMsg] =
     useState<string>('최소 3자 ~ 최대 10자');
   const [nicknameValid, setNicknameValid] = useState(false);
-  //const [passwordValid, setPasswordValid] = useState<string | null>(null);
-  //const [confirmPasswordMsg, setConfirmPasswordMsg] = useState<string | null>(
-  //  null,
-  //);
 
   const [postcodeOpen, setPostcodeOpen] = useState<boolean>(false);
   const [postcode, setPostcode] = useState<string>('');
@@ -70,47 +64,23 @@ const SignupPage = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (
-  //     emailValid &&
-  //     nicknameValid &&
-  //     password === confirmPassword &&
-  //     password.length >= 8
-  //   ) {
-  //     setIsAllFilled(true);
-  //   } else {
-  //     setIsAllFilled(false);
-  //   }
-  // }, [emailValid, nicknameValid, password, confirmPassword]);
-
   useEffect(() => {
-    if (name.length > 0 && nicknameValid && phoneNumber.length === 11) {
+    if (
+      name.length > 0 &&
+      nicknameValid &&
+      phoneNumber.length === 11 &&
+      postcode &&
+      address &&
+      detailAddress
+    ) {
       setIsAllFilled(true);
     } else {
       setIsAllFilled(false);
     }
-  }, [name, nicknameValid, phoneNumber]);
+  }, [name, nicknameValid, phoneNumber, postcode, address, detailAddress]);
 
-  const validateEmail = (email: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validateNickname = (nickname: string) =>
     /^[가-힣a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ]{3,10}$/.test(nickname);
-  const validatePassword = (password: string) =>
-    /^[a-zA-Z0-9!@#$%^&*()]+$/.test(password);
-
-  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   setEmail(value);
-  //   if (value === '') {
-  //     setEmailMsg(null);
-  //   } else if (validateEmail(value)) {
-  //     setEmailValid(true);
-  //     setEmailMsg('유효한 이메일입니다.');
-  //   } else {
-  //     setEmailValid(false);
-  //     setEmailMsg('유효하지 않은 이메일 형식입니다.');
-  //   }
-  // };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -137,36 +107,6 @@ const SignupPage = () => {
     setPhoneNumber(value);
   };
 
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   setPassword(value);
-  //   if (value === '') {
-  //     setPasswordValid(null);
-  //   } else if (
-  //     validatePassword(value) &&
-  //     value.length >= 8 &&
-  //     value.length <= 20
-  //   ) {
-  //     setPasswordValid('비밀번호가 유효합니다.');
-  //   } else {
-  //     setPasswordValid('비밀번호는 8-20자 이내, 특수문자를 포함해야 합니다.');
-  //   }
-  // };
-
-  // const handleConfirmPasswordChange = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   const value = e.target.value;
-  //   setConfirmPassword(value);
-  //   if (value === '') {
-  //     setConfirmPasswordMsg(null);
-  //   } else if (value === password) {
-  //     setConfirmPasswordMsg('비밀번호가 일치합니다.');
-  //   } else {
-  //     setConfirmPasswordMsg('비밀번호가 일치하지 않습니다.');
-  //   }
-  // };
-
   const onClickButton = async () => {
     if (isAllFilled) {
       const userInfo = {
@@ -179,7 +119,8 @@ const SignupPage = () => {
       };
 
       try {
-        const res = await postNewUser(userInfo);
+        const res = await postNewUser(userInfo, profileImageFile);
+        console.log(res);
         alert('회원 가입이 완료되었습니다.');
         navigate('/');
       } catch (error) {
@@ -247,17 +188,6 @@ const SignupPage = () => {
         value={phoneNumber}
         onChange={handlePhoneNumberChange}
       />
-      {/* <S.TextInput
-        type="text"
-        placeholder="이메일"
-        value={email}
-        onChange={handleEmailChange}
-      />
-      {emailMsg && (
-        <S.TextWrapper>
-          <S.Text style={{ color: emailValid ? '#00E5BA' : '#E46769' }}>{emailMsg}</S.Text>
-        </S.TextWrapper>
-      )} */}
       <S.PostcodeWrapper>
         <S.TextInput
           type='text'
@@ -299,46 +229,7 @@ const SignupPage = () => {
           </button>
         </S.PostcodeWindow>
       )}
-      {/* <S.TextInput
-        type='password'
-        placeholder='비밀번호'
-        value={password}
-        onChange={handlePasswordChange}
-      />
-      {passwordValid && (
-        <S.TextWrapper>
-          <S.Text
-            style={{
-              color:
-                passwordValid === '비밀번호가 유효합니다.'
-                  ? '#00E5BA'
-                  : '#E46769',
-            }}
-          >
-            {passwordValid}
-          </S.Text>
-        </S.TextWrapper>
-      )}
-      <S.TextInput
-        type='password'
-        placeholder='비밀번호 확인'
-        value={confirmPassword}
-        onChange={handleConfirmPasswordChange}
-      />
-      {confirmPasswordMsg && (
-        <S.TextWrapper>
-          <S.Text
-            style={{
-              color:
-                confirmPasswordMsg === '비밀번호가 일치합니다.'
-                  ? 'mint/02'
-                  : '#E46769',
-            }}
-          >
-            {confirmPasswordMsg}
-          </S.Text>
-        </S.TextWrapper>
-      )} */}
+
       <S.ButtonWrapper onClick={onClickButton}>
         <Button isActive={isAllFilled} text='회원가입' color='mint' />
       </S.ButtonWrapper>
