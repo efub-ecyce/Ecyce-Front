@@ -27,12 +27,14 @@ import ReviewCompletePage from './pages/Review/ReviewCompletePage/ReviewComplete
 import ProductRegistCompletePage from './pages/Sale/ProductRegistCompletePage/ProductRegistCompletePage';
 import ProductRegistPage from './pages/Sale/ProductRegistPage/ProductRegistPage';
 import NotFoundPage from './pages/NotFoundPage';
+import OAuthRedirectPage from './pages/Auth/OAuthRedirectPage.tsx/OAuthRedirectPage';
 
 function App() {
   return (
     <Routes>
       <Route path='/login' element={<LoginPage />} />
       <Route path='/signup' element={<SignupPage />} />
+      <Route path='/login/oauth2/kakao' element={<OAuthRedirectPage />} />
 
       <Route path='/chatlist' element={<ChatListPage />} />
       <Route path='/chat' element={<ChatPage />} />

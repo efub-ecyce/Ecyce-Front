@@ -3,6 +3,7 @@ import * as font from '../../../styles/font';
 
 export const Container = styled.div`
   width: 100%;
+  height: 100vh;
   background-color: #fafafb;
 
   @media only screen and (min-width: 768px) {
@@ -31,6 +32,7 @@ export const ProfileImage = styled.img`
   width: 5.5625rem;
   height: 5.5625rem;
   flex-shrink: 0;
+  object-fit: cover;
   cursor: pointer;
 `;
 
@@ -111,6 +113,5 @@ export const PostcodeWindow = styled.div`
 
 export const ButtonWrapper = styled.div`
   width: 100%;
-  margin-top: 2.5;
-  margin-bottom: 2rem;
+  margin-top: auto;
 `;
