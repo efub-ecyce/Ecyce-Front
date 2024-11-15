@@ -50,7 +50,7 @@ client.interceptors.response.use(
               } catch (reissueError) {
                 isReissuingToken = false;
                 localStorage.removeItem('token');
-                //window.location.href = '/login';
+                window.location.href = '/login';
                 return Promise.reject(reissueError);
               }
             }
