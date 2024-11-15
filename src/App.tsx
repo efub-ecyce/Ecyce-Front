@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Auth from './hoc/Auth';
 
 import LoginPage from './pages/Auth/LoginPage/LoginPage';
 import SignupPage from './pages/Auth/SignupPage/SignupPage';
@@ -32,38 +33,107 @@ import OAuthRedirectPage from './pages/Auth/OAuthRedirectPage.tsx/OAuthRedirectP
 function App() {
   return (
     <Routes>
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/signup' element={<SignupPage />} />
-      <Route path='/login/oauth2/kakao' element={<OAuthRedirectPage />} />
+      <Route
+        path='/login'
+        element={<Auth Page={LoginPage} option='logout' />}
+      />
+      <Route
+        path='/signup'
+        element={<Auth Page={SignupPage} option='login' />}
+      />
+      <Route
+        path='/login/oauth2/kakao'
+        element={<Auth Page={OAuthRedirectPage} option='logout' />}
+      />
 
-      <Route path='/chatlist' element={<ChatListPage />} />
-      <Route path='/chat/:roomId' element={<ChatPage />} />
+      <Route
+        path='/chatlist'
+        element={<Auth Page={ChatListPage} option='login' />}
+      />
+      <Route
+        path='/chat/:roomId'
+        element={<Auth Page={ChatPage} option='login' />}
+      />
 
-      <Route path='/bookmark' element={<BookmarkPage />} />
-      <Route path='/' element={<MainPage />} />
-      <Route path='/notification' element={<NotificationPage />} />
-      <Route path='/search' element={<SearchPage />} />
+      <Route
+        path='/bookmark'
+        element={<Auth Page={BookmarkPage} option='login' />}
+      />
+      <Route path='/' element={<Auth Page={MainPage} option='all' />} />
+      <Route
+        path='/notification'
+        element={<Auth Page={NotificationPage} option='login' />}
+      />
+      <Route path='/search' element={<Auth Page={SearchPage} option='all' />} />
 
-      <Route path='/my' element={<MyPage />} />
-      <Route path='/my/manage' element={<ProductManagePage />} />
-      <Route path='/my/edit' element={<ProfileEditPage />} />
-      <Route path='/profile/:userId' element={<ProfilePage />} />
-      <Route path='/purchase/:orderId' element={<PurchaseDetailPage />} />
-      <Route path='/purchase' element={<PurchaseHistoryPage />} />
-      <Route path='/sales/:orderId' element={<SalesDetailPage />} />
-      <Route path='/sales' element={<SalesHistoryPage />} />
+      <Route path='/my' element={<Auth Page={MyPage} option='login' />} />
+      <Route
+        path='/my/manage'
+        element={<Auth Page={ProductManagePage} option='login' />}
+      />
+      <Route
+        path='/my/edit'
+        element={<Auth Page={ProfileEditPage} option='login' />}
+      />
+      <Route
+        path='/profile/:userId'
+        element={<Auth Page={ProfilePage} option='login' />}
+      />
+      <Route
+        path='/purchase/:orderId'
+        element={<Auth Page={PurchaseDetailPage} option='login' />}
+      />
+      <Route
+        path='/purchase'
+        element={<Auth Page={PurchaseHistoryPage} option='login' />}
+      />
+      <Route
+        path='/sales/:orderId'
+        element={<Auth Page={SalesDetailPage} option='login' />}
+      />
+      <Route
+        path='/sales'
+        element={<Auth Page={SalesHistoryPage} option='login' />}
+      />
 
-      <Route path='/product/:productId' element={<ProductDetailPage />} />
-      <Route path='/payment' element={<PaymentPage />} />
-      <Route path='/payment/address' element={<EditAddressPage />} />
-      <Route path='/payment/complete' element={<PaymentCompletePage />} />
+      <Route
+        path='/product/:productId'
+        element={<Auth Page={ProductDetailPage} option='all' />}
+      />
+      <Route
+        path='/payment'
+        element={<Auth Page={PaymentPage} option='login' />}
+      />
+      <Route
+        path='/payment/address'
+        element={<Auth Page={EditAddressPage} option='login' />}
+      />
+      <Route
+        path='/payment/complete'
+        element={<Auth Page={PaymentCompletePage} option='login' />}
+      />
 
-      <Route path='/review/:productId' element={<ReviewPage />} />
-      <Route path='/review' element={<ReviewWritePage />} />
-      <Route path='/review/complete' element={<ReviewCompletePage />} />
+      <Route
+        path='/review/:productId'
+        element={<Auth Page={ReviewPage} option='all' />}
+      />
+      <Route
+        path='/review'
+        element={<Auth Page={ReviewWritePage} option='login' />}
+      />
+      <Route
+        path='/review/complete'
+        element={<Auth Page={ReviewCompletePage} option='login' />}
+      />
 
-      <Route path='/post' element={<ProductRegistPage />} />
-      <Route path='/post/complete' element={<ProductRegistCompletePage />} />
+      <Route
+        path='/post'
+        element={<Auth Page={ProductRegistPage} option='login' />}
+      />
+      <Route
+        path='/post/complete'
+        element={<Auth Page={ProductRegistCompletePage} option='login' />}
+      />
 
       <Route path='/*' element={<NotFoundPage />} />
     </Routes>
