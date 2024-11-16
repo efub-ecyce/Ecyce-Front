@@ -22,27 +22,27 @@ const Auth = ({ Page, option }: AuthProps) => {
   const [isLogin, setIsLogin] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const checkIsLogin = async () => {
-    const token = JSON.parse(localStorage.getItem('token') ?? 'null');
-    if (token) {
-      if (new Date().getTime() > token.expiresIn) {
-        try {
-          await postAccessTokenReissue();
+  useEffect(() => {
+    const checkIsLogin = async () => {
+      const token = JSON.parse(localStorage.getItem('token') ?? 'null');
+      if (token) {
+        if (new Date().getTime() > token.expiresIn) {
+          try {
+            await postAccessTokenReissue();
+            setIsLogin(true);
+          } catch (error) {
+            console.error(error);
+            setIsLogin(false);
+          }
+        } else {
           setIsLogin(true);
-        } catch (error) {
-          console.error(error);
-          setIsLogin(false);
         }
       } else {
-        setIsLogin(true);
+        setIsLogin(false);
       }
-    } else {
-      setIsLogin(false);
-    }
-    setIsLoading(false);
-  };
+      setIsLoading(false);
+    };
 
-  useEffect(() => {
     checkIsLogin();
   }, []);
 
@@ -68,8 +68,6 @@ const Auth = ({ Page, option }: AuthProps) => {
           navigate(-1);
       }
     }
-    console.log(isLoading);
-    console.log(isLogin);
   }, [isLoading, isLogin, navigate, option]);
 
   if (isLoading) {
