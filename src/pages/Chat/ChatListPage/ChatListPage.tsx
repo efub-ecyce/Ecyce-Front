@@ -71,6 +71,7 @@ const ChatListPage = () => {
             break;
         }
         setChatRoomList(res);
+        console.log('채팅방 목록 : ', chatRoomList);
       } catch (error) {
         console.error(error);
       }
@@ -86,7 +87,7 @@ const ChatListPage = () => {
 
   const makeChatRoom = async () => {
     try {
-      const res = await postNewChatRoom('이끼끼 80997', true);
+      const res = await postNewChatRoom('이끼끼 17552', false);
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -119,7 +120,7 @@ const ChatListPage = () => {
             />
           ))}
         </S.ChatList>
-        {/*<button onClick={makeChatRoom}>임시 채팅 생성 버튼</button>*/}
+        <button onClick={makeChatRoom}>임시 채팅 생성 버튼</button>
       </S.Container>
       <S.NavBarWrapper>
         <NavBar />

@@ -35,7 +35,7 @@ export const MessageList = ({ messages }: MessageListProps) => {
   const groupedMessages = groupMessages(messages);
   let lastTimeDisplayed: string | null = null;
 
-  const currentUserName = '나'; //임시 값
+  const currentUserName = '이끼끼 80997'; //임시 값
 
   return (
     <S.MessageContainer>

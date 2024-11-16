@@ -13,7 +13,9 @@ export const ChatPreview = ({
   const navigate = useNavigate();
 
   return (
-    <S.Container onClick={() => navigate(`/chat/${roomId}`)}>
+    <S.Container
+      onClick={() => navigate(`/chat/${roomId}`, { state: { name } })}
+    >
       <S.ProfileImage src={profileImage ? profileImage : defaultProfile} />
       <S.TextContainer>
         <S.Name>{name}</S.Name>
