@@ -21,35 +21,6 @@ export const Container = styled.div`
   box-sizing: border-box;
 `;
 
-export const ProfileWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-`;
-
-export const ProfileImage = styled.img`
-  width: 5.5625rem;
-  height: 5.5625rem;
-  flex-shrink: 0;
-  object-fit: cover;
-  cursor: pointer;
-`;
-
-export const CameraIcon = styled.img`
-  width: 1.25rem;
-  height: 1.25rem;
-  flex-shrink: 0;
-  margin-left: -20px;
-  cursor: pointer;
-`;
-
-export const TextWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-`;
-
 export const Text = styled.div`
   ${font.regular}
   color: var(--gray02);
