@@ -1,5 +1,6 @@
 import Header from '../../../components/PaymentPage/Header';
 import ProductComponent from '../../../components/PaymentPage/ProductComponent';
+import RequirementComponent from '../../../components/PaymentPage/RequirementComponent';
 import * as S from './PaymentPage.style';
 
 const PaymentPage = () => {
@@ -24,6 +25,7 @@ const PaymentPage = () => {
         price={productData.price}
         imageURL={productData.imageURL}
       />
+      <RequirementComponent />
     </S.Container>
   ); 
 };
