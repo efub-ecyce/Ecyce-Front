@@ -3,6 +3,7 @@ import ProductComponent from '../../../components/PaymentPage/ProductComponent';
 import RequirementComponent from '../../../components/PaymentPage/RequirementComponent';
 import DeliverInfoComponent from '../../../components/PaymentPage/DeliverInfoComponent';
 import PaymentInfoComponent from '../../../components/PaymentPage/PaymentInfoComponent';
+import { Button } from '../../../components/common/Button';
 import * as S from './PaymentPage.style';
 
 const PaymentPage = () => {
@@ -29,6 +30,8 @@ const PaymentPage = () => {
     deliveryCharge: 4000,
   };
 
+  const btnTxt = `${(priceData.productPrice + priceData.deliveryCharge).toLocaleString()}원 결제하기`;
+
   return (
     <S.Container>
       <Header />
@@ -52,6 +55,7 @@ const PaymentPage = () => {
         productPrice={priceData.productPrice}
         deliveryCharge={priceData.deliveryCharge}
       />
+      <Button isActive={true} text={btnTxt} color='mint'/>
     </S.Container>
   ); 
 };
