@@ -32,3 +32,12 @@ export const postNewUser = async (
     throw error;
   }
 };
+
+export const getUserInfo = async () => {
+  try {
+    const res = await client.get('/user');
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

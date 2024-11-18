@@ -13,13 +13,13 @@ export const getAccessTokenKakao = async (code: string) => {
     });
     const token = {
       accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
       grantType: response.data.grantType,
       expiresIn: new Date().getTime() + response.data.expiresIn,
     };
     localStorage.setItem('token', JSON.stringify(token));
     return response;
   } catch (error) {
-    localStorage.removeItem('token');
     throw error;
   }
 };
@@ -27,16 +27,19 @@ export const getAccessTokenKakao = async (code: string) => {
 export const postAccessTokenReissue = async () => {
   try {
     const response = await client.post(`/login/oauth2/reissue`);
-    const token = {
+    const newToken = {
       accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
       grantType: response.data.grantType,
       expiresIn: new Date().getTime() + response.data.expiresIn,
     };
 
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('token', JSON.stringify(newToken));
+
+    console.log('토큰 재발급 응답 ', response);
+
     return response;
   } catch (error) {
-    localStorage.removeItem('token');
     throw error;
   }
 };
