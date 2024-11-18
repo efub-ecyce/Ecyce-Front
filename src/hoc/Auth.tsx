@@ -52,11 +52,11 @@ const Auth = ({ Page, option }: AuthProps) => {
         case 'all':
           break;
         case 'login':
-          if (!isLogin) {
-            alert('로그인 후 이용해주세요.');
-            navigate(-1);
-            return;
-          }
+          // if (!isLogin) {
+          //   alert('로그인 후 이용해주세요.');
+          //   navigate(-1);
+          //   return;
+          // }
           break;
         case 'logout':
           if (isLogin) {
