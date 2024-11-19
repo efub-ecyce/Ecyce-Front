@@ -5,11 +5,6 @@ const FRONT_DOMAIN = `http://localhost:3000`;
 const REDIRECT_URI = `${FRONT_DOMAIN}/login/oauth2/kakao`;
 
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-const token = localStorage.getItem('token');
-const parsedToken = token ? JSON.parse(token) : null;
-const refreshAuth = parsedToken
-  ? `${parsedToken.grantType} ${parsedToken.refreshToken}`
-  : null;
 
 export const getAccessTokenKakao = async (code: string) => {
   try {
@@ -25,32 +20,26 @@ export const getAccessTokenKakao = async (code: string) => {
     localStorage.setItem('token', JSON.stringify(token));
     return response;
   } catch (error) {
-    localStorage.removeItem('token');
     throw error;
   }
 };
 
 export const postAccessTokenReissue = async () => {
   try {
-    const response = await client.post(`/login/oauth2/reissue`, {
-      headers: {
-        Authorization: refreshAuth,
-      },
-    });
-    const token = {
+    const response = await client.post(`/login/oauth2/reissue`);
+    const newToken = {
       accessToken: response.data.accessToken,
       refreshToken: response.data.refreshToken,
       grantType: response.data.grantType,
       expiresIn: new Date().getTime() + response.data.expiresIn,
     };
 
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('token', JSON.stringify(newToken));
 
-    console.log(response);
+    console.log('토큰 재발급 응답 ', response);
 
     return response;
   } catch (error) {
-    localStorage.removeItem('token');
     throw error;
   }
 };
