@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import ProfileCard from '../../../components/ProfilePage/ProfileCard';
 import FilterTab from '../../../components/ProfilePage/FilterTab';
+import ProductList from '../../../components/ProfilePage/ProductList';
+import ReviewList from '../../../components/ProfilePage/ReviewList';
 
 const ProfileData = {
   profileImg: "",
@@ -9,6 +12,7 @@ const ProfileData = {
 }
 
 const ProfilePage = () => {
+  const [selectedTab, setSelectedTab] = useState<'상품 리스트' | '후기'>('상품 리스트');
   return (
     <>
       <ProfileCard 
@@ -17,7 +21,10 @@ const ProfilePage = () => {
         score={ProfileData.score}
         content={ProfileData.content}
       />
-      <FilterTab />
+      <FilterTab selectedTab={selectedTab} onTabClick={setSelectedTab} /> {/* 상태 전달 */}
+      {selectedTab === '상품 리스트' && <ProductList />}
+      {selectedTab === '후기' && <ReviewList />}
+
     </>
   );
 };

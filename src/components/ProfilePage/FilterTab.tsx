@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import * as S from './FilterTab.style';
 
-const FilterTab: React.FC = () => {
-    const [selectedTab, setSelectedTab] = useState<'상품 리스트' | '후기'>('상품 리스트'); // 선택 가능한 탭 이름을 타입으로 지정
+interface FilterTabProps {
+    selectedTab: '상품 리스트' | '후기';
+    onTabClick: (tabName: '상품 리스트' | '후기') => void;
+}
 
-    const handleClick = (tabName: '상품 리스트' | '후기') => {
-        setSelectedTab(tabName);
-    };
+const FilterTab: React.FC<FilterTabProps> = ({ selectedTab, onTabClick }) => {
 
     return (
         <S.Container>
-            <S.Filter onClick={() => handleClick('상품 리스트')}>
+            <S.Filter onClick={() => onTabClick('상품 리스트')}>
                 <S.FilterName
                     isSelected={selectedTab === '상품 리스트'}
                 >
@@ -18,7 +18,7 @@ const FilterTab: React.FC = () => {
                 </S.FilterName>
                 {selectedTab === '상품 리스트' && <S.Line />}
             </S.Filter>
-            <S.Filter onClick={() => handleClick('후기')}>
+            <S.Filter onClick={() => onTabClick('후기')}>
                 <S.FilterName
                     isSelected={selectedTab === '후기'}
                 >
