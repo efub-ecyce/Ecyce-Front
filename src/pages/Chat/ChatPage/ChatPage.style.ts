@@ -64,8 +64,7 @@ export const TextInput = styled.textarea`
   background: var(--white00);
 
   margin: 0 0.5rem;
-  padding: 0 0.94rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem 0.94rem;
   box-sizing: border-box;
 
   ${font.medium}
@@ -73,6 +72,10 @@ export const TextInput = styled.textarea`
   color: var(--black);
 
   resize: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const IconWrapper = styled.div`

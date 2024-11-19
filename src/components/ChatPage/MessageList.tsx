@@ -1,5 +1,9 @@
 import * as S from './MessageList.style';
 import { Message } from '../../pages/Chat/ChatPage/ChatPage';
+import { userState } from '../../store/userInfoAtom';
+import { useRecoilValue } from 'recoil';
+import { useEffect, useRef } from 'react';
+import React from 'react';
 
 interface MessageListProps {
   messages: Message[];
@@ -31,14 +35,29 @@ const groupMessages = (messages: Message[]) => {
   }, [] as { timeKey: string; sender: string; messages: Message[] }[]);
 };
 
+const renderMessage = (message: string) => {
+  return message.split('\n').map((line, idx) => (
+    <React.Fragment key={idx}>
+      {line}
+      <br />
+    </React.Fragment>
+  ));
+};
+
 export const MessageList = ({ messages }: MessageListProps) => {
+  const userInfo = useRecoilValue(userState);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const groupedMessages = groupMessages(messages);
   let lastTimeDisplayed: string | null = null;
 
-  const currentUserName = '이끼끼 80997'; //임시 값
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [scrollRef, messages]);
 
   return (
-    <S.MessageContainer>
+    <S.MessageContainer ref={scrollRef}>
       {groupedMessages.map((group, groupIndex) => {
         const shouldDisplayTime = group.timeKey !== lastTimeDisplayed;
         lastTimeDisplayed = group.timeKey;
@@ -48,12 +67,14 @@ export const MessageList = ({ messages }: MessageListProps) => {
             {shouldDisplayTime && <S.TimeStamp>{group.timeKey}</S.TimeStamp>}
             {group.messages.map((message, idx) => {
               const messageIndex = groupIndex * 100 + idx;
-              const isCurrentUser = message.sender == currentUserName;
+              const isCurrentUser = message.sender == userInfo.nickname;
 
               return isCurrentUser ? (
-                <S.MyChat key={messageIndex}>{message.content}</S.MyChat>
+                <S.MyChat key={messageIndex}>
+                  {renderMessage(message.content)}
+                </S.MyChat>
               ) : (
-                <S.YourChat>{message.content}</S.YourChat>
+                <S.YourChat>{renderMessage(message.content)}</S.YourChat>
               );
             })}
           </S.GroupContainer>

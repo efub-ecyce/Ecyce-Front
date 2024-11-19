@@ -1,5 +1,4 @@
 import * as S from './ChatPage.style';
-import { ReactComponent as AddIcon } from '../../../assets/ChatPage/add.svg';
 import { ReactComponent as BackIcon } from '../../../assets/ChatPage/back.svg';
 import { ReactComponent as MoreIcon } from '../../../assets/ChatPage/more_vert.svg';
 import { ReactComponent as SendIcon } from '../../../assets/ChatPage/send.svg';
@@ -9,6 +8,8 @@ import { MessageList } from '../../../components/ChatPage/MessageList';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getChatHistory } from '../../../api/chat';
 import { Client, IMessage } from '@stomp/stompjs';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../../store/userInfoAtom';
 
 export interface Message {
   messageId: number;
@@ -24,45 +25,6 @@ export interface MessageRequest {
   type: 'CHAT';
 }
 
-const DummyMessages: Message[] = [
-  {
-    messageId: 1,
-    sender: '이끼끼79619',
-    content: 'Hello, this is a message.',
-    timestamp: '2024-11-12T10:49:25.026594',
-  },
-  {
-    messageId: 2,
-    sender: '이끼끼79619',
-    content: '테스트중입니다',
-    timestamp: '2024-11-12T10:50:24.570453',
-  },
-  {
-    messageId: 3,
-    sender: '나',
-    content: '테스트중입니다',
-    timestamp: '2024-11-12T10:50:24.570453',
-  },
-  {
-    messageId: 4,
-    sender: '나',
-    content: '테스트중입니다',
-    timestamp: '2024-11-12T10:50:24.570453',
-  },
-  {
-    messageId: 5,
-    sender: '이끼끼79619',
-    content: '테스트중입니다',
-    timestamp: '2024-11-12T10:50:24.570453',
-  },
-  {
-    messageId: 6,
-    sender: '나',
-    content: '테스트중입니다',
-    timestamp: '2024-11-12T10:52:24.570453',
-  },
-];
-
 const ChatPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [stompClient, setStompClient] = useState<Client | null>(null);
@@ -72,6 +34,8 @@ const ChatPage = () => {
   const navigate = useNavigate();
   const roomId = Number(useParams().roomId);
   const otherUserName = useLocation().state.name;
+
+  const userInfo = useRecoilValue(userState);
 
   useEffect(() => {
     const getHistory = async () => {
@@ -85,7 +49,6 @@ const ChatPage = () => {
     };
 
     getHistory();
-    //setChatHistory(DummyMessages);
 
     const client = new Client({
       brokerURL: 'wss://api.ecyce-karma.n-e.kr/ws',
@@ -117,11 +80,10 @@ const ChatPage = () => {
   }, [roomId]);
 
   const sendMessage = () => {
-    console.log('메시지 전송 시도');
     if (stompClient && stompClient.connected && chatToSend?.trim()) {
       const chatMessage: MessageRequest = {
         roomId: roomId,
-        sender: '이끼끼 80997',
+        sender: userInfo.nickname as string,
         content: chatToSend,
         type: 'CHAT',
       };
@@ -130,6 +92,19 @@ const ChatPage = () => {
         body: JSON.stringify(chatMessage),
       });
       setChatToSend('');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key !== 'Enter') return;
+
+    e.preventDefault();
+
+    console.log(e.shiftKey);
+    if (e.shiftKey) {
+      setChatToSend(prev => prev + '\n');
+    } else {
+      sendMessage();
     }
   };
 
@@ -159,6 +134,7 @@ const ChatPage = () => {
         <S.TextInput
           value={chatToSend}
           onChange={e => setChatToSend(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <S.IconWrapper onClick={sendMessage}>
           <SendIcon />

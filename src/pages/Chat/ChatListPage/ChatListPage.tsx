@@ -25,29 +25,6 @@ interface ChatRoom {
 
 const filterList = ['전체', '판매', '구매'];
 
-const dummyList = [
-  {
-    roomId: 3,
-    roomName: '이끼끼19387',
-    latestMessage: 'No messages yet',
-  },
-  {
-    roomId: 4,
-    roomName: '이끼끼19387',
-    latestMessage: 'No messages yet',
-  },
-  {
-    roomId: 5,
-    roomName: '이끼끼79619',
-    latestMessage: 'No messages yet',
-  },
-  {
-    roomId: 6,
-    roomName: '이끼끼79619',
-    latestMessage: '테스트중입니다',
-  },
-];
-
 const ChatListPage = () => {
   const [filter, setFilter] = useState<number>(0);
   const [chatRoomList, setChatRoomList] = useState<ChatRoom[]>([]);
@@ -78,20 +55,10 @@ const ChatListPage = () => {
     };
 
     loadChatRoomHistory();
-    //setChatRoomList(dummyList);
   }, [filter]);
 
   const handleFiltering = (id: number) => {
     setFilter(id);
-  };
-
-  const makeChatRoom = async () => {
-    try {
-      const res = await postNewChatRoom('이끼끼 17552', false);
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
@@ -116,11 +83,10 @@ const ChatListPage = () => {
               profileImage={null}
               name={chatRoom.roomName}
               message={chatRoom.latestMessage}
-              unread={1}
+              unread={null}
             />
           ))}
         </S.ChatList>
-        <button onClick={makeChatRoom}>임시 채팅 생성 버튼</button>
       </S.Container>
       <S.NavBarWrapper>
         <NavBar />
