@@ -30,6 +30,13 @@ export const Top = styled.div`
     flex-shrink: 0;
 `;
 
+export const BackgroundLogo = styled.div`
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+`;
+
 export const ContentWrapper = styled.div`
     width: 100%;
     display: flex;

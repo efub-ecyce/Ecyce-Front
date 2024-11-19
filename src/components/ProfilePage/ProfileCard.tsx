@@ -4,6 +4,7 @@ import { ReactComponent as Share } from '../../assets/ProfilePage/share.svg';
 import { ReactComponent as Profile } from '../../assets/ProfilePage/profile.svg';
 import { ReactComponent as YellowStar } from '../../assets/ReviewWritePage/karma-logo-yellow.svg';
 import { ReactComponent as EmptyStar } from '../../assets/ReviewPage/karma-logo-gray.svg';
+import { ReactComponent as BgLogo } from '../../assets/ProfilePage/karma_logo.svg';
 
 interface ProfileProps {
     profileImg: string;
@@ -31,6 +32,7 @@ const ProfileCard = ({ profileImg, userName, score, content }: ProfileProps) => 
                 <GoBackBtn />
                 <Share />
             </S.Top>
+            <S.BackgroundLogo><BgLogo /></S.BackgroundLogo>
             <S.ContentWrapper>
                 <S.ProfileWrapper>
                     <S.ProfileImg><Profile /></S.ProfileImg>
