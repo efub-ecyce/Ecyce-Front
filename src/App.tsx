@@ -43,7 +43,7 @@ function App() {
       />
       <Route
         path='/login/oauth2/kakao'
-        element={<Auth Page={OAuthRedirectPage} option='logout' />}
+        element={<Auth Page={OAuthRedirectPage} option='login' />}
       />
 
       <Route
