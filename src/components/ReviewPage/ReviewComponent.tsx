@@ -31,8 +31,10 @@ const ReviewComponent = ({ profileImg, userName, score, content, reviewImg1, rev
     return (
         <S.Wrapper>
             <S.ProfileWrapper>
-                <S.ProfileImg><ProfileImg /></S.ProfileImg>
-                <S.UserName>{userName}</S.UserName>
+                <S.UserWrapper>
+                    <S.ProfileImg><ProfileImg /></S.ProfileImg>
+                    <S.UserName>{userName}</S.UserName>
+                </S.UserWrapper>
                 <S.StarsWrapper>
                     <S.StarScore>{score.toFixed(1)}</S.StarScore>
                     <S.Stars>{renderStars()}</S.Stars>

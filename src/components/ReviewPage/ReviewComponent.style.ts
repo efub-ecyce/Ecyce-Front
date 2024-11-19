@@ -20,6 +20,11 @@ export const Wrapper = styled.div`
     box-shadow: 0px 0px 5px 0px rgba(61, 73, 70, 0.20);
 `;
 
+export const UserWrapper = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
 export const ProfileImg = styled.div`
     width: 2.5rem;
     height: 2.5rem;
@@ -30,12 +35,12 @@ export const UserName = styled.div`
     ${font.bold}
     color: var(--black02);
     font-size: 18px;
-    width: 100%;
     color: #3D4946;
     font-style: normal;
     font-weight: 700;
     line-height: 150%;
-    margin-left: 0.5rem;
+    padding-left: 0.5rem;
+    width: 12rem;
 `;
 
 export const Stars = styled.div`
@@ -58,15 +63,17 @@ export const StarScore = styled.div`
 export const StarsWrapper = styled.div`
     display: flex;
     align-items: center;
-    width: 6.25rem;
+    width: 8.3rem;
     height: 1.25rem;
     flex-shrink: 0;
     gap: 0.25rem;
 `;
 
 export const ProfileWrapper = styled.div`
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 1rem;
 `;
 
@@ -78,7 +85,7 @@ export const ReviewText = styled.div`
     font-weight: 500;
     line-height: 150%;
 
-    width: 100%;
+    width: 96%;
 `;
 
 export const ImagesWrapper = styled.div`
@@ -153,4 +160,5 @@ export const WrittenDate = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top: 0.5rem;
+    margin-right: 2rem;
 `;

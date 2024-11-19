@@ -1,4 +1,8 @@
 import ReviewComponent from '../../../components/ReviewPage/ReviewComponent';
+import NavBar from '../../../components/common/NavBar';
+import Header from '../../../components/ReviewPage/Header';
+import Filter from '../../../components/ReviewPage/Filter';
+import * as S from './ReviewPage.style';
 
 const ReviewData = {
   profileImg: "",
@@ -13,18 +17,77 @@ const ReviewData = {
 
 const ReviewPage = () => {
   return (
-    <>
-    <ReviewComponent 
-      profileImg={ReviewData.profileImg}
-      userName={ReviewData.userName}
-      score={ReviewData.score}
-      content={ReviewData.content}
-      reviewImg1={ReviewData.reviewImg1}
-      reviewImg2={ReviewData.reviewImg2}
-      reviewImg3={ReviewData.reviewImg3}
-      writtenDate={ReviewData.writtenDate}
-    />
-    </>
+    <S.Container>
+      <S.Top>
+        <Header title="후기" num={1886} />
+        <Filter />
+      </S.Top>
+      <S.Contents>
+        <ReviewComponent 
+          profileImg={ReviewData.profileImg}
+          userName={ReviewData.userName}
+          score={ReviewData.score}
+          content={ReviewData.content}
+          reviewImg1={ReviewData.reviewImg1}
+          reviewImg2={ReviewData.reviewImg2}
+          reviewImg3={ReviewData.reviewImg3}
+          writtenDate={ReviewData.writtenDate}
+        />
+        <ReviewComponent 
+          profileImg={ReviewData.profileImg}
+          userName={ReviewData.userName}
+          score={ReviewData.score}
+          content={ReviewData.content}
+          reviewImg1={ReviewData.reviewImg1}
+          reviewImg2={ReviewData.reviewImg2}
+          reviewImg3={ReviewData.reviewImg3}
+          writtenDate={ReviewData.writtenDate}
+        />
+        <ReviewComponent 
+          profileImg={ReviewData.profileImg}
+          userName={ReviewData.userName}
+          score={ReviewData.score}
+          content={ReviewData.content}
+          reviewImg1={ReviewData.reviewImg1}
+          reviewImg2={ReviewData.reviewImg2}
+          reviewImg3={ReviewData.reviewImg3}
+          writtenDate={ReviewData.writtenDate}
+        />
+        <ReviewComponent 
+          profileImg={ReviewData.profileImg}
+          userName={ReviewData.userName}
+          score={ReviewData.score}
+          content={ReviewData.content}
+          reviewImg1={ReviewData.reviewImg1}
+          reviewImg2={ReviewData.reviewImg2}
+          reviewImg3={ReviewData.reviewImg3}
+          writtenDate={ReviewData.writtenDate}
+        />
+        <ReviewComponent 
+          profileImg={ReviewData.profileImg}
+          userName={ReviewData.userName}
+          score={ReviewData.score}
+          content={ReviewData.content}
+          reviewImg1={ReviewData.reviewImg1}
+          reviewImg2={ReviewData.reviewImg2}
+          reviewImg3={ReviewData.reviewImg3}
+          writtenDate={ReviewData.writtenDate}
+        />
+        <ReviewComponent 
+          profileImg={ReviewData.profileImg}
+          userName={ReviewData.userName}
+          score={ReviewData.score}
+          content={ReviewData.content}
+          reviewImg1={ReviewData.reviewImg1}
+          reviewImg2={ReviewData.reviewImg2}
+          reviewImg3={ReviewData.reviewImg3}
+          writtenDate={ReviewData.writtenDate}
+        />
+      </S.Contents>
+    <S.NavBar>
+        <NavBar />
+      </S.NavBar>
+    </S.Container>
   );
 };
 
