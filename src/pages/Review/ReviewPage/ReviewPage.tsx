@@ -1,8 +1,22 @@
+import React, { useState } from 'react';
 import ReviewComponent from '../../../components/ReviewPage/ReviewComponent';
 import NavBar from '../../../components/common/NavBar';
 import Header from '../../../components/ReviewPage/Header';
 import Filter from '../../../components/ReviewPage/Filter';
 import * as S from './ReviewPage.style';
+import ReviewDetailComponent from '../../../components/ReviewPage/ReviewDetailComponent';
+
+
+interface ReviewDataType {
+  profileImg: string;
+  userName: string;
+  score: number;
+  content: string;
+  reviewImg1: string;
+  reviewImg2: string;
+  reviewImg3: string;
+  writtenDate: string;
+}
 
 const ReviewData = {
   profileImg: "",
@@ -16,6 +30,16 @@ const ReviewData = {
 }
 
 const ReviewPage = () => {
+  const [selectedReview, setSelectedReview] = useState<ReviewDataType | null>(null);
+
+  const handleReviewClick = (review: ReviewDataType) => {
+    setSelectedReview(review);
+  };
+
+  const handleOverlayClick = () => {
+    setSelectedReview(null);
+  };
+
   return (
     <S.Container>
       <S.Top>
@@ -23,70 +47,43 @@ const ReviewPage = () => {
         <Filter />
       </S.Top>
       <S.Contents>
-        <ReviewComponent 
-          profileImg={ReviewData.profileImg}
-          userName={ReviewData.userName}
-          score={ReviewData.score}
-          content={ReviewData.content}
-          reviewImg1={ReviewData.reviewImg1}
-          reviewImg2={ReviewData.reviewImg2}
-          reviewImg3={ReviewData.reviewImg3}
-          writtenDate={ReviewData.writtenDate}
-        />
-        <ReviewComponent 
-          profileImg={ReviewData.profileImg}
-          userName={ReviewData.userName}
-          score={ReviewData.score}
-          content={ReviewData.content}
-          reviewImg1={ReviewData.reviewImg1}
-          reviewImg2={ReviewData.reviewImg2}
-          reviewImg3={ReviewData.reviewImg3}
-          writtenDate={ReviewData.writtenDate}
-        />
-        <ReviewComponent 
-          profileImg={ReviewData.profileImg}
-          userName={ReviewData.userName}
-          score={ReviewData.score}
-          content={ReviewData.content}
-          reviewImg1={ReviewData.reviewImg1}
-          reviewImg2={ReviewData.reviewImg2}
-          reviewImg3={ReviewData.reviewImg3}
-          writtenDate={ReviewData.writtenDate}
-        />
-        <ReviewComponent 
-          profileImg={ReviewData.profileImg}
-          userName={ReviewData.userName}
-          score={ReviewData.score}
-          content={ReviewData.content}
-          reviewImg1={ReviewData.reviewImg1}
-          reviewImg2={ReviewData.reviewImg2}
-          reviewImg3={ReviewData.reviewImg3}
-          writtenDate={ReviewData.writtenDate}
-        />
-        <ReviewComponent 
-          profileImg={ReviewData.profileImg}
-          userName={ReviewData.userName}
-          score={ReviewData.score}
-          content={ReviewData.content}
-          reviewImg1={ReviewData.reviewImg1}
-          reviewImg2={ReviewData.reviewImg2}
-          reviewImg3={ReviewData.reviewImg3}
-          writtenDate={ReviewData.writtenDate}
-        />
-        <ReviewComponent 
-          profileImg={ReviewData.profileImg}
-          userName={ReviewData.userName}
-          score={ReviewData.score}
-          content={ReviewData.content}
-          reviewImg1={ReviewData.reviewImg1}
-          reviewImg2={ReviewData.reviewImg2}
-          reviewImg3={ReviewData.reviewImg3}
-          writtenDate={ReviewData.writtenDate}
-        />
+      {Array(6)
+          .fill(ReviewData)
+          .map((review, index) => (
+            <ReviewComponent
+              key={index}
+              profileImg={review.profileImg}
+              userName={review.userName}
+              score={review.score}
+              content={review.content}
+              reviewImg1={review.reviewImg1}
+              reviewImg2={review.reviewImg2}
+              reviewImg3={review.reviewImg3}
+              writtenDate={review.writtenDate}
+              onClick={() => handleReviewClick(review)}
+            />
+          ))}
       </S.Contents>
-    <S.NavBar>
+      <S.NavBar>
         <NavBar />
       </S.NavBar>
+
+      {selectedReview && (
+        <S.Overlay onClick={handleOverlayClick}>
+          <S.DetailWrapper onClick={(e) => e.stopPropagation()}>
+            <ReviewDetailComponent
+              profileImg={selectedReview.profileImg}
+              userName={selectedReview.userName}
+              score={selectedReview.score}
+              content={selectedReview.content}
+              reviewImg1={selectedReview.reviewImg1}
+              reviewImg2={selectedReview.reviewImg2}
+              reviewImg3={selectedReview.reviewImg3}
+              writtenDate={selectedReview.writtenDate}
+            />
+          </S.DetailWrapper>
+        </S.Overlay>
+      )}
     </S.Container>
   );
 };

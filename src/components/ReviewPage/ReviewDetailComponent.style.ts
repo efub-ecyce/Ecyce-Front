@@ -18,7 +18,6 @@ export const Wrapper = styled.div`
     box-sizing: border-box;
     border-radius: 0.625rem;
     box-shadow: 0px 0px 5px 0px rgba(61, 73, 70, 0.20);
-    cursor: pointer;
 `;
 
 export const UserWrapper = styled.div`
@@ -92,55 +91,23 @@ export const ReviewText = styled.div`
 export const ImagesWrapper = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 1rem;
     width: 100%;
 `;
 
-export const SmallImagesWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    width: 50%;
+export const ArrowBtn = styled.div`
+    cursor: pointer;
+    z-index: 10;
 `;
 
-export const Image1 = styled.div`
-    width: 10.9375rem;
+export const Image = styled.div`
+    width: 21.8125rem;
     height: 12.5rem;
     aspect-ratio: 7 / 8;
     background-color: var(--white01);
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
-    overflow: hidden;
-    
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-`;
-
-export const Image2 = styled.div`
-    width: 10.875rem;
-    height: 6.25rem;
-    aspect-ratio: 2 / 1;
-    background-color: var(--mint04);
-    border-top-right-radius: 0.5rem;
-    overflow: hidden;
-    
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-`;
-
-export const Image3 = styled.div`
-    width: 10.875rem;
-    height: 6.25rem;
-    aspect-ratio: 2 / 1;
-    background-color: var(--gray02);
-    border-bottom-right-radius: 0.5rem;
     overflow: hidden;
     
     img {

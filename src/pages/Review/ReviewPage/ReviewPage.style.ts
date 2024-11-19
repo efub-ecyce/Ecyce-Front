@@ -33,6 +33,7 @@ export const NavBar = styled.div`
     width: 100%;
     position: absolute;
     bottom: 0;
+    z-index: 10;
 `;
 
 export const Contents = styled.div`
@@ -50,4 +51,24 @@ export const Contents = styled.div`
     &::-webkit-scrollbar {
         display: none;
     }
+`;
+
+export const Overlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+`;
+
+export const DetailWrapper = styled.div`
+    width: 90%;
+    max-width: 768px;
+    padding: 1rem;
+    border-radius: 10px;
 `;
