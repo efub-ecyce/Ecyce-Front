@@ -1,5 +1,23 @@
+import * as S from './PaymentPage.style';
+import { ReactComponent as Logo } from '../../../assets/ProductRegistPage/karma-logo.svg';
+import { Button } from '../../../components/common/Button';
+import { useNavigate } from 'react-router-dom';
+import 'animate.css';
+
 const PaymentCompletePage = () => {
-  return <div></div>;
+  const navigate = useNavigate();
+
+  return (
+    <S.Container>
+      <S.Title>결제가 완료되었습니다!</S.Title>
+      <S.LogoWrapper className='animate__animated animate__flipInY'>
+        <Logo />
+      </S.LogoWrapper>
+      <S.ButtonWrapper onClick={() => navigate('/')}>
+        <Button isActive={true} text='돌아가기' color='white' />
+      </S.ButtonWrapper>
+    </S.Container>
+  );
 };
 
 export default PaymentCompletePage;
