@@ -1,4 +1,5 @@
 import ProfileCard from '../../../components/ProfilePage/ProfileCard';
+import FilterTab from '../../../components/ProfilePage/FilterTab';
 
 const ProfileData = {
   profileImg: "",
@@ -9,12 +10,15 @@ const ProfileData = {
 
 const ProfilePage = () => {
   return (
-    <ProfileCard 
-      profileImg={ProfileData.profileImg} 
-      userName={ProfileData.userName}
-      score={ProfileData.score}
-      content={ProfileData.content}
-    />
+    <>
+      <ProfileCard 
+        profileImg={ProfileData.profileImg} 
+        userName={ProfileData.userName}
+        score={ProfileData.score}
+        content={ProfileData.content}
+      />
+      <FilterTab />
+    </>
   );
 };
 
