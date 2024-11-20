@@ -5,6 +5,8 @@ import { ReactComponent as Profile } from '../../assets/ProfilePage/profile.svg'
 import { ReactComponent as YellowStar } from '../../assets/ReviewWritePage/karma-logo-yellow.svg';
 import { ReactComponent as EmptyStar } from '../../assets/ReviewPage/karma-logo-gray.svg';
 import { ReactComponent as BgLogo } from '../../assets/ProfilePage/karma_logo.svg';
+import { ReactComponent as ChatIcon } from '../../assets/ProfilePage/ChatIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileProps {
     profileImg: string;
@@ -15,6 +17,7 @@ interface ProfileProps {
 
 const ProfileCard = ({ profileImg, userName, score, content }: ProfileProps) => {
     const integerScore = Math.floor(score);
+    const navigate = useNavigate();
 
     // 별점 렌더링
     const renderStars = () => {
@@ -30,7 +33,15 @@ const ProfileCard = ({ profileImg, userName, score, content }: ProfileProps) => 
         <S.Container>
             <S.Top>
                 <GoBackBtn />
-                <Share />
+                <S.ChatAndShare>
+                    {/* 이거 나중에 사용자 id 받아서 그 채팅창으로 이동하도록 */}
+                    <S.Btn onClick={() => navigate("/chatlist")}>
+                        <ChatIcon />
+                    </S.Btn>
+                    <S.Btn>
+                        <Share />
+                    </S.Btn>
+                </S.ChatAndShare>
             </S.Top>
             <S.BackgroundLogo><BgLogo /></S.BackgroundLogo>
             <S.ContentWrapper>

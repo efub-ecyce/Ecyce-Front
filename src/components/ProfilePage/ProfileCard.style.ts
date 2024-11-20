@@ -28,6 +28,20 @@ export const Top = styled.div`
     padding: 0.2rem 1.28125rem;
     top: 0;
     flex-shrink: 0;
+    z-index: 1;
+`;
+
+export const Btn = styled.div`
+    cursor: pointer;
+    z-index: 1;
+`;
+
+export const ChatAndShare = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.81rem;
+    z-index: 1;
 `;
 
 export const BackgroundLogo = styled.div`
@@ -35,6 +49,7 @@ export const BackgroundLogo = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    z-index: 0;
 `;
 
 export const ContentWrapper = styled.div`
@@ -58,7 +73,6 @@ export const ProfileWrapper = styled.div`
 export const ProfileImg = styled.div`
     width: 5.5625rem;
     height: 5.5625rem;
-    flex-shrink: 0;
 `;
 
 export const UserName = styled.div`
