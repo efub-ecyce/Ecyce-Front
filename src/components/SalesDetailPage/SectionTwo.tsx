@@ -2,10 +2,22 @@ import * as S from '../../pages/My/SalesDetailPage/SalesDetailPage.style';
 import { useRecoilState } from 'recoil';
 import { SalesDetailState } from '../../pages/My/SalesDetailPage/SalesDetailPage';
 import { useNavigate } from 'react-router-dom';
+import { postNewChatRoom } from '../../api/chat';
 
 export const SectionTwo = () => {
   const [salesDetail, setSalesDetail] = useRecoilState(SalesDetailState);
   const navigate = useNavigate();
+
+  const navigateChat = async () => {
+    try {
+      const response = await postNewChatRoom(salesDetail.buyerNickname, true);
+      navigate(`/chat/${response.roomId}`, {
+        state: { name: salesDetail.buyerNickname },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <S.Section>
@@ -26,9 +38,7 @@ export const SectionTwo = () => {
       <S.TableRow>
         <S.TableHeader>주문자</S.TableHeader>
         <S.Data>{salesDetail.buyerName}</S.Data>
-        <S.ChatButton onClick={() => navigate(`/chat`)}>
-          채팅 보내기
-        </S.ChatButton>
+        <S.ChatButton onClick={() => navigateChat()}>채팅 보내기</S.ChatButton>
       </S.TableRow>
       <S.TableRow>
         <S.TableHeader>연락처</S.TableHeader>

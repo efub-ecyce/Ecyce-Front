@@ -4,6 +4,7 @@ import { CancelModal, FinishModal } from './CustomConfirmModal';
 import { useRecoilState } from 'recoil';
 import { PurchaseDetailState } from '../../pages/My/PurchaseDetailPage/PurchaseDetailPage';
 import { useNavigate } from 'react-router-dom';
+import { postNewChatRoom } from '../../api/chat';
 
 const NameMap: { [key: string]: string[] } = {
   접수완료: ['문의하기', '주문 취소하기'],
@@ -37,11 +38,25 @@ export const ButtonBar = () => {
     } else return;
   };
 
+  const navigateChat = async () => {
+    try {
+      const response = await postNewChatRoom(
+        purchaseDetail.sellerNickname,
+        false,
+      );
+      navigate(`/chat/${response.roomId}`, {
+        state: { name: purchaseDetail.sellerNickname },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getModal = () => {
     if (!modalType) return null;
     switch (modalType) {
       case '문의하기':
-        navigate('/chat');
+        navigateChat();
         return null;
       case '주문 취소하기':
         return (
