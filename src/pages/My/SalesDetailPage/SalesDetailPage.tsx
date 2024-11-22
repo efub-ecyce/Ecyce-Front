@@ -6,53 +6,66 @@ import { SectionOne } from '../../../components/SalesDetailPage/SectionOne';
 import { SectionTwo } from '../../../components/SalesDetailPage/SectionTwo';
 import { SectionThree } from '../../../components/SalesDetailPage/SectionThree';
 import { SectionFour } from '../../../components/SalesDetailPage/SectionFour';
+import { getDetailHistory } from '../../../api/order';
+import { useParams } from 'react-router-dom';
 
 const DummyDetail = {
-  orderNum: 202709281234,
-  orderDate: '2024.10.05.',
-  state: '접수 완료',
-  productName: '텀블러 가방',
-  options: { S: 1, M: 2 },
-  customer: '이끼끼',
-  phoneNum: '010-1234-5678',
-  orderDetail: '라라ㅏㄹ',
-  recipient: '이끼끼',
-  recipientNum: '010-1234-5678',
-  address: '서울 서대문구 어쩌구 주소',
-  postcode: 12345,
-  delivery: '대한통운',
-  trakingNum: 12345678910,
-  price: 40000,
-  shipping: 4000,
-  totalPrice: 44000,
-  sellerName: '김승자',
-  sellerNum: '010-1234-4567',
-  sellerAddress: '서울 서대문구 어쩌구 주소',
-  sellerPostcode: 12345,
+  // 주문 상품
+  orderId: 2,
+  productName: '에코백',
+  productOption: '에코백 옵션 1',
+  orderCount: 4,
+  orderState: '접수완료',
+  // 안내 사항
+  materialInfo: '단단한 가죽',
+  buyerNotice: '가죽이 변형될 수 있습니다.',
+  // 요청 사항
+  request: '과잠으로 에코백을 만들어주세요.',
+  createdAt: '2024-11-08T22:39:14.612877',
+  // 판매자
+  sellerNickname: '판매자 닉네임',
+  sellerName: '판매자 이름',
+  sellerPhone: '010-1234-5678',
+  sellerAddress: '[12345] 서울특별시 강남구 테헤란로 123',
+  // 구매자
+  buyerNickname: '구매자 닉네임',
+  buyerName: '구매자 이름',
+  buyerPhone: '010-1234-5678',
+  buyerAddress: '[12345] 서울특별시 강남구 테헤란로 123',
+  invoiceNumber: '대한통운 122223333', // 배송 전이라면 "미발행"
+  // 결제 정보
+  price: 36000,
+  deliveryFee: 3000,
+  totalPrice: 39000,
 };
 
 export interface SalesDetail {
-  orderNum: number;
-  orderDate: string;
-  state: string;
+  orderId: number;
   productName: string;
-  options: { [key: string]: number };
-  customer: string;
-  phoneNum: string;
-  orderDetail: string;
-  recipient: string;
-  recipientNum: string;
-  address: string;
-  postcode: number;
-  delivery: string;
-  trakingNum: number;
-  price: number;
-  shipping: number;
-  totalPrice: number;
+  productOption: string;
+  orderCount: number;
+  orderState: string;
+
+  materialInfo: string;
+  buyerNotice: string;
+
+  request: string;
+  createdAt: string;
+
+  sellerNickname: string;
   sellerName: string;
-  sellerNum: string;
+  sellerPhone: string;
   sellerAddress: string;
-  sellerPostcode: number;
+
+  buyerNickname: string;
+  buyerName: string;
+  buyerPhone: string;
+  buyerAddress: string;
+  invoiceNumber: string;
+
+  price: number;
+  deliveryFee: number;
+  totalPrice: number;
 }
 
 export const SalesDetailState = atom<SalesDetail>({
@@ -62,9 +75,20 @@ export const SalesDetailState = atom<SalesDetail>({
 
 const SalesDetailPage = () => {
   const [salesDetail, setSalesDetail] = useRecoilState(SalesDetailState);
+  const orderId = useParams();
 
   useEffect(() => {
-    setSalesDetail(DummyDetail);
+    const getSalesDetail = async () => {
+      try {
+        // const response = await getDetailHistory(Number(orderId));
+        // setSalesDetail(response);
+        setSalesDetail(DummyDetail);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getSalesDetail();
   }, []);
 
   return (

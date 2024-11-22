@@ -64,7 +64,7 @@ export const patchCompleteOrder = async (orderId: number) => {
   }
 };
 
-export const patchShipOrder = async (orderId: number, invoice: number) => {
+export const patchShipOrder = async (orderId: number, invoice: string) => {
   try {
     const res = await client.patch(`/orders/${orderId}/ship`, {
       invoiceNumber: invoice,

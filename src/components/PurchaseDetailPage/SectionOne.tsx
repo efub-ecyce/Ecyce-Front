@@ -3,6 +3,16 @@ import { useRecoilState } from 'recoil';
 import { PurchaseDetailState } from '../../pages/My/PurchaseDetailPage/PurchaseDetailPage';
 import { ButtonBar } from './ButtonBar';
 
+const formatDate = (isoString: string) => {
+  const date = new Date(isoString);
+
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}. ${month}. ${day}.`;
+};
+
 export const SectionOne = () => {
   const [purchaseDetail, setPurchaseDetail] =
     useRecoilState(PurchaseDetailState);
@@ -10,18 +20,18 @@ export const SectionOne = () => {
   return (
     <S.Section>
       <S.Row1>
-        <S.Title>{purchaseDetail.orderDate}</S.Title>
-        <S.State>{purchaseDetail.state}</S.State>
+        <S.Title>{formatDate(purchaseDetail.createdAt)}</S.Title>
+        <S.State>{purchaseDetail.orderState}</S.State>
       </S.Row1>
-      <S.OrderNum>주문번호 {purchaseDetail.orderNum}</S.OrderNum>
+      <S.OrderNum>주문번호 {purchaseDetail.orderId}</S.OrderNum>
       {[
-        '접수 완료',
-        '제작 대기중',
+        '접수완료',
+        '제작대기',
         '제작중',
-        '제작 완료',
+        '제작완료',
         '배송중',
-        '배송 완료',
-      ].includes(purchaseDetail.state) && <ButtonBar />}
+        '구매확정',
+      ].includes(purchaseDetail.orderState) && <ButtonBar />}
     </S.Section>
   );
 };

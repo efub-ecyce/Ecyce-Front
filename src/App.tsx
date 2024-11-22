@@ -115,7 +115,7 @@ function App() {
         element={<Auth Page={ReviewPage} option='all' />}
       />
       <Route
-        path='/review'
+        path='/review/write/:orderId'
         element={<Auth Page={ReviewWritePage} option='login' />}
       />
       <Route

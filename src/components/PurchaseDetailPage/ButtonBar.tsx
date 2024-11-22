@@ -6,12 +6,12 @@ import { PurchaseDetailState } from '../../pages/My/PurchaseDetailPage/PurchaseD
 import { useNavigate } from 'react-router-dom';
 
 const NameMap: { [key: string]: string[] } = {
-  '접수 완료': ['문의하기', '주문 취소하기'],
-  '제작 대기중': ['문의하기', '주문 취소하기'],
+  접수완료: ['문의하기', '주문 취소하기'],
+  제작대기: ['문의하기', '주문 취소하기'],
   제작중: ['문의하기'],
-  '제작 완료': ['문의하기'],
+  제작완료: ['문의하기'],
   배송중: ['문의하기', '구매 확정하기'],
-  '배송 완료': ['문의하기', '후기 작성하기'],
+  구매확정: ['문의하기', '후기 작성하기'],
 };
 
 export const ButtonBar = () => {
@@ -22,10 +22,6 @@ export const ButtonBar = () => {
 
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log('purchaseDetail.state:', purchaseDetail.state);
-  }, [purchaseDetail.state]);
 
   const modalHandler = (
     event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
@@ -63,7 +59,7 @@ export const ButtonBar = () => {
         );
 
       case '후기 작성하기':
-        navigate('/review');
+        navigate(`/review/write/${purchaseDetail.orderId}`);
         return null;
 
       default:
@@ -74,14 +70,16 @@ export const ButtonBar = () => {
   return (
     <S.Container>
       {isModalActive && getModal()}
-      <S.YButton onClick={event => openModal(NameMap[purchaseDetail.state][0])}>
-        {NameMap[purchaseDetail.state][0]}
+      <S.YButton
+        onClick={event => openModal(NameMap[purchaseDetail.orderState][0])}
+      >
+        {NameMap[purchaseDetail.orderState][0]}
       </S.YButton>
-      {NameMap[purchaseDetail.state][1] && (
+      {NameMap[purchaseDetail.orderState][1] && (
         <S.NButton
-          onClick={event => openModal(NameMap[purchaseDetail.state][1])}
+          onClick={event => openModal(NameMap[purchaseDetail.orderState][1])}
         >
-          {NameMap[purchaseDetail.state][1]}
+          {NameMap[purchaseDetail.orderState][1]}
         </S.NButton>
       )}
     </S.Container>
