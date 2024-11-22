@@ -48,13 +48,7 @@ const SalesHistoryPage = () => {
           setStartDate={setStartDate}
           setEndDate={setEndDate}
         />
-        <S.HistoryContainer>
-          <History {...dummyHistory} />
-          <History {...dummyHistory} />
-          <History {...dummyHistory} />
-          <History {...dummyHistory} />
-          <History {...dummyHistory} />
-        </S.HistoryContainer>
+        <S.HistoryContainer></S.HistoryContainer>
       </S.Container>
       <S.NavWrapper>
         <NavBar />
