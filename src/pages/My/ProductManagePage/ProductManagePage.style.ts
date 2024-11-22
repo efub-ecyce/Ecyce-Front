@@ -54,6 +54,10 @@ export const ProductContainer = styled.div`
 
   overflow-y: scroll;
   margin-bottom: 90px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const NavWrapper = styled.div`
