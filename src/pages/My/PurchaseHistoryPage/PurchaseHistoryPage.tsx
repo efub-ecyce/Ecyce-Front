@@ -62,11 +62,21 @@ const PurchaseHistoryPage = () => {
     }
   };
 
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(
+    new Date(new Date().setMonth(new Date().getMonth() - 3)),
+  );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
 
   const [historyList, setHistoryList] = useState<HistoryProps[]>([]);
   const [filteredList, setFilteredList] = useState<HistoryProps[]>([]);
+
+  const isDateInRange = (date: string) => {
+    const createdDate = new Date(date);
+    return (
+      (!startDate || createdDate >= startDate) &&
+      (!endDate || createdDate <= endDate)
+    );
+  };
 
   useEffect(() => {
     const getHistoryList = async () => {
@@ -87,23 +97,26 @@ const PurchaseHistoryPage = () => {
 
   useEffect(() => {
     const filteredList = historyList.filter(history => {
-      if (activeFilter === '진행중') {
-        return [
-          '접수완료',
-          '제작대기',
-          '제작중',
-          '제작완료',
-          '배송중',
-        ].includes(history.orderState);
-      } else if (activeFilter === '완료') {
-        return ['구매확정', '주문취소', '주문거절'].includes(
-          history.orderState,
-        );
+      const isInDateRange = isDateInRange(history.createdAt);
+      if (isInDateRange) {
+        if (activeFilter === '진행중') {
+          return [
+            '접수완료',
+            '제작대기',
+            '제작중',
+            '제작완료',
+            '배송중',
+          ].includes(history.orderState);
+        } else if (activeFilter === '완료') {
+          return ['구매확정', '주문취소', '주문거절'].includes(
+            history.orderState,
+          );
+        }
+        return true; // 다른 필터의 경우 모든 상품 표시
       }
-      return true; // 다른 필터의 경우 모든 상품 표시
     });
     setFilteredList(filteredList);
-  }, [activeFilter, historyList]);
+  }, [activeFilter, historyList, startDate, endDate]);
 
   return (
     <>
