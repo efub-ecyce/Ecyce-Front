@@ -29,6 +29,7 @@ import ProductRegistCompletePage from './pages/Sale/ProductRegistCompletePage/Pr
 import ProductRegistPage from './pages/Sale/ProductRegistPage/ProductRegistPage';
 import NotFoundPage from './pages/NotFoundPage';
 import OAuthRedirectPage from './pages/Auth/OAuthRedirectPage.tsx/OAuthRedirectPage';
+import ProductEditPage from './pages/Sale/ProductEditPage/ProductEditPage';
 
 function App() {
   return (
@@ -129,6 +130,10 @@ function App() {
       <Route
         path='/post'
         element={<Auth Page={ProductRegistPage} option='login' />}
+      />
+      <Route
+        path='/edit'
+        element={<Auth Page={ProductEditPage} option='login' />}
       />
       <Route
         path='/post/complete'

@@ -1,11 +1,16 @@
-import * as S from './ProductRegistPage.style';
+import * as S from '../ProductRegistPage/ProductRegistPage.style';
 import { ImageUpload } from '../../../components/common/ImageUpload';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../../components/common/Header';
 import { OptionComponent } from '../../../components/ProductRegisterPage/OptionComponent';
 import { Button } from '../../../components/common/Button';
-import { postProduct, ProductInfo } from '../../../api/product';
+import {
+  getProductDetail,
+  patchProduct,
+  postProduct,
+  ProductInfo,
+} from '../../../api/product';
 
 export interface Option_Client {
   id: number;
@@ -13,7 +18,67 @@ export interface Option_Client {
   price: number | undefined;
 }
 
-const ProductRegistPage = () => {
+const dummyData = {
+  productId: 1,
+  userId: 1,
+  sellerNickname: '이끼끼47212',
+  productName: '파우치 가방 리사이클링',
+  isMarked: false, // false면 북마크 안한거임
+  price: 40000,
+  content: '안쓰는 학잠이나 바지를 파우치로 만들어드려요.',
+  duration: 1,
+  rating: 0,
+  productState: 'ON_SALE',
+  deliveryFee: 3000,
+  materialInfo: '이 제품은 오직 ',
+  buyerNotice: '배송이 늦어질 수 있습니다.',
+  options: [
+    {
+      optionId: 1,
+      optionName: 'L 사이즈',
+      optionPrice: 3000,
+    },
+    {
+      optionId: 2,
+      optionName: 'M 사이즈',
+      optionPrice: 2000,
+    },
+    {
+      optionId: 3,
+      optionName: 'S 사이즈',
+      optionPrice: 1000,
+    },
+  ],
+};
+
+const extractProductData = (data: any) => {
+  const {
+    productName,
+    price,
+    content,
+    duration,
+    deliveryFee,
+    materialInfo,
+    buyerNotice,
+    options,
+  } = data;
+
+  return {
+    productName,
+    price,
+    content,
+    duration,
+    deliveryFee,
+    materialInfo,
+    buyerNotice,
+    options: options.map((opt: any) => ({
+      optionName: opt.optionName,
+      optionPrice: opt.optionPrice,
+    })),
+  };
+};
+
+const ProductEditPage = () => {
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [productImgFile, setProductImgFile] = useState<File[]>([]);
   const [productImgPreview, setProductImgPreview] = useState<string[]>([]);
@@ -34,6 +99,22 @@ const ProductRegistPage = () => {
   const [options, setOptions] = useState<Option_Client[]>([]);
 
   const navigate = useNavigate();
+  const productId = useLocation().state.productId;
+
+  useEffect(() => {
+    const getProductData = async () => {
+      try {
+        //const res = await getProductDetail(productId);
+        const res = dummyData;
+        const extractedData = extractProductData(res);
+        setProductData(extractedData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getProductData();
+  }, []);
 
   useEffect(() => {
     const isAllFilled = (): boolean => {
@@ -91,7 +172,8 @@ const ProductRegistPage = () => {
   const onClickButton = async () => {
     if (isAllFilled) {
       try {
-        const res = await postProduct(
+        const res = await patchProduct(
+          productId,
           productData,
           productImgFile,
           materialImgFile,
@@ -196,4 +278,4 @@ const ProductRegistPage = () => {
   );
 };
 
-export default ProductRegistPage;
+export default ProductEditPage;

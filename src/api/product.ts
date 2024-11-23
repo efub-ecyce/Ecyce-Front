@@ -31,8 +31,17 @@ export interface ProductInfo {
 
   materialInfo: string;
   buyerNotice: string;
-  option: Option[];
+  options: Option[];
 }
+
+export const getProductDetail = async (productId: number) => {
+  try {
+    const res = await client.get(`/product/${productId}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const postProduct = async (
   productData: ProductInfo,
@@ -63,20 +72,9 @@ export const postProduct = async (
   }
 };
 
-interface patchProductInfo {
-  productName?: string;
-  price?: number;
-  content?: string;
-  duration?: number;
-  deliveryFee?: string;
-
-  materialInfo?: string;
-  buyerNotice?: string;
-}
-
 export const patchProduct = async (
   productId: number,
-  productData: patchProductInfo,
+  productData: ProductInfo,
   productImages: File[],
   materialImage: File[],
 ) => {

@@ -58,7 +58,7 @@ export const ManageDrawer = ({ drawerHandler, modalHandler }: DrawerProps) => {
         )}
         <S.Menu
           onClick={() =>
-            navigate('/post', { state: { productId: productInfo.productId } })
+            navigate('/edit', { state: { productId: productInfo.productId } })
           }
         >
           수정하기
