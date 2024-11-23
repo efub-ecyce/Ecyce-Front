@@ -43,14 +43,17 @@ function App() {
       />
       <Route
         path='/login/oauth2/kakao'
-        element={<Auth Page={OAuthRedirectPage} option='logout' />}
+        element={<Auth Page={OAuthRedirectPage} option='login' />}
       />
 
       <Route
         path='/chatlist'
         element={<Auth Page={ChatListPage} option='login' />}
       />
-      <Route path='/chat' element={<Auth Page={ChatPage} option='login' />} />
+      <Route
+        path='/chat/:roomId'
+        element={<Auth Page={ChatPage} option='login' />}
+      />
 
       <Route
         path='/bookmark'
@@ -115,7 +118,7 @@ function App() {
         element={<Auth Page={ReviewPage} option='all' />}
       />
       <Route
-        path='/review'
+        path='/review/write/:orderId'
         element={<Auth Page={ReviewWritePage} option='login' />}
       />
       <Route

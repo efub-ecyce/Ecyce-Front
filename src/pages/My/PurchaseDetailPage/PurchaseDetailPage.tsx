@@ -8,29 +8,37 @@ import { SectionTwo } from '../../../components/PurchaseDetailPage/SectionTwo';
 import { SectionThree } from '../../../components/PurchaseDetailPage/SectionThree';
 import { SectionFour } from '../../../components/PurchaseDetailPage/SectionFour';
 import { AlertSection } from '../../../components/PurchaseDetailPage/AlertSection';
+import { getPurchaseHistory } from '../../../api/order';
+import { useParams } from 'react-router-dom';
 
 const DummyDetail = {
-  orderNum: 202709281234,
-  orderDate: '2024.10.05.',
-  state: '제작 대기중',
-  productName: '텀블러 가방',
-  options: { S: 1, M: 2 },
-  customer: '이끼끼',
-  phoneNum: '010-1234-5678',
-  orderDetail: '라라ㅏㄹ',
-  recipient: '이끼끼',
-  recipientNum: '010-1234-5678',
-  address: '서울 서대문구 어쩌구 주소',
-  postcode: 12345,
-  delivery: '대한통운',
-  trakingNum: 12345678910,
-  price: 40000,
-  shipping: 4000,
-  totalPrice: 44000,
-  sellerName: '김승자',
-  sellerNum: '010-1234-4567',
-  sellerAddress: '서울 서대문구 어쩌구 주소',
-  sellerPostcode: 12345,
+  // 주문 상품
+  orderId: 2,
+  productName: '에코백',
+  productOption: '에코백 옵션 1',
+  orderCount: 4,
+  orderState: '구매확정',
+  // 안내 사항
+  materialInfo: '단단한 가죽',
+  buyerNotice: '가죽이 변형될 수 있습니다.',
+  // 요청 사항
+  request: '과잠으로 에코백을 만들어주세요.',
+  createdAt: '2024-11-08T22:39:14.612877',
+  // 판매자
+  sellerNickname: '판매자 닉네임',
+  sellerName: '판매자 이름',
+  sellerPhone: '010-1234-5678',
+  sellerAddress: '[12345] 서울특별시 강남구 테헤란로 123',
+  // 구매자
+  buyerNickname: '구매자 닉네임',
+  buyerName: '구매자 이름',
+  buyerPhone: '010-1234-5678',
+  buyerAddress: '[12345] 서울특별시 강남구 테헤란로 123',
+  invoiceNumber: '대한통운 122223333', // 배송 전이라면 "미발행"
+  // 결제 정보
+  price: 36000,
+  deliveryFee: 3000,
+  totalPrice: 39000,
 };
 
 export const PurchaseDetailState = atom<SalesDetail>({
@@ -42,8 +50,20 @@ const PurchaseDetailPage = () => {
   const [purchaseDetail, setPurchaseDetail] =
     useRecoilState(PurchaseDetailState);
 
+  const orderId = useParams();
+
   useEffect(() => {
-    setPurchaseDetail(DummyDetail);
+    const getSalesDetail = async () => {
+      try {
+        // const response = await getPurchaseHistory(Number(orderId));
+        // setPurchaseDetail(response);
+        setPurchaseDetail(DummyDetail);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getSalesDetail();
   }, []);
 
   return (
@@ -54,8 +74,8 @@ const PurchaseDetailPage = () => {
 
       <SectionOne />
       <S.Bar />
-      {['제작 대기중', '제작중', '제작 완료', '배송중', '배송 완료'].includes(
-        purchaseDetail.state,
+      {['제작대기', '제작중', '제작완료', '배송중', '구매확정'].includes(
+        purchaseDetail.orderState,
       ) && (
         <>
           <AlertSection />

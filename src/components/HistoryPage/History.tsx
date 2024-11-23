@@ -1,42 +1,37 @@
 import * as S from './History.style';
 import { ReactComponent as ArrowIcon } from '../../assets/HistoryPage/arrow-right.svg';
 import { useNavigate } from 'react-router-dom';
+import { HistoryProps } from '../../pages/My/PurchaseHistoryPage/PurchaseHistoryPage';
 
-interface HistoryProps {
-  orderId: number;
-  date: string;
-  state: string;
-  image: string | undefined;
-  name: string;
-  options: {
-    [option: string]: number;
-  };
-  price: number;
+function formatTimestamp(isoTimestamp: string) {
+  const date = new Date(isoTimestamp);
+
+  const year = date.getFullYear().toString().slice(-2);
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}. ${month}. ${day}.`;
 }
 
 export const History = (props: HistoryProps) => {
   const navigate = useNavigate();
 
-  const optionEntries = Object.entries(props.options);
-
   return (
     <S.Container>
       <S.Header>
-        <S.Date>{props.date}</S.Date>
-        <S.State>{props.state}</S.State>
+        <S.Date>{formatTimestamp(props.createdAt)}</S.Date>
+        <S.State>{props.orderState}</S.State>
       </S.Header>
       <S.Content>
-        <S.Image src={props.image} />
+        <S.Image src={props.productImages.productImageUrl} />
         <S.Info>
-          <S.Name>{props.name}</S.Name>
+          <S.Name>{props.productName}</S.Name>
           <S.Options>
-            {optionEntries.slice(0, 2).map(([option, count]) => (
-              <S.Option key={option}>
-                {option} | {count}개
-              </S.Option>
-            ))}
+            <S.Option>
+              {props.productOption} | {props.orderCount}개
+            </S.Option>
           </S.Options>
-          <S.Price>{props.price.toLocaleString()}원</S.Price>
+          <S.Price>{props.totalPrice.toLocaleString()}원</S.Price>
         </S.Info>
       </S.Content>
       <S.IconWrapper onClick={() => navigate(`./${props.orderId}`)}>

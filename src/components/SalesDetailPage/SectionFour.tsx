@@ -15,7 +15,7 @@ export const SectionFour = () => {
       </S.Row2>
       <S.Row2>
         <S.TableHeader>배송비</S.TableHeader>
-        <S.Data>{Number(salesDetail.shipping).toLocaleString()}원</S.Data>
+        <S.Data>{Number(salesDetail.deliveryFee).toLocaleString()}원</S.Data>
       </S.Row2>
       <S.Row2>
         <S.Title>총 금액</S.Title>

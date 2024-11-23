@@ -56,6 +56,12 @@ export const ChatList = styled.div`
 
   overflow-y: scroll;
   margin-bottom: 90px;
+
+  flex-grow: 1;
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
 `;
 
 export const NavBarWrapper = styled.div`
