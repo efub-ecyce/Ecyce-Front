@@ -2,20 +2,33 @@ import * as S from './OptionComponent.style';
 import { ReactComponent as PlusButton } from '../../assets/ProductRegistPage/add.svg';
 import { ReactComponent as DeleteButton } from '../../assets/ProductRegistPage/remove_circle.svg';
 import { useEffect, useState } from 'react';
-import { Option } from '../../pages/Sale/ProductRegistPage/ProductRegistPage';
+import { Option_Client } from '../../pages/Sale/ProductRegistPage/ProductRegistPage';
 
 interface OptionProps {
-  options: Option[];
-  setOptions: React.Dispatch<React.SetStateAction<Option[]>>;
+  options: Option_Client[];
+  setOptions: React.Dispatch<React.SetStateAction<Option_Client[]>>;
+  setProductData: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export const OptionComponent = ({ options, setOptions }: OptionProps) => {
+export const OptionComponent = ({
+  options,
+  setOptions,
+  setProductData,
+}: OptionProps) => {
   useEffect(() => {
     if (options.length < 1) {
       setOptions([{ id: Date.now(), name: undefined, price: undefined }]);
     }
     //기존 옵션 불러오는 코드 작성
   }, []);
+
+  useEffect(() => {
+    const updateOptions = options.map(({ name, price }) => ({
+      optionName: name,
+      optionPrice: price,
+    }));
+    setProductData((prev: any) => ({ ...prev, option: updateOptions }));
+  }, [options, setProductData]);
 
   const handleAddOption = () => {
     const newOption = { id: Date.now(), name: undefined, price: undefined };
