@@ -57,7 +57,6 @@ const ProductDetailPage = () => {
       <Footer onPurchaseClick={handlePurchaseClick}/>
       {isOrderModalOpen && (
         <OrderModal
-          drawerHandler={handleModalClose}
           modalHandler={handleModalClose}
         />
       )}
