@@ -50,14 +50,14 @@ const ProductRegistPage = () => {
 
       // Check if all fields are filled
       return (
-        productName.trim() !== '' && // productName is not empty
+        productName?.trim() !== '' && // productName is not empty
         !!price && // price is defined
-        content.trim() !== '' && // content is not empty
+        content?.trim() !== '' && // content is not empty
         !!duration && // duration is defined
         !!deliveryFee && // deliveryFee is defined
-        materialInfo.trim() !== '' && // materialInfo is not empty
-        buyerNotice.trim() !== '' && // buyerNotice is not empty
-        options.length > 0 && // option array is not empty
+        materialInfo?.trim() !== '' && // materialInfo is not empty
+        buyerNotice?.trim() !== '' && // buyerNotice is not empty
+        options.length > 0 && // options array is not empty
         options.every(
           opt =>
             opt.optionName?.trim() !== '' && // optionName is not empty
@@ -85,7 +85,18 @@ const ProductRegistPage = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setProductData({ ...productData, [name]: value });
+    if (value === '') {
+      setProductData({ ...productData, [name]: undefined });
+      return;
+    }
+    if (['price', 'duration', 'deliveryFee'].includes(name)) {
+      const numericValue = Number(value.replace(/,/g, ''));
+      if (!isNaN(numericValue)) {
+        setProductData({ ...productData, [name]: numericValue });
+      }
+    } else {
+      setProductData({ ...productData, [name]: value });
+    }
   };
 
   const onClickButton = async () => {
@@ -102,6 +113,9 @@ const ProductRegistPage = () => {
       }
     }
   };
+
+  const formatPrice = (price: number | undefined) =>
+    price !== undefined ? price.toLocaleString() : '';
 
   return (
     <S.Container>
@@ -131,7 +145,7 @@ const ProductRegistPage = () => {
       <S.TextInput
         type='text'
         placeholder='₩ 가격'
-        value={productData.price}
+        value={formatPrice(productData.price)}
         name='price'
         onChange={onChangeData}
         onKeyDown={handleKeyDown}
@@ -139,7 +153,7 @@ const ProductRegistPage = () => {
       <S.TextInput
         type='text'
         placeholder='₩ 배송비'
-        value={productData.deliveryFee}
+        value={formatPrice(productData.deliveryFee)}
         name='deliveryFee'
         onChange={onChangeData}
         onKeyDown={handleKeyDown}

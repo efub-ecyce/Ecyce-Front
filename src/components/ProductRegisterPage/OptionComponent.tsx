@@ -27,7 +27,7 @@ export const OptionComponent = ({
       optionName: name,
       optionPrice: price,
     }));
-    setProductData((prev: any) => ({ ...prev, option: updateOptions }));
+    setProductData((prev: any) => ({ ...prev, options: updateOptions }));
   }, [options, setProductData]);
 
   const handleAddOption = () => {

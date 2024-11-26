@@ -60,11 +60,13 @@ export const postProduct = async (
       formData.append(key, value);
     });
 
-    const res = await client.post('/product', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    // const res = await client.post('/product', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // });
+
+    const res = await client.post('/product', productData);
 
     return res.data;
   } catch (error) {
