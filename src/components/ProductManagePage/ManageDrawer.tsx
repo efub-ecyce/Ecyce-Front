@@ -33,6 +33,7 @@ export const ManageDrawer = ({ drawerHandler, modalHandler }: DrawerProps) => {
       } else {
         const res = await patchProductState(productInfo.productId, 'ON_SALE');
       }
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +59,7 @@ export const ManageDrawer = ({ drawerHandler, modalHandler }: DrawerProps) => {
         )}
         <S.Menu
           onClick={() =>
-            navigate('/post', { state: { productId: productInfo.productId } })
+            navigate('/edit', { state: { productId: productInfo.productId } })
           }
         >
           수정하기
