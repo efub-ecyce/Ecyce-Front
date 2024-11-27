@@ -11,12 +11,15 @@ import { ReactComponent as ShoppingIcon } from '../../../assets/MyPage/shopping_
 import { ReactComponent as LogoutIcon } from '../../../assets/MyPage/logout.svg';
 import { ReactComponent as SignoutIcon } from '../../../assets/MyPage/signout.svg';
 import { useState } from 'react';
+import { useResetRecoilState } from 'recoil';
+import { userState } from '../../../store/userInfoAtom';
 
 const MyPage = () => {
   const navigate = useNavigate();
 
   const [isSOModalOpen, setIsSOModalOpen] = useState<boolean>(false);
   const [isLOModalOpen, setIsLOModalOpen] = useState<boolean>(false);
+  const resetUserInfo = useResetRecoilState(userState);
 
   const soModalHandler = (
     event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
@@ -38,8 +41,10 @@ const MyPage = () => {
   };
 
   const LogOut = () => {
-    console.log('임시 로그아웃 함수');
+    localStorage.removeItem('token');
+    resetUserInfo();
     setIsLOModalOpen(false);
+    navigate('/login');
   };
 
   return (

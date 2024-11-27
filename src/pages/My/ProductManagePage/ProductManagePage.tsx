@@ -24,33 +24,6 @@ export interface ProductProps {
   thumbnail: string;
 }
 
-const dummyData = [
-  {
-    productId: 1,
-    userId: 1, // 판매자 ID
-    nickname: '이끼끼 상점',
-    productName: '파우치 가방 리사이클링링링',
-    price: 40000,
-    duration: 5,
-    productState: 'ON_SALE',
-    isMarked: false,
-    thumbnail:
-      'https://karma-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/reviewImages/example1.jpg',
-  },
-  {
-    productId: 2,
-    userId: 1, // 판매자 ID
-    nickname: '이끼끼 상점',
-    productName: '신발을 지갑으로',
-    price: 30000,
-    duration: 7,
-    productState: 'ON_SALE',
-    isMarked: false,
-    thumbnail:
-      'https://karma-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/reviewImages/example1.jpg',
-  },
-];
-
 export const selectedProduct = atom<{
   productId: number;
   productState: string;
@@ -76,11 +49,8 @@ const ProductManagePage = () => {
     const getProductList = async () => {
       try {
         const response = await getMyProducts(userId as number);
+        console.log(response);
         setProductList(response);
-
-        if (productList.length == 0) {
-          setProductList(dummyData);
-        }
       } catch (error) {
         console.error(error);
       }
@@ -125,6 +95,7 @@ const ProductManagePage = () => {
     try {
       const res = await deleteProduct(productId);
       setIsModalActive(false);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

@@ -33,6 +33,7 @@ export const ManageDrawer = ({ drawerHandler, modalHandler }: DrawerProps) => {
       } else {
         const res = await patchProductState(productInfo.productId, 'ON_SALE');
       }
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
