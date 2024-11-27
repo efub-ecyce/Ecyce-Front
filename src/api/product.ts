@@ -8,3 +8,12 @@ export const getAllProduct = async () => {
         throw error;
     }
 };
+
+export const getProductDetail = async (productId: string) => {
+    try {
+        const res = await client.get(`/product/${productId}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
