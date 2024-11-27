@@ -34,6 +34,17 @@ export interface ProductInfo {
   options: Option[];
 }
 
+export interface PatchInfo {
+  productName: string;
+  price: number;
+  content: string;
+  duration: number;
+  deliveryFee: number;
+
+  materialInfo: string;
+  buyerNotice: string;
+}
+
 export const getProductDetail = async (productId: number) => {
   try {
     const res = await client.get(`/product/${productId}`);
@@ -76,7 +87,7 @@ export const postProduct = async (
 
 export const patchProduct = async (
   productId: number,
-  productData: ProductInfo,
+  productData: PatchInfo,
   productImages: File[],
   materialImage: File[],
 ) => {
@@ -95,11 +106,13 @@ export const patchProduct = async (
       formData.append(key, value);
     });
 
-    const res = await client.patch(`/product/${productId}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    // const res = await client.patch(`/product/${productId}`, formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // });
+
+    const res = await client.patch(`/product/${productId}`, productData);
 
     return res.data;
   } catch (error) {
@@ -107,11 +120,27 @@ export const patchProduct = async (
   }
 };
 
-// export const patchOptions = async (productId:number, options : Option[]) => {
-//     try{
-//         const res = await client.patch(`/product/${productId}`,)
+export const deleteOptions = async (productId: number, optionId: number) => {
+  try {
+    const res = await client.delete(`/product/${productId}/option/${optionId}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
-//     }catch(error){
-//         throw error;
-//     }
-// }
+export const postOptions = async (
+  productId: number,
+  optionName: string,
+  optionPrice: number,
+) => {
+  try {
+    const res = await client.post(`/product/${productId}/option`, {
+      optionName: optionName,
+      optionPrice: optionPrice,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

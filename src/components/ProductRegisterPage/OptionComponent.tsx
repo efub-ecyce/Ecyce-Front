@@ -16,19 +16,20 @@ export const OptionComponent = ({
   setProductData,
 }: OptionProps) => {
   useEffect(() => {
-    if (options.length < 1) {
+    if (options.length === 0) {
       setOptions([{ id: Date.now(), name: undefined, price: undefined }]);
     }
-    //기존 옵션 불러오는 코드 작성
   }, []);
 
   useEffect(() => {
-    const updateOptions = options.map(({ name, price }) => ({
-      optionName: name,
-      optionPrice: price,
-    }));
-    setProductData((prev: any) => ({ ...prev, options: updateOptions }));
-  }, [options, setProductData]);
+    if (options.length > 0) {
+      const updateOptions = options.map(({ name, price }) => ({
+        optionName: name,
+        optionPrice: price,
+      }));
+      setProductData((prev: any) => ({ ...prev, options: updateOptions }));
+    }
+  }, [options]);
 
   const handleAddOption = () => {
     const newOption = { id: Date.now(), name: undefined, price: undefined };

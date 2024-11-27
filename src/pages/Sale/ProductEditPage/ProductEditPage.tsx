@@ -6,9 +6,10 @@ import Header from '../../../components/common/Header';
 import { OptionComponent } from '../../../components/ProductRegisterPage/OptionComponent';
 import { Button } from '../../../components/common/Button';
 import {
+  deleteOptions,
   getProductDetail,
   patchProduct,
-  postProduct,
+  postOptions,
   ProductInfo,
 } from '../../../api/product';
 
@@ -17,39 +18,6 @@ export interface Option_Client {
   name: string | undefined;
   price: number | undefined;
 }
-
-const dummyData = {
-  productId: 1,
-  userId: 1,
-  sellerNickname: '이끼끼47212',
-  productName: '파우치 가방 리사이클링',
-  isMarked: false, // false면 북마크 안한거임
-  price: 40000,
-  content: '안쓰는 학잠이나 바지를 파우치로 만들어드려요.',
-  duration: 1,
-  rating: 0,
-  productState: 'ON_SALE',
-  deliveryFee: 3000,
-  materialInfo: '이 제품은 오직 ',
-  buyerNotice: '배송이 늦어질 수 있습니다.',
-  options: [
-    {
-      optionId: 1,
-      optionName: 'L 사이즈',
-      optionPrice: 3000,
-    },
-    {
-      optionId: 2,
-      optionName: 'M 사이즈',
-      optionPrice: 2000,
-    },
-    {
-      optionId: 3,
-      optionName: 'S 사이즈',
-      optionPrice: 1000,
-    },
-  ],
-};
 
 const extractProductData = (data: any) => {
   const {
@@ -72,6 +40,7 @@ const extractProductData = (data: any) => {
     materialInfo,
     buyerNotice,
     options: options.map((opt: any) => ({
+      optionId: opt.optionId,
       optionName: opt.optionName,
       optionPrice: opt.optionPrice,
     })),
@@ -96,6 +65,9 @@ const ProductEditPage = () => {
     options: [],
   });
 
+  const [prevOptions, setPrevOptions] = useState<
+    { optionId: number; optionName: string; optionPrice: number }[]
+  >([]);
   const [options, setOptions] = useState<Option_Client[]>([]);
 
   const navigate = useNavigate();
@@ -104,17 +76,32 @@ const ProductEditPage = () => {
   useEffect(() => {
     const getProductData = async () => {
       try {
-        //const res = await getProductDetail(productId);
-        const res = dummyData;
+        const res = await getProductDetail(productId);
         const extractedData = extractProductData(res);
         setProductData(extractedData);
+        setPrevOptions(extractedData.options);
       } catch (error) {
         console.error(error);
       }
     };
 
     getProductData();
-  }, []);
+  }, [productId]);
+
+  useEffect(() => {
+    const setPrevOptions = () => {
+      if (prevOptions && prevOptions.length > 0) {
+        const options = prevOptions.map((item, idx) => ({
+          id: idx,
+          name: item.optionName,
+          price: item.optionPrice,
+        }));
+        setOptions(options);
+      }
+    };
+
+    setPrevOptions();
+  }, [prevOptions]);
 
   useEffect(() => {
     const isAllFilled = (): boolean => {
@@ -171,14 +158,38 @@ const ProductEditPage = () => {
 
   const onClickButton = async () => {
     if (isAllFilled) {
+      const patchData = {
+        productName: productData.productName,
+        price: productData.price as number,
+        content: productData.content,
+        duration: productData.duration as number,
+        deliveryFee: productData.deliveryFee as number,
+        materialInfo: productData.materialInfo,
+        buyerNotice: productData.buyerNotice,
+      };
       try {
         const res = await patchProduct(
           productId,
-          productData,
+          patchData,
           productImgFile,
           materialImgFile,
         );
-        navigate('./complete');
+
+        const res2 = await Promise.all(
+          options.map(option =>
+            postOptions(
+              productId,
+              option.name as string,
+              option.price as number,
+            ),
+          ),
+        );
+
+        const res3 = await Promise.all(
+          prevOptions.map(option => deleteOptions(productId, option.optionId)),
+        );
+
+        navigate('/post/complete');
       } catch (error) {
         console.error(error);
       }
