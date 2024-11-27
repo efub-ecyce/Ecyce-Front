@@ -14,7 +14,7 @@ const ProductList = () => {
   return (
     <S.Container>
       <S.Contents>
-        <ProductComponent1
+        {/* <ProductComponent1
           title={productData.title}
           term={productData.term}
           price={productData.price}
@@ -76,7 +76,7 @@ const ProductList = () => {
           price={productData.price}
           imageURL={productData.imageURL}
           bookmarkedData={productData.bookmarked}
-        />
+        /> */}
       </S.Contents>
     </S.Container>
   );
