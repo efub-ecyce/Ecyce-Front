@@ -26,7 +26,7 @@ const ProfileEditPage = () => {
     name: '',
     nickname: '',
     phoneNumber: '',
-    postcode: undefined,
+    postalCode: undefined,
     address1: '',
     address2: '',
   });
@@ -48,14 +48,14 @@ const ProfileEditPage = () => {
 
   useEffect(() => {
     const isAllFilled = (): boolean => {
-      const { name, nickname, phoneNumber, postcode, address1, address2 } =
+      const { name, nickname, phoneNumber, postalCode, address1, address2 } =
         userInfo;
 
       return (
         name?.trim() !== '' &&
         nickname?.trim() !== '' &&
         phoneNumber?.trim() !== '' &&
-        !!postcode &&
+        !!postalCode &&
         address1?.trim() !== '' &&
         address2?.trim() !== ''
       );
@@ -98,12 +98,7 @@ const ProfileEditPage = () => {
       <S.TextSection>
         <S.Title>기본 정보</S.Title>
         <S.Subtitle>이름</S.Subtitle>
-        <S.TextInput
-          type='text'
-          value={userInfo?.name}
-          name='name'
-          onChange={onChangeData}
-        />
+        <S.TextInput type='text' value={userInfo?.name} name='name' readOnly />
         <S.Subtitle>닉네임</S.Subtitle>
         <S.TextInput
           type='text'

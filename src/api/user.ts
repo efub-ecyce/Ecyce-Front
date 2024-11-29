@@ -4,7 +4,7 @@ export interface UserInfo {
   name: string;
   nickname: string;
   phoneNumber: string;
-  postcode: string | undefined;
+  postalCode: string | undefined;
   address1: string;
   address2: string;
   bio?: string;
@@ -47,20 +47,34 @@ export const patchUserInfo = async (
   userInfo: UserInfo,
   imageFile: File | null,
 ) => {
+  const { nickname, phoneNumber, postalCode, address1, address2, bio } =
+    userInfo;
+  const filteredInfo = {
+    nickname,
+    phoneNumber,
+    bio,
+  };
+  const addressInfo = {
+    postalCode,
+    address1,
+    address2,
+  };
+
   try {
     const formData = new FormData();
-    if (imageFile) {
-      formData.append('profileImage', imageFile);
-    }
-    Object.entries(userInfo).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    // if (imageFile) {
+    //   formData.append('profileImage', imageFile);
+    // }
+
+    formData.append('request', JSON.stringify(filteredInfo));
 
     const res = await client.patch('/user', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+
+    //const res2 = await client.patch('/user/address', addressInfo);
 
     return res.data;
   } catch (error) {

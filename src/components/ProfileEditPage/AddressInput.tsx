@@ -22,7 +22,7 @@ export const AddressInput = ({
     // 우편번호 & 주소 업데이트
     setUserInfo({
       ...userInfo,
-      postcode: data.zonecode,
+      postalCode: data.zonecode,
       address1: data.address,
     });
     setPostcodeOpen(false);
@@ -39,7 +39,7 @@ export const AddressInput = ({
   return (
     <S.AddressContainer>
       <S.Postcode>
-        <S.TextInput type='text' value={userInfo.postcode} readOnly />
+        <S.TextInput type='text' value={userInfo.postalCode} readOnly />
         <S.SearchButton onClick={handlePostcodeSearch}>
           우편번호 검색
         </S.SearchButton>
