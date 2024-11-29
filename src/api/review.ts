@@ -12,8 +12,9 @@ export const postReview = async (
 ) => {
   try {
     const formData = new FormData();
-    Object.entries(reviewData).forEach(([key, value]) =>
-      formData.append(key, String(value)),
+    formData.append(
+      'reviewRequestDto',
+      new Blob([JSON.stringify(reviewData)], { type: 'application/json' }),
     );
     if (reviewImages && reviewImages.length > 0) {
       reviewImages.forEach(item => formData.append('reviewImages', item)); // 나중에 키 확인

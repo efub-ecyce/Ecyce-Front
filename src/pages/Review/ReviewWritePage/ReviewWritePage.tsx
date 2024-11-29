@@ -57,7 +57,7 @@ const ReviewWritePage = () => {
     if (isAllFilled) {
       try {
         const res = await postReview(reviewData, imgFile);
-        navigate('./complete');
+        navigate('review/complete');
       } catch (error) {
         console.error(error);
       }
