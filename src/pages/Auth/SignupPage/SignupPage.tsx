@@ -43,13 +43,13 @@ const SignupPage = () => {
   const [nicknameValid, setNicknameValid] = useState(false);
 
   const [postcodeOpen, setPostcodeOpen] = useState<boolean>(false);
-  const [postcode, setPostcode] = useState<string>('');
+  const [postalCode, setPostalCode] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [detailAddress, setDetailAddress] = useState<string>('');
 
   const handlePostcodeComplete = (data: any) => {
     // 우편번호 & 주소 업데이트
-    setPostcode(data.zonecode);
+    setPostalCode(data.zonecode);
     setAddress(data.address);
     setPostcodeOpen(false);
   };
@@ -69,7 +69,7 @@ const SignupPage = () => {
       name.length > 0 &&
       nicknameValid &&
       phoneNumber.length === 11 &&
-      postcode &&
+      postalCode &&
       address &&
       detailAddress
     ) {
@@ -77,7 +77,7 @@ const SignupPage = () => {
     } else {
       setIsAllFilled(false);
     }
-  }, [name, nicknameValid, phoneNumber, postcode, address, detailAddress]);
+  }, [name, nicknameValid, phoneNumber, postalCode, address, detailAddress]);
 
   const validateNickname = (nickname: string) =>
     /^[가-힣a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ]{3,10}$/.test(nickname);
@@ -113,7 +113,7 @@ const SignupPage = () => {
         name: name,
         nickname: nickname,
         phoneNumber: phoneNumber,
-        postcode: postcode,
+        postalCode: postalCode,
         address1: address,
         address2: detailAddress,
       };
@@ -192,7 +192,7 @@ const SignupPage = () => {
         <S.TextInput
           type='text'
           placeholder='우편번호'
-          value={postcode}
+          value={postalCode}
           readOnly
         />
         <S.PostcodeButton onClick={handlePostcodeSearch}>

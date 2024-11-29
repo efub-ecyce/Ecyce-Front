@@ -4,7 +4,7 @@ interface UserInfo {
   name: string;
   nickname: string;
   phoneNumber: string;
-  postcode: string;
+  postalCode: string;
   address1: string;
   address2: string;
 }
@@ -17,29 +17,17 @@ export const postNewUser = async (
   if (imageFile) {
     formData.append('profileImage', imageFile);
   }
-  Object.entries(userInfo).forEach(([key, value]) => {
-    if (key == 'postcode') {
-      formData.append('postalCode', value);
-    }
-    formData.append(key, value);
-  });
+  formData.append(
+    'request',
+    new Blob([JSON.stringify(userInfo)], { type: 'application/json' }),
+  );
 
   try {
-    // const res = await client.post(`/user`, formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // });
-
-    const tempData = {
-      name: userInfo.name,
-      nickname: userInfo.nickname,
-      phoneNumber: userInfo.phoneNumber,
-      postalCode: userInfo.postcode,
-      address1: userInfo.address1,
-      address2: userInfo.address2,
-    };
-    const res = await client.post(`/user`, tempData);
+    const res = await client.post(`/user`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return res.data;
   } catch (error) {
     throw error;
