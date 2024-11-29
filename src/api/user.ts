@@ -7,6 +7,7 @@ export interface UserInfo {
   postalCode: string | undefined;
   address1: string;
   address2: string;
+  profileImageUrl?: string;
   bio?: string;
 }
 
@@ -62,11 +63,14 @@ export const patchUserInfo = async (
 
   try {
     const formData = new FormData();
-    // if (imageFile) {
-    //   formData.append('profileImage', imageFile);
-    // }
+    if (imageFile) {
+      formData.append('profileImage', imageFile);
+    }
 
-    formData.append('request', JSON.stringify(filteredInfo));
+    formData.append(
+      'request',
+      new Blob([JSON.stringify(filteredInfo)], { type: 'application/json' }),
+    );
 
     const res = await client.patch('/user', formData, {
       headers: {
@@ -74,9 +78,9 @@ export const patchUserInfo = async (
       },
     });
 
-    //const res2 = await client.patch('/user/address', addressInfo);
+    const res2 = await client.patch('/user/address', addressInfo);
 
-    return res.data;
+    return res.data + res2.data;
   } catch (error) {
     throw error;
   }

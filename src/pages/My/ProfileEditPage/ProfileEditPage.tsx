@@ -26,6 +26,7 @@ const ProfileEditPage = () => {
     name: '',
     nickname: '',
     phoneNumber: '',
+    profileImageUrl: '',
     postalCode: undefined,
     address1: '',
     address2: '',
@@ -38,6 +39,7 @@ const ProfileEditPage = () => {
       try {
         const res = await getUserInfo();
         setUserInfo(res);
+        setImgPreivew(res.profileImageUrl);
       } catch (error) {
         console.error(error);
       }
