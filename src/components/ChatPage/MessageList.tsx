@@ -21,18 +21,18 @@ const groupMessages = (messages: Message[]) => {
   return messages.reduce((arr, message, index) => {
     const timeKey = formatTimeStamp(message.timestamp);
     const prevMessage = messages[index - 1];
-    const isSameSender = prevMessage && prevMessage?.sender === message.sender;
+    const isSameSender = prevMessage && prevMessage?.userId === message.userId;
     const isSameMinute =
       prevMessage && formatTimeStamp(prevMessage.timestamp) === timeKey;
 
     if (!isSameSender || !isSameMinute) {
-      arr.push({ timeKey, sender: message.sender, messages: [message] });
+      arr.push({ timeKey, userId: message.userId, messages: [message] });
     } else {
       arr[arr.length - 1].messages.push(message);
     }
 
     return arr;
-  }, [] as { timeKey: string; sender: string; messages: Message[] }[]);
+  }, [] as { timeKey: string; userId: number; messages: Message[] }[]);
 };
 
 const renderMessage = (message: string) => {
@@ -67,7 +67,7 @@ export const MessageList = ({ messages }: MessageListProps) => {
             {shouldDisplayTime && <S.TimeStamp>{group.timeKey}</S.TimeStamp>}
             {group.messages.map((message, idx) => {
               const messageIndex = groupIndex * 100 + idx;
-              const isCurrentUser = message.sender == userInfo.nickname;
+              const isCurrentUser = message.userId == userInfo.userId;
 
               return isCurrentUser ? (
                 <S.MyChat key={messageIndex}>

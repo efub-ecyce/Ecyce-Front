@@ -1,6 +1,4 @@
-import { Client, IMessage } from '@stomp/stompjs';
 import { client } from './client';
-import { useEffect, useState } from 'react';
 
 export const postNewChatRoom = async (userName: string, isSeller: boolean) => {
   try {

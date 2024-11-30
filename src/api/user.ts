@@ -1,6 +1,7 @@
 import { client } from './client';
 
-export interface UserInfo {
+
+interface UserInfo {
   name: string;
   nickname: string;
   phoneNumber: string;
@@ -19,9 +20,10 @@ export const postNewUser = async (
   if (imageFile) {
     formData.append('profileImage', imageFile);
   }
-  Object.entries(userInfo).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
+  formData.append(
+    'request',
+    new Blob([JSON.stringify(userInfo)], { type: 'application/json' }),
+  );
 
   try {
     const res = await client.post(`/user`, formData, {
@@ -81,6 +83,7 @@ export const patchUserInfo = async (
     const res2 = await client.patch('/user/address', addressInfo);
 
     return res.data + res2.data;
+
   } catch (error) {
     throw error;
   }
