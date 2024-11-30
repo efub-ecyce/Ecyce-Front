@@ -2,61 +2,68 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../../../components/common/NavBar';
 import ProductComponent1 from '../../../components/common/ProductComponent1';
 import SearchBar from '../../../components/SearchPage/SearchBar';
-import { useNavigate } from 'react-router-dom';
 import * as S from './SearchPage.style';
 import { getAllProduct } from '../../../api/product';
-import type { ProductProps } from '../../../components/common/ProductComponent1';
+import { getSearchResult } from '../../../api/search';
 
-const productDummyData: ProductProps[] = [
-  {
-    duration: 3,
-    isMarked: false,
-    price: 20000,
-    productName: "청바지를 활용한 텀블러 가방",
-    // imageURL: "",
-    productId: 1,
-  },
-];
+interface ResultProps {
+  productId: number;
+  userId: number;
+  nickname: string;
+  productName: string;
+  price: number;
+  duration: number;
+  productState: string;
+  isMarked: boolean;
+}
 
 const SearchPage = () => {
-  const [productList, setProductList] = useState<ProductProps[]>([]);
+  const [productList, setProductList] = useState<ResultProps[]>([]);
+  const [searchWord, setSearchWord] = useState<string>("");
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await getAllProduct();
+      setProductList(response);
+    } catch (error) {
+      console.error("Failed to fetch all products:", error);
+    }
+  };
+
+  const fetchSearchResults = async (word: string) => {
+    try {
+      const response = await getSearchResult(word);
+      setProductList(response);
+    } catch (error) {
+      console.error("Failed to fetch search results:", error);
+    }
+  };
 
   useEffect(() => {
-    const getProductList = async () => {
-      try {
-        const response = await getAllProduct();
-        if (!response || response.length === 0) {
-          setProductList(productDummyData);
-        } else {
-          setProductList(response);
-          console.log(response);
-        }
-      } catch (error) {
-        console.error(error);
-        setProductList(productDummyData);
-      }
-    };
-  
-    getProductList();
-  }, []);
+    if (searchWord.trim() === "") {
+      fetchAllProducts();
+    } else {
+      fetchSearchResults(searchWord);
+    }
+  }, [searchWord]);
 
   return (
     <S.Container>
       <S.Top>
-        <SearchBar />
+        <SearchBar onSearch={setSearchWord} /> {/* 검색어 업데이트 */}
       </S.Top>
-      {/* <S.Contents>
-      {productList.map((product, index) => (
+      <S.Contents>
+        {productList.map((product) => (
           <ProductComponent1
-            key={index}
+            key={product.productId}
+            productId={product.productId}
             productName={product.productName}
             duration={product.duration}
             price={product.price}
-            // imageURL={product.imageURL}
             isMarked={product.isMarked}
           />
         ))}
-      </S.Contents> */}
+      </S.Contents>
       <S.NavBar>
         <NavBar />
       </S.NavBar>

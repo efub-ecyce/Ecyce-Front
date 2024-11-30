@@ -6,7 +6,7 @@ interface ReviewProps {
     profileImg: string;
     userName: string;
     content: string;
-    score: number;
+    score: string;
 }
 
 const ReviewComponent = ({profileImg, userName, content, score}: ReviewProps) => {

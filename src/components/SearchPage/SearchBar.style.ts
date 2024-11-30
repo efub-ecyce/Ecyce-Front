@@ -39,4 +39,5 @@ export const SearchWindow = styled.input`
 export const Btn = styled.div`
   position: absolute;
   left: 0;
+  cursor: pointer;
 `;

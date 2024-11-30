@@ -2,24 +2,31 @@ import * as S from './Footer.style'
 import React, { useState } from 'react';
 import { ReactComponent as Review } from '../../assets/ProductDetailPage/review.svg'
 import { ReactComponent as Bookmark } from '../../assets/ProductDetailPage/bookmark.svg'
+import { ReactComponent as FilledBookmark} from '../../assets/ProductDetailPage/bookmark_filled.svg';
 import { useNavigate } from 'react-router-dom';
 
 interface FooterProps {
     onPurchaseClick: () => void;
+    productId: number;
 }
 
-const Footer: React.FC<FooterProps> = ({ onPurchaseClick }) => {
+const Footer: React.FC<FooterProps> = ({ onPurchaseClick, productId }) => {
     const navigate = useNavigate();
+    const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+
+    const handleBookmarkToggle = () => {
+        setIsBookmarked((prev) => !prev);
+    };
 
     return (
         <S.Container>
             <S.Wrapper>
-                <S.ButtonWrapper onClick={() => navigate('/review/1')}>
+                <S.ButtonWrapper onClick={() => navigate(`/review/${productId}`)}>
                     <Review />
                     <S.Text>후기</S.Text>
                 </S.ButtonWrapper>
-                <S.ButtonWrapper>
-                    <Bookmark />
+                <S.ButtonWrapper onClick={handleBookmarkToggle}>
+                    {isBookmarked ? <FilledBookmark /> : <Bookmark />}
                     <S.Text>북마크</S.Text>
                 </S.ButtonWrapper>
             </S.Wrapper>
