@@ -158,7 +158,7 @@ export const postOptions = async (
 export const patchPostImages = async (
   productId: number,
   productImages: File[],
-  materialImage: File,
+  materialImage: File[],
 ) => {
   try {
     if (productImages.length > 0) {
@@ -175,9 +175,9 @@ export const patchPostImages = async (
       );
     }
 
-    if (materialImage) {
+    if (materialImage.length > 0) {
       const formData_mat = new FormData();
-      formData_mat.append('materialEx', materialImage);
+      formData_mat.append('materialEx', materialImage[0]);
       const res_mat = await client.patch(
         `/product/${productId}/mat`,
         formData_mat,

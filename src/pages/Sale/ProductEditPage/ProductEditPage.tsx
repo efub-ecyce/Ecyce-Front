@@ -1,5 +1,8 @@
 import * as S from '../ProductRegistPage/ProductRegistPage.style';
-import { ImageUpload } from '../../../components/common/ImageUpload';
+import {
+  ImageUpload,
+  ImageUploadWithNull,
+} from '../../../components/common/ImageUpload';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../../components/common/Header';
@@ -56,7 +59,7 @@ const extractProductData = (data: any) => {
 
 const ProductEditPage = () => {
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
-  const [productImgFile, setProductImgFile] = useState<File[]>([]);
+  const [productImgFile, setProductImgFile] = useState<Array<File | null>>([]);
   const [productImgPreview, setProductImgPreview] = useState<string[]>([]);
   const [materialImgFile, setMaterialImgFile] = useState<File[]>([]);
   const [materialImgPreview, setMaterialImgPreview] = useState<string[]>([]);
@@ -194,8 +197,8 @@ const ProductEditPage = () => {
 
         const res_patch_image = await patchPostImages(
           productId,
-          productImgFile,
-          materialImgFile[0],
+          productImgFile.filter(item => item !== null) as File[],
+          materialImgFile,
         );
 
         if (deletedImgs.length > 0) {
@@ -229,7 +232,7 @@ const ProductEditPage = () => {
     <S.Container>
       <Header title='등록하기' />
       <S.Title>기본 정보</S.Title>
-      <ImageUpload
+      <ImageUploadWithNull
         id='product'
         imageNum={5}
         imgFile={productImgFile}
