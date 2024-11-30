@@ -1,7 +1,7 @@
 import { client } from './client';
 
 
-interface UserInfo {
+export interface UserInfo {
   name: string;
   nickname: string;
   phoneNumber: string;
