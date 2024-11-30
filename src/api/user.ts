@@ -1,10 +1,11 @@
 import { client } from './client';
 
-export interface UserInfo {
+
+interface UserInfo {
   name: string;
   nickname: string;
   phoneNumber: string;
-  postcode: string | undefined;
+  postalCode: string;
   address1: string;
   address2: string;
   bio?: string;
@@ -18,9 +19,10 @@ export const postNewUser = async (
   if (imageFile) {
     formData.append('profileImage', imageFile);
   }
-  Object.entries(userInfo).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
+  formData.append(
+    'request',
+    new Blob([JSON.stringify(userInfo)], { type: 'application/json' }),
+  );
 
   try {
     const res = await client.post(`/user`, formData, {
@@ -61,6 +63,7 @@ export const patchUserInfo = async (
         'Content-Type': 'multipart/form-data',
       },
     });
+
 
     return res.data;
   } catch (error) {

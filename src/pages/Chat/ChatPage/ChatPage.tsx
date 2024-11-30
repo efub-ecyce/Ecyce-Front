@@ -12,15 +12,15 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '../../../store/userInfoAtom';
 
 export interface Message {
-  messageId: number;
-  sender: string;
+  messageId: string;
+  userId: number;
   content: string;
   timestamp: string;
 }
 
 export interface MessageRequest {
   roomId: number;
-  sender: string;
+  userId: number;
   content: string;
   type: 'CHAT';
 }
@@ -30,6 +30,7 @@ const ChatPage = () => {
   const [stompClient, setStompClient] = useState<Client | null>(null);
   const [chatHistory, setChatHistory] = useState<Message[]>([]);
   const [chatToSend, setChatToSend] = useState<string>('');
+  const [accessToken, setAccessToken] = useState<string>('');
 
   const navigate = useNavigate();
   const roomId = Number(useParams().roomId);
@@ -48,13 +49,25 @@ const ChatPage = () => {
       }
     };
 
+    const token = localStorage.getItem('token');
+    if (token) setAccessToken(JSON.parse(token).accessToken);
+
     getHistory();
+  }, [roomId]);
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    console.log('액세스 토큰 : ', accessToken);
 
     const client = new Client({
       brokerURL: 'wss://api.ecyce-karma.n-e.kr/ws',
       reconnectDelay: 5000,
       debug: str => {
         console.log(str); // 디버깅 로그 확인
+      },
+      connectHeaders: {
+        Authorization: `Bearer ${accessToken}`,
       },
       onConnect: () => {
         console.log('WebSocket 연결');
@@ -77,19 +90,25 @@ const ChatPage = () => {
     return () => {
       client.deactivate();
     };
-  }, [roomId]);
+  }, [accessToken, roomId]);
 
   const sendMessage = () => {
     if (stompClient && stompClient.connected && chatToSend?.trim()) {
       const chatMessage: MessageRequest = {
         roomId: roomId,
-        sender: userInfo.nickname as string,
+        userId: userInfo.userId as number,
         content: chatToSend,
         type: 'CHAT',
       };
+
+      console.log('액세스 토큰 : ', accessToken);
+
       stompClient.publish({
         destination: `/pub/chat/message`,
         body: JSON.stringify(chatMessage),
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       setChatToSend('');
     }

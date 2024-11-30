@@ -6,7 +6,6 @@ import {
   getChatRoomListAll,
   getChatRoomListPurchase,
   getChatRoomListSale,
-  postNewChatRoom,
 } from '../../../api/chat';
 
 export interface ChatPreviewProps {
