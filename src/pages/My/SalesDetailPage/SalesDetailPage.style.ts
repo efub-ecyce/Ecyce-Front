@@ -92,6 +92,7 @@ export const TableHeader = styled.div`
   color: var(--black00);
 
   width: 6rem;
+  flex-shrink: 0;
 `;
 
 export const Data = styled.div`

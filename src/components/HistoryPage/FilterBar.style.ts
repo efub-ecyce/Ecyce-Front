@@ -7,6 +7,7 @@ export const FilterBar = styled.div`
   align-items: center;
   width: 100%;
   height: 3.75rem;
+  flex-shrink: 0;
 `;
 
 export const Filter = styled.div<{ $isActive: boolean }>`
