@@ -20,6 +20,7 @@ interface ChatRoom {
   roomId: number;
   roomName: string;
   latestMessage: string;
+  profileImage: string;
 }
 
 const filterList = ['전체', '판매', '구매'];
@@ -79,7 +80,7 @@ const ChatListPage = () => {
             <ChatPreview
               key={idx}
               roomId={chatRoom.roomId}
-              profileImage={null}
+              profileImage={chatRoom.profileImage}
               name={chatRoom.roomName}
               message={chatRoom.latestMessage}
               unread={null}
