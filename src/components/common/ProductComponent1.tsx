@@ -2,27 +2,35 @@ import React, { useState } from 'react';
 import * as S from "../common/ProductComponent1.style";
 import { ReactComponent as UnfilledBookmark } from '../../assets/common/ProductComponent1/bookmark_unfilled.svg';
 import { ReactComponent as FilledBookmark } from '../../assets/common/ProductComponent1/bookmark_filled.svg';
+import { useNavigate } from 'react-router-dom';
 
-interface ProductProps {
-  title: string;
-  term: number;
+export interface ProductProps {
+  productName: string;
+  duration: number;
   price: number;
-  imageURL: string;
-  bookmarkedData: boolean;
+  isMarked: boolean;
+  productId: number;
+  // imageURL: string;
 }
 
-const ProductComponent1 = ({ title, term, price, imageURL, bookmarkedData }: ProductProps) => {
-  const [bookmarked, setBookmarked] = useState(bookmarkedData);
+const ProductComponent1 = ({ productName, duration, price, isMarked, productId }: ProductProps) => {
+  const [bookmarked, setBookmarked] = useState(isMarked);
+  const navigate = useNavigate();
 
-  const toggleBookmark = () => {
+  const toggleBookmark = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setBookmarked(prev => !prev);
   }
+
+  const handleNavigate = () => {
+    navigate(`/product/${productId}`);
+  };
   
   return (
-    <S.Wrapper>
-      <S.ProductPicture imageURL={imageURL}></S.ProductPicture>
-      <S.Title>{title}</S.Title>
-      <S.Term>제작 소요 기간 {term}일</S.Term>
+    <S.Wrapper onClick={handleNavigate}>
+      <S.ProductPicture imageURL={"imageURL"}></S.ProductPicture>
+      <S.Title>{productName}</S.Title>
+      <S.Term>제작 소요 기간 {duration}일</S.Term>
       <S.PNB>
         <S.Price>{price.toLocaleString()}원</S.Price>
         {bookmarked ? (
