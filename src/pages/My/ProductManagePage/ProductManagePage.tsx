@@ -5,7 +5,7 @@ import { MyProduct } from '../../../components/ProductManagePage/MyProduct';
 import { ManageDrawer } from '../../../components/ProductManagePage/ManageDrawer';
 import { ConfirmModal } from '../../../components/common/ConfirmModal';
 import NavBar from '../../../components/common/NavBar';
-import { getMyProducts } from '../../../api/artist';
+import { getArtistProducts } from '../../../api/artist';
 import { userState } from '../../../store/userInfoAtom';
 import { atom, useRecoilValue } from 'recoil';
 import { deleteProduct } from '../../../api/product';
@@ -48,7 +48,7 @@ const ProductManagePage = () => {
   useEffect(() => {
     const getProductList = async () => {
       try {
-        const response = await getMyProducts(userId as number);
+        const response = await getArtistProducts(userId as number);
         console.log(response);
         setProductList(response);
       } catch (error) {
