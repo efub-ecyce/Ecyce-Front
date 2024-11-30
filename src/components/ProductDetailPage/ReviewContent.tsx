@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getProductReviews } from '../../api/review';
 import { useState, useEffect } from 'react';
 
-interface ReviewData {
+export interface ReviewData {
     content: string;
     rating: number;
     reviewDate: string;
@@ -13,7 +13,7 @@ interface ReviewData {
     reviewerName: string;
 }
 
-interface ReviewImages {
+export interface ReviewImages {
     imageId: number;
     imageUrl: string;
 }

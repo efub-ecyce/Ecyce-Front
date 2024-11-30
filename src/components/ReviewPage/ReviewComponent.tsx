@@ -6,7 +6,7 @@ import { ReactComponent as EmptyStar } from '../../assets/ReviewPage/karma-logo-
 interface ReviewProps {
     profileImg: string;
     userName: string;
-    score: number;
+    score: string;
     content: string;
     reviewImg1: string;
     reviewImg2: string;
@@ -17,7 +17,7 @@ interface ReviewProps {
 
 const ReviewComponent = ({ profileImg, userName, score, content, reviewImg1, reviewImg2, reviewImg3, writtenDate, onClick }: ReviewProps) => {
     
-    const integerScore = Math.floor(score);
+    const integerScore = Math.floor(Number(score));
 
     // 별점 렌더링
     const renderStars = () => {
@@ -37,7 +37,7 @@ const ReviewComponent = ({ profileImg, userName, score, content, reviewImg1, rev
                     <S.UserName>{userName}</S.UserName>
                 </S.UserWrapper>
                 <S.StarsWrapper>
-                    <S.StarScore>{score.toFixed(1)}</S.StarScore>
+                    <S.StarScore>{score}</S.StarScore>
                     <S.Stars>{renderStars()}</S.Stars>
                 </S.StarsWrapper>
             </S.ProfileWrapper>

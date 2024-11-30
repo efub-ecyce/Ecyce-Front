@@ -82,7 +82,7 @@ const ReviewList = () => {
                         key={review.reviewId}
                         profileImg="" // 이미지 데이터 추가 처리하기
                         userName={review.reviewer}
-                        score={5}
+                        score={"5.0"}
                         content={review.reviewContent}
                         reviewImg1={review.reviewImages[0] || ""}
                         reviewImg2={review.reviewImages[1] || ""}
@@ -99,7 +99,7 @@ const ReviewList = () => {
                         <ReviewDetailComponent
                             profileImg="" // 이미지 데이터 추가 처리하기
                             userName={selectedReview.reviewer}
-                            score={5}
+                            score={"5.0"}
                             content={selectedReview.reviewContent}
                             reviewImg1={selectedReview.reviewImages[0] || ""}
                             reviewImg2={selectedReview.reviewImages[1] || ""}
