@@ -13,6 +13,8 @@ import { ReactComponent as QIcon } from '../../../assets/MyPage/question_circle.
 import { getUserInfo, patchUserInfo } from '../../../api/user';
 import { UserInfo } from '../../../api/user';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../../../store/userInfoAtom';
 
 const ProfileEditPage = () => {
   const [isAllFilled, setIsAllFilled] = useState(false);
@@ -21,6 +23,8 @@ const ProfileEditPage = () => {
 
   const [ImgFile, setImgFile] = useState<File>();
   const [ImgPreview, setImgPreivew] = useState<string>();
+
+  const setRecoilUserInfo = useSetRecoilState(userState);
 
   const [userInfo, setUserInfo] = useState<UserInfo>({
     name: '',
@@ -77,6 +81,13 @@ const ProfileEditPage = () => {
     if (isAllFilled) {
       try {
         const res = await patchUserInfo(userInfo, ImgFile || null);
+
+        setRecoilUserInfo(prevState => ({
+          ...prevState,
+          nickname: res.nickname,
+          profileImageUrl: res.profileImageUrl,
+        }));
+
         alert('저장되었습니다.');
         navigate('/my');
       } catch (error) {

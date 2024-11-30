@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/common/Button';
 import DaumPostcode from 'react-daum-postcode';
 import { postNewUser } from '../../../api/user';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../../../store/userInfoAtom';
 
 const SignupPage = () => {
   const [name, setName] = useState<string>('');
@@ -16,6 +18,8 @@ const SignupPage = () => {
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
   const [profileImage, setProfileImage] = useState<string>(basicProfile);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const setRecoilUserInfo = useSetRecoilState(userState);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -121,6 +125,14 @@ const SignupPage = () => {
       try {
         const res = await postNewUser(userInfo, profileImageFile);
         console.log(res);
+
+        setRecoilUserInfo(prevState => ({
+          ...prevState, // 기존 상태를 복사
+          name: res.name,
+          nickname: res.nickname,
+          profileImageUrl: res.profileImageUrl,
+        }));
+
         alert('회원 가입이 완료되었습니다.');
         navigate('/');
       } catch (error) {
