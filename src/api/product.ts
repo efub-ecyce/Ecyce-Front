@@ -26,7 +26,7 @@ export const getAllProduct = async () => {
     }
 };
 
-export const getProductDetail = async (productId: string || number) => {
+export const getProductDetail = async (productId: string | number) => {
     try {
         const res = await client.get(`/product/${productId}`);
         return res.data;
