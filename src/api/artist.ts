@@ -17,3 +17,12 @@ export const getArtistProducts = async (userId: number) => {
         throw error;
     }
 };
+
+export const getArtistReviews = async (userId: number) => {
+    try {
+        const res = await client.get(`/artist/${userId}/review`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};

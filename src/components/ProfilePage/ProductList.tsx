@@ -4,7 +4,7 @@ import * as S from './ProductList.style';
 import { useParams } from 'react-router-dom';
 import { getArtistProducts } from '../../api/artist';
 
-export interface ArtistProduct {
+interface ArtistProduct {
   productId : number;
   userId : number;
   nickname : string;
@@ -37,7 +37,7 @@ const ProductList = () => {
   }, [userId]);
 
   if (isLoading) {
-    return <div>로딩 중</div>;
+    return <S.Notice>로딩 중</S.Notice>;
   }
 
   if (productList.length === 0) {

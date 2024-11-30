@@ -32,7 +32,7 @@ const ProfileCard = ({ profileImg, userName, score, content }: ProfileProps) => 
     return (
         <S.Container>
             <S.Top>
-                <GoBackBtn />
+                <GoBackBtn onClick={() => navigate(-1)}/>
                 <S.ChatAndShare>
                     {/* 이거 나중에 사용자 id 받아서 그 채팅창으로 이동하도록 */}
                     <S.Btn onClick={() => navigate("/chatlist")}>
