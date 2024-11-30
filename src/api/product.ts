@@ -1,5 +1,49 @@
 import { client } from './client';
 
+export interface Option {
+  optionName: string;
+  optionPrice: number;
+}
+
+export interface ProductInfo {
+  productName: string;
+  price: number | undefined;
+  content: string;
+  duration: number | undefined;
+  deliveryFee: number | undefined;
+
+  materialInfo: string;
+  buyerNotice: string;
+  options: Option[];
+}
+
+export const getAllProduct = async () => {
+    try {
+        const res = await client.get(`/product`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getProductDetail = async (productId: string || number) => {
+    try {
+        const res = await client.get(`/product/${productId}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getProductCategory = async (categoryId: number) => {
+    try {
+        const res = await client.get(`/product/category?code=${categoryId}`);
+        return res.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const patchProductState = async (productId: number, state: string) => {
   try {
     const res = await client.patch(`/product/${productId}`, {
@@ -18,21 +62,6 @@ export const deleteProduct = async (productId: number) => {
   }
 };
 
-export interface Option {
-  optionName: string;
-  optionPrice: number;
-}
-export interface ProductInfo {
-  productName: string;
-  price: number | undefined;
-  content: string;
-  duration: number | undefined;
-  deliveryFee: number | undefined;
-
-  materialInfo: string;
-  buyerNotice: string;
-  options: Option[];
-}
 
 export interface PatchInfo {
   productName: string;
@@ -45,14 +74,6 @@ export interface PatchInfo {
   buyerNotice: string;
 }
 
-export const getProductDetail = async (productId: number) => {
-  try {
-    const res = await client.get(`/product/${productId}`);
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
-};
 
 export const postProduct = async (
   productData: ProductInfo,

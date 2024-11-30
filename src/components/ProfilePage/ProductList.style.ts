@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as font from '../../styles/font';
 
 export const Container = styled.div`
     width: 100%;
@@ -35,4 +36,19 @@ export const Contents = styled.div`
     &::-webkit-scrollbar {
         display: none;
     }
+`;
+
+export const Notice = styled.div`
+    ${font.medium}
+    color: var(--gray01);
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

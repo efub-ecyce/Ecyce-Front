@@ -40,6 +40,7 @@ export const Contents = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     gap: 1rem;
     width: 100%;
+    min-height: 850px;
     justify-content: center;
     overflow-y: auto;
     margin-top: calc(8rem);
@@ -50,4 +51,6 @@ export const Contents = styled.div`
     &::-webkit-scrollbar {
         display: none;
     }
+
+    align-content: start;
 `;

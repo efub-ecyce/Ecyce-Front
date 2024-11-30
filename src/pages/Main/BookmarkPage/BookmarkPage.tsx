@@ -19,7 +19,7 @@ const BookmarkPage = () => {
         <Header title='관심목록'/>
       </S.Top>
       <S.Contents>
-        {/* 이거 나중에 map으로 꼭 바꿔라 ;; */}
+        {/* 이거 나중에 map으로 꼭 바꿔라 ;;
         <ProductComponent1
           title={productData.title}
           term={productData.term}
@@ -82,7 +82,7 @@ const BookmarkPage = () => {
           price={productData.price}
           imageURL={productData.imageURL}
           bookmarkedData={productData.bookmarked}
-        />
+        /> */}
       </S.Contents>
       <S.NavBar>
         <NavBar />

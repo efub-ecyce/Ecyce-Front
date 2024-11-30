@@ -1,82 +1,63 @@
+import React, { useState, useEffect } from 'react';
 import ProductComponent1 from '../../components/common/ProductComponent1';
-import { useNavigate } from 'react-router-dom';
 import * as S from './ProductList.style';
+import { useParams } from 'react-router-dom';
+import { getArtistProducts } from '../../api/artist';
+
+interface ArtistProduct {
+  productId : number;
+  userId : number;
+  nickname : string;
+  productName : string;
+  price : number;
+  duration : number;
+  productState : string;
+  isMarked : boolean;
+}
 
 const ProductList = () => {
-  const productData = {
-    title: "청바지를 활용한 텀블러 가방",
-    term: 3,
-    price: 20000,
-    imageURL: "",
-    bookmarked: false,
-  };
+  const { userId } = useParams<{ userId: string }>();
+  const [productList, setProductList] = useState<ArtistProduct[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchArtistProducts = async () => {
+      if (!userId) return;
+      try {
+        const response = await getArtistProducts(Number(userId));
+        setProductList(response);
+      } catch (error) {
+        console.error('작가 상품 정보 로드 실패', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArtistProducts();
+  }, [userId]);
+
+  if (isLoading) {
+    return <S.Notice>로딩 중</S.Notice>;
+  }
+
+  if (productList.length === 0) {
+    return <S.Notice>등록된 상품이 없습니다.</S.Notice>;
+  }
 
   return (
     <S.Container>
       <S.Contents>
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
+        {productList.map((product, index) => (
+          <ProductComponent1
+            key={index}
+            productName={product.productName}
+            duration={product.duration}
+            price={product.price}
+            // imageURL={product.imageURL}
+            isMarked={product.isMarked}
+            productId={product.productId}
+          />
+        ))}
       </S.Contents>
     </S.Container>
   );

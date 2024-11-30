@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as font from '../../../styles/font'
 
 export const Container = styled.div`
     width: 100%;
@@ -41,8 +42,9 @@ export const Contents = styled.div`
     flex-direction: column;
     gap: 1rem;
     width: 100%;
-    justify-content: center;
-    align-items: flex-start;
+    height: 75vh;
+    justify-content: flex-start;
+    align-items: center;
     overflow-y: auto;
 
     scrollbar-width: none;
@@ -71,4 +73,19 @@ export const DetailWrapper = styled.div`
     max-width: 768px;
     padding: 1rem;
     border-radius: 10px;
+`;
+
+export const Notice = styled.div`
+    ${font.medium}
+    color: var(--gray01);
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

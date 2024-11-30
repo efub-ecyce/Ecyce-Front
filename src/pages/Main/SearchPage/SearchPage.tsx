@@ -1,88 +1,68 @@
+import React, { useState, useEffect } from 'react';
 import NavBar from '../../../components/common/NavBar';
 import ProductComponent1 from '../../../components/common/ProductComponent1';
 import SearchBar from '../../../components/SearchPage/SearchBar';
-import { useNavigate } from 'react-router-dom';
 import * as S from './SearchPage.style';
+import { getAllProduct } from '../../../api/product';
+import { getSearchResult } from '../../../api/search';
+
+interface ResultProps {
+  productId: number;
+  userId: number;
+  nickname: string;
+  productName: string;
+  price: number;
+  duration: number;
+  productState: string;
+  isMarked: boolean;
+}
 
 const SearchPage = () => {
-  const productData = {
-    title: "청바지를 활용한 텀블러 가방",
-    term: 3,
-    price: 20000,
-    imageURL: "",
-    bookmarked: false,
+  const [productList, setProductList] = useState<ResultProps[]>([]);
+  const [searchWord, setSearchWord] = useState<string>("");
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await getAllProduct();
+      setProductList(response);
+    } catch (error) {
+      console.error("Failed to fetch all products:", error);
+    }
   };
+
+  const fetchSearchResults = async (word: string) => {
+    try {
+      const response = await getSearchResult(word);
+      setProductList(response);
+    } catch (error) {
+      console.error("Failed to fetch search results:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchWord.trim() === "") {
+      fetchAllProducts();
+    } else {
+      fetchSearchResults(searchWord);
+    }
+  }, [searchWord]);
 
   return (
     <S.Container>
       <S.Top>
-        <SearchBar />
+        <SearchBar onSearch={setSearchWord} /> {/* 검색어 업데이트 */}
       </S.Top>
       <S.Contents>
-        {/* 이거 나중에 map으로 꼭 바꿔라 ;; */}
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
+        {productList.map((product) => (
+          <ProductComponent1
+            key={product.productId}
+            productId={product.productId}
+            productName={product.productName}
+            duration={product.duration}
+            price={product.price}
+            isMarked={product.isMarked}
+          />
+        ))}
       </S.Contents>
       <S.NavBar>
         <NavBar />

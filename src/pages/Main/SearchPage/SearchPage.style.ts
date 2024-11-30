@@ -41,8 +41,8 @@ export const Contents = styled.div`
     gap: 1rem;
     width: 100%;
     justify-content: center;
+    align-items: flex-start;
     overflow-y: auto;
-    margin-top: calc(6rem);
     margin-bottom: 80px;
 
     scrollbar-width: none;
