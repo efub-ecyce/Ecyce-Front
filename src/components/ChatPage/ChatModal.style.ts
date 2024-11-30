@@ -13,7 +13,7 @@ export const Container = styled.div`
   right: 0.94rem;
 
   width: 7.5625rem;
-  height: 6.375rem;
+  //height: 6.375rem;
   padding: 0.5625rem 0.9375rem;
   box-sizing: border-box;
 

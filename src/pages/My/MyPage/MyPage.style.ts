@@ -29,11 +29,12 @@ export const ProfImg = styled.img`
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 export const Name = styled.div`
   ${font.semibold}
-  font-size: 1.875rem;
+  font-size: 1.7rem;
   color: var(--black00);
   margin-left: 1rem;
 `;

@@ -12,26 +12,26 @@ export const SectionThree = () => {
       <S.Line />
       <S.TableRow>
         <S.TableHeader>수령인</S.TableHeader>
-        <S.Data>{purchaseDetail.recipient}</S.Data>
+        <S.Data>{purchaseDetail.buyerName}</S.Data>
       </S.TableRow>
       <S.TableRow>
         <S.TableHeader>연락처</S.TableHeader>
-        <S.Data>{purchaseDetail.recipientNum}</S.Data>
+        <S.Data>{purchaseDetail.buyerPhone}</S.Data>
       </S.TableRow>
       <S.TableRow>
         <S.TableHeader>주소</S.TableHeader>
-        <S.Data>{`[${purchaseDetail.postcode}] ${purchaseDetail.address}`}</S.Data>
+        <S.Data>{purchaseDetail.buyerAddress}</S.Data>
       </S.TableRow>
-      {(purchaseDetail.state === '배송중' ||
-        purchaseDetail.state === '배송 완료') && (
+      {(purchaseDetail.orderState === '배송중' ||
+        purchaseDetail.orderState === '구매확정') && (
         <>
           <S.TableRow>
             <S.TableHeader>택배사</S.TableHeader>
-            <S.Data>{purchaseDetail.delivery}</S.Data>
+            <S.Data>{}</S.Data>
           </S.TableRow>
           <S.TableRow>
             <S.TableHeader>운송장번호</S.TableHeader>
-            <S.Data>{purchaseDetail.trakingNum}</S.Data>
+            <S.Data>{purchaseDetail.invoiceNumber}</S.Data>
           </S.TableRow>
         </>
       )}
