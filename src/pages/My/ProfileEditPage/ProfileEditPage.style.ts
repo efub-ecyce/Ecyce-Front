@@ -17,6 +17,10 @@ export const Container = styled.div`
 
   padding: 0 1.25rem;
   box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ImageSection = styled.div`
@@ -157,4 +161,20 @@ export const QWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const PostcodeWindow = styled.div`
+  position: absolute;
+  z-index: 100;
+  background: var(--white00);
+  padding: 20px;
+  border: 1px solid #dddddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
 `;

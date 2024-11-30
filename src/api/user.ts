@@ -1,5 +1,6 @@
 import { client } from './client';
 
+
 interface UserInfo {
   name: string;
   nickname: string;
@@ -7,6 +8,7 @@ interface UserInfo {
   postalCode: string;
   address1: string;
   address2: string;
+  bio?: string;
 }
 
 export const postNewUser = async (
@@ -56,12 +58,12 @@ export const patchUserInfo = async (
       formData.append(key, value);
     });
 
-    // const res = await client.patch('/user', formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // });
-    const res = await client.patch('/user', userInfo);
+    const res = await client.patch('/user', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
 
     return res.data;
   } catch (error) {

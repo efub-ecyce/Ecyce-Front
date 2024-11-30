@@ -29,6 +29,7 @@ import ProductRegistCompletePage from './pages/Sale/ProductRegistCompletePage/Pr
 import ProductRegistPage from './pages/Sale/ProductRegistPage/ProductRegistPage';
 import NotFoundPage from './pages/NotFoundPage';
 import OAuthRedirectPage from './pages/Auth/OAuthRedirectPage.tsx/OAuthRedirectPage';
+import ProductEditPage from './pages/Sale/ProductEditPage/ProductEditPage';
 
 function App() {
   return (
@@ -121,7 +122,7 @@ function App() {
         element={<Auth Page={ReviewPage} option='login' />}
       />
       <Route
-        path='/review'
+        path='/review/write/:orderId'
         element={<Auth Page={ReviewWritePage} option='login' />}
       />
       <Route
@@ -132,6 +133,10 @@ function App() {
       <Route
         path='/post'
         element={<Auth Page={ProductRegistPage} option='login' />}
+      />
+      <Route
+        path='/edit'
+        element={<Auth Page={ProductEditPage} option='login' />}
       />
       <Route
         path='/post/complete'
