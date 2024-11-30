@@ -1,24 +1,42 @@
 import * as S from './MyProduct.style';
 import { ReactComponent as MoreButton } from '../../assets/ProductManagePage/more_vert.svg';
-
+import { ProductProps } from '../../pages/My/ProductManagePage/ProductManagePage';
+import { useNavigate } from 'react-router-dom';
+import { selectedProduct } from '../../pages/My/ProductManagePage/ProductManagePage';
+import { useSetRecoilState } from 'recoil';
 interface MyProductProps {
+  productInfo: ProductProps;
   drawerHandler: (
     event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
   ) => void;
 }
 
-export const MyProduct = ({ drawerHandler }: MyProductProps) => {
+export const MyProduct = ({ productInfo, drawerHandler }: MyProductProps) => {
+  const navigate = useNavigate();
+  const setProductInfo = useSetRecoilState(selectedProduct);
+
+  const handleDrawer = (
+    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
+  ) => {
+    e.stopPropagation();
+    drawerHandler(e);
+    setProductInfo({
+      productId: productInfo.productId,
+      productState: productInfo.productState,
+    });
+  };
+
   return (
-    <S.Container>
-      <S.ProductImage />
+    <S.Container onClick={() => navigate(`/product/${productInfo.productId}`)}>
+      <S.ProductImage src={productInfo.thumbnail} />
       <S.ProductInfo>
         <S.Row>
-          <S.Title>텀블러 가방 만들기</S.Title>
-          <S.IconWrapper onClick={drawerHandler}>
+          <S.Title>{productInfo.productName}</S.Title>
+          <S.IconWrapper onClick={handleDrawer}>
             <MoreButton />
           </S.IconWrapper>
         </S.Row>
-        <S.Price>20,000원</S.Price>
+        <S.Price>{productInfo.price.toLocaleString()}원</S.Price>
       </S.ProductInfo>
     </S.Container>
   );

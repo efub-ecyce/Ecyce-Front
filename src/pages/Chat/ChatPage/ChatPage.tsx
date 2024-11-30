@@ -1,85 +1,161 @@
 import * as S from './ChatPage.style';
-import { ReactComponent as AddIcon } from '../../../assets/ChatPage/add.svg';
 import { ReactComponent as BackIcon } from '../../../assets/ChatPage/back.svg';
 import { ReactComponent as MoreIcon } from '../../../assets/ChatPage/more_vert.svg';
 import { ReactComponent as SendIcon } from '../../../assets/ChatPage/send.svg';
 import { ChatModal } from '../../../components/ChatPage/ChatModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MessageList } from '../../../components/ChatPage/MessageList';
-import { timeStamp } from 'console';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { getChatHistory } from '../../../api/chat';
+import { Client, IMessage } from '@stomp/stompjs';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../../store/userInfoAtom';
 
-interface Message {
-  senderId: number;
-  text: string;
-  timestamp: string; //추후 수정 (format 함수 만들기..)
+export interface Message {
+  messageId: string;
+  userId: number;
+  content: string;
+  timestamp: string;
 }
 
-const DummyMessages: Message[] = [
-  {
-    senderId: 0,
-    text: '안녕하세요',
-    timestamp: '10:00',
-  },
-  {
-    senderId: 1,
-    text: '네 안녕하세요',
-    timestamp: '10:00',
-  },
-  {
-    senderId: 1,
-    text: '내 식탁에 누가 손을 올려 감히 내 허락이 없이는 Ain’t nobody 원하는 건 다 내 손안에 Get it 뒤로 기대 Lean 떨어 떨어 다리 털끝 하나 건들다간 Runnin’ like a dog, shhh Face down Don’t get caught, jeez 난 뺏긴 적이 없지 매번 독식 그저 Teeth and claw로 Notice',
-    timestamp: '10:00',
-  },
-  {
-    senderId: 0,
-    text: 'Yeah don’t you dare dare dare 선을 넘는 순간 Maybe just one time 무너뜨려 Knock down It’s so perfect 커져 가는 이 Thrillin’ And you know that you’re feedin’ my appetite',
-    timestamp: '10:02',
-  },
-  {
-    senderId: 1,
-    text: '난 입을 벌렸다면 I bite that If you take a bite then I Bite Back Bite Back Bite Back Bite Back Bite Back',
-    timestamp: '10:08',
-  },
-  {
-    senderId: 0,
-    text: '내 것을 탐한다면 (Uh) I like that (I like that) If you take a bite then I Bite Back Bite Back Bite Back Bite Back Bite Back',
-    timestamp: '10:08',
-  },
-];
+export interface MessageRequest {
+  roomId: number;
+  userId: number;
+  content: string;
+  type: 'CHAT';
+}
 
 const ChatPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [stompClient, setStompClient] = useState<Client | null>(null);
+  const [chatHistory, setChatHistory] = useState<Message[]>([]);
+  const [chatToSend, setChatToSend] = useState<string>('');
+  const [accessToken, setAccessToken] = useState<string>('');
+
+  const navigate = useNavigate();
+  const roomId = Number(useParams().roomId);
+  const otherUserName = useLocation().state.name;
+
+  const userInfo = useRecoilValue(userState);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      try {
+        const res = await getChatHistory(roomId);
+        setChatHistory(res);
+        console.log('채팅 내역 : ', chatHistory);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const token = localStorage.getItem('token');
+    if (token) setAccessToken(JSON.parse(token).accessToken);
+
+    getHistory();
+  }, [roomId]);
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    console.log('액세스 토큰 : ', accessToken);
+
+    const client = new Client({
+      brokerURL: 'wss://api.ecyce-karma.n-e.kr/ws',
+      reconnectDelay: 5000,
+      debug: str => {
+        console.log(str); // 디버깅 로그 확인
+      },
+      connectHeaders: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      onConnect: () => {
+        console.log('WebSocket 연결');
+        client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
+          try {
+            console.log(JSON.parse(message.body));
+            const newChat: Message = JSON.parse(message.body);
+            setChatHistory(prev => [...prev, newChat]);
+          } catch (error) {
+            console.error('구독 에러 : ', error);
+          }
+        });
+      },
+      onStompError: frame => {
+        console.error('STOMP 오류:', frame.headers['message']);
+      },
+    });
+    client.activate();
+    setStompClient(client);
+    return () => {
+      client.deactivate();
+    };
+  }, [accessToken, roomId]);
+
+  const sendMessage = () => {
+    if (stompClient && stompClient.connected && chatToSend?.trim()) {
+      const chatMessage: MessageRequest = {
+        roomId: roomId,
+        userId: userInfo.userId as number,
+        content: chatToSend,
+        type: 'CHAT',
+      };
+
+      console.log('액세스 토큰 : ', accessToken);
+
+      stompClient.publish({
+        destination: `/pub/chat/message`,
+        body: JSON.stringify(chatMessage),
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setChatToSend('');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key !== 'Enter') return;
+
+    e.preventDefault();
+
+    console.log(e.shiftKey);
+    if (e.shiftKey) {
+      setChatToSend(prev => prev + '\n');
+    } else {
+      sendMessage();
+    }
+  };
 
   const modalHandler = (e: React.MouseEvent<HTMLDivElement>, type: string) => {
     if (type === 'open') {
       e.stopPropagation();
       setIsModalOpen(true);
-    } else {
-      if (isModalOpen) {
-        setIsModalOpen(false);
-      }
+    } else if (isModalOpen) {
+      setIsModalOpen(false);
     }
   };
 
   return (
     <S.Container onClick={e => modalHandler(e, 'close')}>
       <S.Header>
-        <S.IconWrapper>
+        <S.IconWrapper onClick={() => navigate(-1)}>
           <BackIcon />
         </S.IconWrapper>
-        <S.Name>홍홍</S.Name>
+        <S.Name>{otherUserName}</S.Name>
         <S.IconWrapper onClick={e => modalHandler(e, 'open')}>
           <MoreIcon />
         </S.IconWrapper>
         {isModalOpen && <ChatModal />}
       </S.Header>
-      <MessageList messages={DummyMessages} />
+      <MessageList messages={chatHistory} />
       <S.InputBar>
-        <S.IconWrapper>
-          <AddIcon />
-        </S.IconWrapper>
-        <S.TextInput />
-        <S.IconWrapper>
+        <S.TextInput
+          value={chatToSend}
+          onChange={e => setChatToSend(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <S.IconWrapper onClick={sendMessage}>
           <SendIcon />
         </S.IconWrapper>
       </S.InputBar>

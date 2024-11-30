@@ -29,6 +29,7 @@ import ProductRegistCompletePage from './pages/Sale/ProductRegistCompletePage/Pr
 import ProductRegistPage from './pages/Sale/ProductRegistPage/ProductRegistPage';
 import NotFoundPage from './pages/NotFoundPage';
 import OAuthRedirectPage from './pages/Auth/OAuthRedirectPage.tsx/OAuthRedirectPage';
+import ProductEditPage from './pages/Sale/ProductEditPage/ProductEditPage';
 
 function App() {
   return (
@@ -43,25 +44,31 @@ function App() {
       />
       <Route
         path='/login/oauth2/kakao'
-        element={<Auth Page={OAuthRedirectPage} option='logout' />}
+        element={<Auth Page={OAuthRedirectPage} option='all' />}
       />
 
       <Route
         path='/chatlist'
         element={<Auth Page={ChatListPage} option='login' />}
       />
-      <Route path='/chat' element={<Auth Page={ChatPage} option='login' />} />
+      <Route
+        path='/chat/:roomId'
+        element={<Auth Page={ChatPage} option='login' />}
+      />
 
       <Route
         path='/bookmark'
         element={<Auth Page={BookmarkPage} option='login' />}
       />
-      <Route path='/' element={<Auth Page={MainPage} option='all' />} />
+      <Route path='/' element={<Auth Page={MainPage} option='login' />} />
       <Route
         path='/notification'
         element={<Auth Page={NotificationPage} option='login' />}
       />
-      <Route path='/search' element={<Auth Page={SearchPage} option='all' />} />
+      <Route
+        path='/search'
+        element={<Auth Page={SearchPage} option='login' />}
+      />
 
       <Route path='/my' element={<Auth Page={MyPage} option='login' />} />
       <Route
@@ -95,7 +102,7 @@ function App() {
 
       <Route
         path='/product/:productId'
-        element={<Auth Page={ProductDetailPage} option='all' />}
+        element={<Auth Page={ProductDetailPage} option='login' />}
       />
       <Route
         path='/payment'
@@ -112,10 +119,10 @@ function App() {
 
       <Route
         path='/review/:productId'
-        element={<Auth Page={ReviewPage} option='all' />}
+        element={<Auth Page={ReviewPage} option='login' />}
       />
       <Route
-        path='/review'
+        path='/review/write/:orderId'
         element={<Auth Page={ReviewWritePage} option='login' />}
       />
       <Route
@@ -126,6 +133,10 @@ function App() {
       <Route
         path='/post'
         element={<Auth Page={ProductRegistPage} option='login' />}
+      />
+      <Route
+        path='/edit'
+        element={<Auth Page={ProductEditPage} option='login' />}
       />
       <Route
         path='/post/complete'

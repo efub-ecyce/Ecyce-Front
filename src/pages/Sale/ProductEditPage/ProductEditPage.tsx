@@ -1,11 +1,17 @@
-import * as S from './ProductRegistPage.style';
+import * as S from '../ProductRegistPage/ProductRegistPage.style';
 import { ImageUpload } from '../../../components/common/ImageUpload';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../../components/common/Header';
 import { OptionComponent } from '../../../components/ProductRegisterPage/OptionComponent';
 import { Button } from '../../../components/common/Button';
-import { postProduct, ProductInfo } from '../../../api/product';
+import {
+  deleteOptions,
+  getProductDetail,
+  patchProduct,
+  postOptions,
+  ProductInfo,
+} from '../../../api/product';
 
 export interface Option_Client {
   id: number;
@@ -13,7 +19,35 @@ export interface Option_Client {
   price: number | undefined;
 }
 
-const ProductRegistPage = () => {
+const extractProductData = (data: any) => {
+  const {
+    productName,
+    price,
+    content,
+    duration,
+    deliveryFee,
+    materialInfo,
+    buyerNotice,
+    options,
+  } = data;
+
+  return {
+    productName,
+    price,
+    content,
+    duration,
+    deliveryFee,
+    materialInfo,
+    buyerNotice,
+    options: options.map((opt: any) => ({
+      optionId: opt.optionId,
+      optionName: opt.optionName,
+      optionPrice: opt.optionPrice,
+    })),
+  };
+};
+
+const ProductEditPage = () => {
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [productImgFile, setProductImgFile] = useState<File[]>([]);
   const [productImgPreview, setProductImgPreview] = useState<string[]>([]);
@@ -31,9 +65,43 @@ const ProductRegistPage = () => {
     options: [],
   });
 
+  const [prevOptions, setPrevOptions] = useState<
+    { optionId: number; optionName: string; optionPrice: number }[]
+  >([]);
   const [options, setOptions] = useState<Option_Client[]>([]);
 
   const navigate = useNavigate();
+  const productId = useLocation().state.productId;
+
+  useEffect(() => {
+    const getProductData = async () => {
+      try {
+        const res = await getProductDetail(productId);
+        const extractedData = extractProductData(res);
+        setProductData(extractedData);
+        setPrevOptions(extractedData.options);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getProductData();
+  }, [productId]);
+
+  useEffect(() => {
+    const setPrevOptions = () => {
+      if (prevOptions && prevOptions.length > 0) {
+        const options = prevOptions.map((item, idx) => ({
+          id: idx,
+          name: item.optionName,
+          price: item.optionPrice,
+        }));
+        setOptions(options);
+      }
+    };
+
+    setPrevOptions();
+  }, [prevOptions]);
 
   useEffect(() => {
     const isAllFilled = (): boolean => {
@@ -50,14 +118,14 @@ const ProductRegistPage = () => {
 
       // Check if all fields are filled
       return (
-        productName?.trim() !== '' && // productName is not empty
+        productName.trim() !== '' && // productName is not empty
         !!price && // price is defined
-        content?.trim() !== '' && // content is not empty
+        content.trim() !== '' && // content is not empty
         !!duration && // duration is defined
         !!deliveryFee && // deliveryFee is defined
-        materialInfo?.trim() !== '' && // materialInfo is not empty
-        buyerNotice?.trim() !== '' && // buyerNotice is not empty
-        options.length > 0 && // options array is not empty
+        materialInfo.trim() !== '' && // materialInfo is not empty
+        buyerNotice.trim() !== '' && // buyerNotice is not empty
+        options.length > 0 && // option array is not empty
         options.every(
           opt =>
             opt.optionName?.trim() !== '' && // optionName is not empty
@@ -85,37 +153,48 @@ const ProductRegistPage = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    if (value === '') {
-      setProductData({ ...productData, [name]: undefined });
-      return;
-    }
-    if (['price', 'duration', 'deliveryFee'].includes(name)) {
-      const numericValue = Number(value.replace(/,/g, ''));
-      if (!isNaN(numericValue)) {
-        setProductData({ ...productData, [name]: numericValue });
-      }
-    } else {
-      setProductData({ ...productData, [name]: value });
-    }
+    setProductData({ ...productData, [name]: value });
   };
 
   const onClickButton = async () => {
     if (isAllFilled) {
+      const patchData = {
+        productName: productData.productName,
+        price: productData.price as number,
+        content: productData.content,
+        duration: productData.duration as number,
+        deliveryFee: productData.deliveryFee as number,
+        materialInfo: productData.materialInfo,
+        buyerNotice: productData.buyerNotice,
+      };
       try {
-        const res = await postProduct(
-          productData,
+        const res = await patchProduct(
+          productId,
+          patchData,
           productImgFile,
           materialImgFile,
         );
-        navigate('./complete');
+
+        const res2 = await Promise.all(
+          options.map(option =>
+            postOptions(
+              productId,
+              option.name as string,
+              option.price as number,
+            ),
+          ),
+        );
+
+        const res3 = await Promise.all(
+          prevOptions.map(option => deleteOptions(productId, option.optionId)),
+        );
+
+        navigate('/post/complete');
       } catch (error) {
         console.error(error);
       }
     }
   };
-
-  const formatPrice = (price: number | undefined) =>
-    price !== undefined ? price.toLocaleString() : '';
 
   return (
     <S.Container>
@@ -145,7 +224,7 @@ const ProductRegistPage = () => {
       <S.TextInput
         type='text'
         placeholder='₩ 가격'
-        value={formatPrice(productData.price)}
+        value={productData.price}
         name='price'
         onChange={onChangeData}
         onKeyDown={handleKeyDown}
@@ -153,7 +232,7 @@ const ProductRegistPage = () => {
       <S.TextInput
         type='text'
         placeholder='₩ 배송비'
-        value={formatPrice(productData.deliveryFee)}
+        value={productData.deliveryFee}
         name='deliveryFee'
         onChange={onChangeData}
         onKeyDown={handleKeyDown}
@@ -210,4 +289,4 @@ const ProductRegistPage = () => {
   );
 };
 
-export default ProductRegistPage;
+export default ProductEditPage;

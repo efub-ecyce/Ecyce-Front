@@ -12,6 +12,11 @@ export const Container = styled.div`
 
   width: 100%;
   min-height: 6.5rem;
+
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const UploadButton = styled.label`

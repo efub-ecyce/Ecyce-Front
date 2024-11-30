@@ -53,8 +53,8 @@ const Auth = ({ Page, option }: AuthProps) => {
           break;
         case 'login':
           if (!isLogin) {
-            // alert('로그인 후 이용해주세요.');
-            // navigate(-1);
+            alert('로그인 후 이용해주세요.');
+            navigate('/login');
             return;
           }
           break;
