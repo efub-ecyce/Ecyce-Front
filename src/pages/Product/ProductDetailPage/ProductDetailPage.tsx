@@ -72,7 +72,7 @@ const ProductDetailPage = () => {
     const getProductInfo = async () => {
       try {
         const response = await getProductDetail(productId);
-        console.log(response)
+        console.log(response);
         if (!response || response.length === 0) {
           setProductInfo(productDummyData[0]);
         } else {
@@ -85,7 +85,7 @@ const ProductDetailPage = () => {
     };
 
     getProductInfo();
-  }, []);
+  }, [productId]);
 
   const handlePurchaseClick = () => {
     setIsOrderModalOpen(true);
@@ -105,19 +105,21 @@ const ProductDetailPage = () => {
         reviewImg5={ProductImgData.reviewImg5}
       />
       {productInfo ? (
-        <DetailContent 
-          userId={productInfo.userId}
-          userName={productInfo.sellerNickname}
-          title={productInfo.productName}
-          price={productInfo.price}
-          material={productInfo.materialInfo}
-          period={productInfo.duration}
-          bio={productInfo.content}
-        />
+        <>
+          <DetailContent 
+            userId={productInfo.userId}
+            userName={productInfo.sellerNickname}
+            title={productInfo.productName}
+            price={productInfo.price}
+            material={productInfo.materialInfo}
+            period={productInfo.duration}
+            bio={productInfo.content}
+          />
+          <ReviewContent productId={productInfo.productId} />
+        </>
       ) : (
         <div>로딩 중</div>
       )}
-      <ReviewContent />
       <Footer onPurchaseClick={handlePurchaseClick} />
       {isOrderModalOpen && <OrderModal modalHandler={handleModalClose} />}
     </S.Container>
