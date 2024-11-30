@@ -10,37 +10,6 @@ import { getSalesHistory } from '../../../api/order';
 
 const filterList = ['전체', '접수', '진행중', '완료'];
 
-const dummyHistory = [
-  {
-    orderId: 1,
-    productName: '파우치 가방 리사이클링',
-    productOption: '텀블러 옵션 1',
-    orderCount: 1,
-    orderState: '접수완료',
-    createdAt: '2024-11-08T22:35:53.26533',
-    totalPrice: 15000, // 배송비 + 상품가격
-    productImages: {
-      productImageId: 1,
-      productImageUrl:
-        'https://karma-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/reviewImages/example1.jpg',
-    },
-  },
-  {
-    orderId: 1,
-    productName: '파우치 가방 리사이클링',
-    productOption: '텀블러 옵션 1',
-    orderCount: 1,
-    orderState: '접수완료',
-    createdAt: '2024-11-08T22:35:53.26533',
-    totalPrice: 15000, // 배송비 + 상품가격
-    productImages: {
-      productImageId: 1,
-      productImageUrl:
-        'https://karma-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/reviewImages/example1.jpg',
-    },
-  },
-];
-
 const SalesHistoryPage = () => {
   const [activeFilter, setActiveFilter] = useState<string>(filterList[0]);
   const handleFiltering = (fil: string) => {
@@ -70,10 +39,6 @@ const SalesHistoryPage = () => {
       try {
         const response = await getSalesHistory();
         setHistoryList(response);
-
-        if (historyList.length == 0) {
-          setHistoryList(dummyHistory);
-        }
       } catch (error) {
         console.error(error);
       }

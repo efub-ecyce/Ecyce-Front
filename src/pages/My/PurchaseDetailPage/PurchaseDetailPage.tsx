@@ -8,7 +8,7 @@ import { SectionTwo } from '../../../components/PurchaseDetailPage/SectionTwo';
 import { SectionThree } from '../../../components/PurchaseDetailPage/SectionThree';
 import { SectionFour } from '../../../components/PurchaseDetailPage/SectionFour';
 import { AlertSection } from '../../../components/PurchaseDetailPage/AlertSection';
-import { getPurchaseHistory } from '../../../api/order';
+import { getDetailHistory } from '../../../api/order';
 import { useParams } from 'react-router-dom';
 
 const DummyDetail = {
@@ -50,14 +50,13 @@ const PurchaseDetailPage = () => {
   const [purchaseDetail, setPurchaseDetail] =
     useRecoilState(PurchaseDetailState);
 
-  const orderId = useParams();
+  const orderId = useParams().orderId;
 
   useEffect(() => {
     const getSalesDetail = async () => {
       try {
-        // const response = await getPurchaseHistory(Number(orderId));
-        // setPurchaseDetail(response);
-        setPurchaseDetail(DummyDetail);
+        const response = await getDetailHistory(Number(orderId));
+        setPurchaseDetail(response);
       } catch (error) {
         console.error(error);
       }

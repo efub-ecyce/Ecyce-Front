@@ -24,10 +24,10 @@ export const AcceptModal = ({ modalHandler, setState }: ModalProps) => {
     try {
       const res = await patchAcceptOrder(salesDetail.orderId, true);
       modalHandler(e);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
-    //setState(prev => ({ ...prev, orderState: '제작대기중' }));
   };
 
   return (
@@ -47,6 +47,7 @@ export const RejectModal = ({ modalHandler, setState }: ModalProps) => {
     try {
       const res = await patchAcceptOrder(salesDetail.orderId, false);
       modalHandler(e);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -61,28 +62,6 @@ export const RejectModal = ({ modalHandler, setState }: ModalProps) => {
   );
 };
 
-export const CancelModal = ({ modalHandler, setState }: ModalProps) => {
-  const salesDetail = useRecoilValue(SalesDetailState);
-  const yesFunction = async (
-    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
-  ) => {
-    try {
-      const res = await patchAcceptOrder(salesDetail.orderId, false);
-      modalHandler(e);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <ConfirmModal
-      question='주문을 취소하시겠습니까?'
-      yesFunction={yesFunction}
-      modalHandler={modalHandler}
-    />
-  );
-};
-
 export const StartModal = ({ modalHandler, setState }: ModalProps) => {
   const salesDetail = useRecoilValue(SalesDetailState);
   const yesFunction = async (
@@ -91,6 +70,7 @@ export const StartModal = ({ modalHandler, setState }: ModalProps) => {
     try {
       const res = await patchStartOrder(salesDetail.orderId);
       modalHandler(e);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -113,6 +93,7 @@ export const DoneModal = ({ modalHandler, setState }: ModalProps) => {
     try {
       const res = await patchCompleteOrder(salesDetail.orderId);
       modalHandler(e);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

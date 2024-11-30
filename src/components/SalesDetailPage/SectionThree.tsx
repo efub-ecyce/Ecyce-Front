@@ -24,9 +24,11 @@ export const SectionThree = () => {
     try {
       const res = await patchShipOrder(
         salesDetail.orderId,
+        shippngInfo.comp,
         shippngInfo.invoice,
       );
       setIsEdit(false);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +60,9 @@ export const SectionThree = () => {
           운송장 등록하기
         </S.ShippingButton>
       )}
-      {(salesDetail.orderState === '배송완료' || isDeliverStart) && (
+      {(salesDetail.orderState === '배송완료' ||
+        salesDetail.orderState === '배송중' ||
+        isDeliverStart) && (
         <>
           {isEdit ? (
             <>
@@ -86,12 +90,12 @@ export const SectionThree = () => {
             <>
               <S.TableRow>
                 <S.TableHeader>택배사</S.TableHeader>
-                <S.Data>{}</S.Data>
-                {salesDetail.orderState !== '배송완료' && (
+                <S.Data>{salesDetail.deliveryCompany}</S.Data>
+                {/* {salesDetail.orderState !== '배송완료' && (
                   <S.ChatButton onClick={() => setIsEdit(true)}>
                     수정하기
                   </S.ChatButton>
-                )}
+                )} */}
               </S.TableRow>
               <S.TableRow>
                 <S.TableHeader>운송장번호</S.TableHeader>

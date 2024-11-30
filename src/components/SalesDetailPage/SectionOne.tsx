@@ -23,9 +23,9 @@ export const SectionOne = () => {
         <S.State>{salesDetail.orderState}</S.State>
       </S.Row1>
       <S.OrderNum>주문번호 {salesDetail.orderId}</S.OrderNum>
-      {['접수완료', '제작대기중', '제작중'].includes(
-        salesDetail.orderState,
-      ) && <ButtonBar />}
+      {['접수완료', '제작대기', '제작중'].includes(salesDetail.orderState) && (
+        <ButtonBar />
+      )}
     </S.Section>
   );
 };

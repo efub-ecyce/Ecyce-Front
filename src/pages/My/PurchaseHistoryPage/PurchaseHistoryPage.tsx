@@ -48,9 +48,9 @@ export interface HistoryProps {
   orderState: string;
   createdAt: string;
   totalPrice: number;
-  productImages: {
-    productImageId: number;
-    productImageUrl: string;
+  productImages?: {
+    productImageId?: number;
+    productImageUrl?: string;
   };
 }
 
@@ -83,10 +83,6 @@ const PurchaseHistoryPage = () => {
       try {
         const response = await getPurchaseHistory();
         setHistoryList(response);
-
-        if (historyList.length == 0) {
-          setHistoryList(dummyHistory);
-        }
       } catch (error) {
         console.error(error);
       }

@@ -19,6 +19,7 @@ export const CancelModal = ({ modalHandler, setState }: ModalProps) => {
     try {
       const res = await patchCancelOrder(purchaseDetail.orderId);
       modalHandler(e);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -42,6 +43,7 @@ export const FinishModal = ({ modalHandler, setState }: ModalProps) => {
     try {
       const res = await patchConfirmOrder(purchaseDetail.orderId);
       modalHandler(e);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

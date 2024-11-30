@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import * as S from './ButtonBar.style';
 import {
   AcceptModal,
-  CancelModal,
   DoneModal,
   RejectModal,
   StartModal,
@@ -10,10 +9,10 @@ import {
 import { useRecoilState } from 'recoil';
 import { SalesDetailState } from '../../pages/My/SalesDetailPage/SalesDetailPage';
 
-const NameMap: { [key: string]: [string, string] } = {
+const NameMap: { [key: string]: [string, string?] } = {
   접수완료: ['주문 수락하기', '주문 거절하기'],
-  제작대기: ['제작 시작하기', '주문 취소하기'],
-  제작중: ['제작 완료하기', '주문 취소하기'],
+  제작대기: ['제작 시작하기'],
+  제작중: ['제작 완료하기'],
 };
 
 export const ButtonBar = () => {
@@ -45,10 +44,6 @@ export const ButtonBar = () => {
         return (
           <RejectModal modalHandler={modalHandler} setState={setSalesDetail} />
         );
-      case '주문 취소하기':
-        return (
-          <CancelModal modalHandler={modalHandler} setState={setSalesDetail} />
-        );
       case '제작 시작하기':
         return (
           <StartModal modalHandler={modalHandler} setState={setSalesDetail} />
@@ -70,11 +65,18 @@ export const ButtonBar = () => {
       >
         {NameMap[salesDetail.orderState][0]}
       </S.YButton>
-      <S.NButton
-        onClick={event => openModal(NameMap[salesDetail.orderState][1])}
-      >
-        {NameMap[salesDetail.orderState][1]}
-      </S.NButton>
+      {salesDetail.orderState === '접수완료' && (
+        <S.NButton
+          onClick={event =>
+            openModal(
+              NameMap[salesDetail.orderState][1] ||
+                NameMap[salesDetail.orderState][0],
+            )
+          }
+        >
+          {NameMap[salesDetail.orderState][1]}
+        </S.NButton>
+      )}
     </S.Container>
   );
 };
