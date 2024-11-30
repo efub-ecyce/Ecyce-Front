@@ -1,25 +1,26 @@
 import { client } from './client';
 
-interface userInfo {
+interface UserInfo {
   name: string;
   nickname: string;
   phoneNumber: string;
-  postcode: string;
+  postalCode: string;
   address1: string;
   address2: string;
 }
 
 export const postNewUser = async (
-  userInfo: userInfo,
+  userInfo: UserInfo,
   imageFile: File | null,
 ) => {
   const formData = new FormData();
   if (imageFile) {
     formData.append('profileImage', imageFile);
   }
-  Object.entries(userInfo).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
+  formData.append(
+    'request',
+    new Blob([JSON.stringify(userInfo)], { type: 'application/json' }),
+  );
 
   try {
     const res = await client.post(`/user`, formData, {
@@ -36,6 +37,32 @@ export const postNewUser = async (
 export const getUserInfo = async () => {
   try {
     const res = await client.get('/user');
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const patchUserInfo = async (
+  userInfo: UserInfo,
+  imageFile: File | null,
+) => {
+  try {
+    const formData = new FormData();
+    if (imageFile) {
+      formData.append('profileImage', imageFile);
+    }
+    Object.entries(userInfo).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    // const res = await client.patch('/user', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // });
+    const res = await client.patch('/user', userInfo);
+
     return res.data;
   } catch (error) {
     throw error;
