@@ -50,7 +50,10 @@ function App() {
         path='/chatlist'
         element={<Auth Page={ChatListPage} option='login' />}
       />
-      <Route path='/chat' element={<Auth Page={ChatPage} option='login' />} />
+      <Route
+        path='/chat/:roomId'
+        element={<Auth Page={ChatPage} option='login' />}
+      />
 
       <Route
         path='/bookmark'
