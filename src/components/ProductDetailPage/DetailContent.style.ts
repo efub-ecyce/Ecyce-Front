@@ -16,6 +16,7 @@ export const ProfileWrapper = styled.div`
     align-items: center;
     gap: 1.06rem;
     margin-bottom: 1.25rem;
+    cursor: pointer;
 `;
 
 export const UserName = styled.div`

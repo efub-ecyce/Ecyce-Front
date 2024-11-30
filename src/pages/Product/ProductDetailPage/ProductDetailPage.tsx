@@ -106,6 +106,7 @@ const ProductDetailPage = () => {
       />
       {productInfo ? (
         <DetailContent 
+          userId={productInfo.userId}
           userName={productInfo.sellerNickname}
           title={productInfo.productName}
           price={productInfo.price}
