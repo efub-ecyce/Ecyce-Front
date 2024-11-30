@@ -5,9 +5,10 @@ interface UserInfo {
   name: string;
   nickname: string;
   phoneNumber: string;
-  postalCode: string;
+  postalCode: string | undefined;
   address1: string;
   address2: string;
+  profileImageUrl?: string;
   bio?: string;
 }
 
@@ -49,14 +50,29 @@ export const patchUserInfo = async (
   userInfo: UserInfo,
   imageFile: File | null,
 ) => {
+  const { nickname, phoneNumber, postalCode, address1, address2, bio } =
+    userInfo;
+  const filteredInfo = {
+    nickname,
+    phoneNumber,
+    bio,
+  };
+  const addressInfo = {
+    postalCode,
+    address1,
+    address2,
+  };
+
   try {
     const formData = new FormData();
     if (imageFile) {
       formData.append('profileImage', imageFile);
     }
-    Object.entries(userInfo).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+
+    formData.append(
+      'request',
+      new Blob([JSON.stringify(filteredInfo)], { type: 'application/json' }),
+    );
 
     const res = await client.patch('/user', formData, {
       headers: {
@@ -64,8 +80,10 @@ export const patchUserInfo = async (
       },
     });
 
+    const res2 = await client.patch('/user/address', addressInfo);
 
-    return res.data;
+    return res.data + res2.data;
+
   } catch (error) {
     throw error;
   }
