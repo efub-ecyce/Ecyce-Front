@@ -1,7 +1,9 @@
 import * as S from './DetailContent.style'
 import { ReactComponent as ProfileImg } from '../../assets/ProductDetailPage/profile.svg'
+import { useNavigate } from 'react-router-dom';
 
 interface ProductProps {
+    userId: number;
     userName: string;
     title: string;
     price: number;
@@ -10,10 +12,12 @@ interface ProductProps {
     bio: string;
 }
 
-const DetailContent = ({userName, title, price, material, period, bio}: ProductProps) => {
+const DetailContent = ({userId, userName, title, price, material, period, bio}: ProductProps) => {
+    const navigate = useNavigate();
+    
     return (
         <S.Container>
-            <S.ProfileWrapper>
+            <S.ProfileWrapper onClick={ () => navigate(`/profile/${userId}`)}>
                 <ProfileImg />
                 <S.UserName>{userName}</S.UserName>
             </S.ProfileWrapper>

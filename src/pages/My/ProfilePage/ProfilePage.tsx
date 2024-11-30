@@ -53,7 +53,7 @@ const ProfilePage = () => {
   return (
     <>
       <ProfileCard 
-        profileImg={artistInfo.profileImage} 
+        profileImg={artistInfo.profileImage}
         userName={artistInfo.nickname}
         score={artistInfo.averageRating}
         content={artistInfo.bio}
