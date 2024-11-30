@@ -34,6 +34,8 @@ export const ProfileImage = styled.img`
   flex-shrink: 0;
   object-fit: cover;
   cursor: pointer;
+
+  border-radius: 50%;
 `;
 
 export const CameraIcon = styled.img`

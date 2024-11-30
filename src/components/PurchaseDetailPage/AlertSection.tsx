@@ -6,33 +6,23 @@ import { useRecoilState } from 'recoil';
 import { PurchaseDetailState } from '../../pages/My/PurchaseDetailPage/PurchaseDetailPage';
 
 const AlertMap: {
-  [key in
-    | '제작 대기중'
-    | '제작중'
-    | '제작 완료'
-    | '배송중'
-    | '배송 완료']: string;
+  [key in '제작대기' | '제작중' | '제작완료' | '배송중' | '구매확정']: string;
 } = {
-  '제작 대기중': '작가님이 주문을 수락했어요!',
+  제작대기: '작가님이 주문을 수락했어요!',
   제작중: '주문하신 상품 제작이 시작됐어요!',
-  '제작 완료': '주문하신 상품이 완성됐어요!',
+  제작완료: '주문하신 상품이 완성됐어요!',
   배송중: '주문하신 상품 배송이 시작됐어요!',
-  '배송 완료': '주문하신 상품 배송이 완료됐어요!',
+  구매확정: '주문하신 상품 배송이 완료됐어요!',
 };
 
 const DescMap: {
-  [key in
-    | '제작 대기중'
-    | '제작중'
-    | '제작 완료'
-    | '배송중'
-    | '배송 완료']: string;
+  [key in '제작대기' | '제작중' | '제작완료' | '배송중' | '구매확정']: string;
 } = {
-  '제작 대기중': '하단의 안내사항을 확인해주세요.',
+  제작대기: '하단의 안내사항을 확인해주세요.',
   제작중: '조금만 기다려주시면 멋진 업사이클링 제품이 완성됩니다.',
-  '제작 완료': '조금만 기다려주시면 멋진 업사이클링 제품이 배송됩니다.',
+  제작완료: '조금만 기다려주시면 멋진 업사이클링 제품이 배송됩니다.',
   배송중: '하단의 배송 정보에서 운송장 번호를 확인해 주세요.',
-  '배송 완료': '마음에 드셨다면 후기를 작성해주세요.',
+  구매확정: '마음에 드셨다면 후기를 작성해주세요.',
 };
 
 export const AlertSection = () => {
@@ -40,24 +30,24 @@ export const AlertSection = () => {
   const [purchaseDetail, setPurchaseDetail] =
     useRecoilState(PurchaseDetailState);
 
-  const currentState = purchaseDetail.state as keyof typeof AlertMap;
+  const currentState = purchaseDetail.orderState as keyof typeof AlertMap;
   console.log(currentState);
 
   return (
     <S.Section>
       <S.AlertMessage>{AlertMap[currentState]}</S.AlertMessage>
-      <S.AlertDesc>{AlertMap[currentState]}</S.AlertDesc>
+      <S.AlertDesc>{DescMap[currentState]}</S.AlertDesc>
       <S.InfoBox>
         <div>
           <S.Title>업사이클링 소재</S.Title>
-          <S.Content>안입는 청바지</S.Content>
+          <S.Content>{purchaseDetail.materialInfo}</S.Content>
         </div>
         <div>
           <S.Title>안내 사항</S.Title>
-          <S.Content>아아아아앙</S.Content>
+          <S.Content>{purchaseDetail.buyerNotice}</S.Content>
         </div>
       </S.InfoBox>
-      {purchaseDetail.state === '제작 대기중' && (
+      {purchaseDetail.orderState === '제작대기' && (
         <S.SellerInfo>
           <S.OpenTab onClick={() => setIsOpen(prev => !prev)}>
             <S.TabName>판매자 정보 확인</S.TabName>
@@ -71,11 +61,11 @@ export const AlertSection = () => {
               </S.TableRow>
               <S.TableRow>
                 <S.TableHeader>연락처</S.TableHeader>
-                <S.Data>{purchaseDetail.sellerNum}</S.Data>
+                <S.Data>{purchaseDetail.sellerPhone}</S.Data>
               </S.TableRow>
               <S.TableRow>
                 <S.TableHeader>주소</S.TableHeader>
-                <S.Data>{`[${purchaseDetail.postcode}] ${purchaseDetail.address}`}</S.Data>
+                <S.Data>{purchaseDetail.buyerAddress}</S.Data>
               </S.TableRow>
             </>
           )}

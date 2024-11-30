@@ -27,6 +27,10 @@ export const HistoryContainer = styled.div`
   width: 100%;
 
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const NavWrapper = styled.div`

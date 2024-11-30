@@ -39,6 +39,10 @@ export const Title = styled.div`
   ${font.semibold}
   font-size: 1.125rem;
   color: var(--black02);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Price = styled.div`

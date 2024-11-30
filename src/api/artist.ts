@@ -1,5 +1,6 @@
 import { client } from './client';
 
+
 export const getArtistInfo = async (userId: number) => {
     try {
         const res = await client.get(`/artist/${userId}`);
@@ -26,3 +27,13 @@ export const getArtistReviews = async (userId: number) => {
         throw error;
     }
 };
+
+export const getMyProducts = async (userId: number) => { //머지하고 함수 하나로 통일하기
+  try {
+    const res = await client.get(`artist/${userId}/product`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+

@@ -54,6 +54,7 @@ export const MyChat = styled.div`
   ${font.regular}
   color: var(--white00);
   font-size: 1rem;
+  text-align: right;
 `;
 
 export const YourChat = styled.div`
@@ -73,4 +74,5 @@ export const YourChat = styled.div`
   ${font.regular}
   color: var(--black);
   font-size: 1rem;
+  text-align: left;
 `;

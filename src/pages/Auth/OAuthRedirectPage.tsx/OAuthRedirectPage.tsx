@@ -20,6 +20,7 @@ const OAuthRedirectPage = () => {
           userId: userInfo.userId,
           name: userInfo.name,
           nickname: userInfo.nickname,
+          profileImageUrl: userInfo.profileImageUrl,
         });
         response.data.isNewUser ? navigate('/signup') : navigate('/');
         return;

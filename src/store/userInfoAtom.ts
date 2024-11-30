@@ -5,8 +5,9 @@ const { persistAtom } = recoilPersist();
 
 interface userStateType {
   userId: number | null;
-  name: string | null;
-  nickname: string | null;
+  name?: string | null;
+  nickname?: string | null;
+  profileImageUrl?: string;
 }
 
 export const userState = atom<userStateType>({
@@ -15,6 +16,7 @@ export const userState = atom<userStateType>({
     userId: 0,
     name: '',
     nickname: '',
+    profileImageUrl: '',
   },
   effects_UNSTABLE: [persistAtom],
 });

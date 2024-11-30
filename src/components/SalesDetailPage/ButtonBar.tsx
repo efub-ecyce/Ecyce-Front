@@ -11,8 +11,8 @@ import { useRecoilState } from 'recoil';
 import { SalesDetailState } from '../../pages/My/SalesDetailPage/SalesDetailPage';
 
 const NameMap: { [key: string]: [string, string] } = {
-  '접수 완료': ['주문 수락하기', '주문 거절하기'],
-  '제작 대기중': ['제작 시작하기', '주문 취소하기'],
+  접수완료: ['주문 수락하기', '주문 거절하기'],
+  제작대기: ['제작 시작하기', '주문 취소하기'],
   제작중: ['제작 완료하기', '주문 취소하기'],
 };
 
@@ -65,11 +65,15 @@ export const ButtonBar = () => {
   return (
     <S.Container>
       {isModalActive && getModal()}
-      <S.YButton onClick={event => openModal(NameMap[salesDetail.state][0])}>
-        {NameMap[salesDetail.state][0]}
+      <S.YButton
+        onClick={event => openModal(NameMap[salesDetail.orderState][0])}
+      >
+        {NameMap[salesDetail.orderState][0]}
       </S.YButton>
-      <S.NButton onClick={event => openModal(NameMap[salesDetail.state][1])}>
-        {NameMap[salesDetail.state][1]}
+      <S.NButton
+        onClick={event => openModal(NameMap[salesDetail.orderState][1])}
+      >
+        {NameMap[salesDetail.orderState][1]}
       </S.NButton>
     </S.Container>
   );
