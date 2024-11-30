@@ -116,11 +116,14 @@ const ProductDetailPage = () => {
             bio={productInfo.content}
           />
           <ReviewContent productId={productInfo.productId} />
+          <Footer 
+            onPurchaseClick={handlePurchaseClick} 
+            productId={productInfo.productId}
+          />
         </>
       ) : (
         <div>로딩 중</div>
       )}
-      <Footer onPurchaseClick={handlePurchaseClick} />
       {isOrderModalOpen && <OrderModal modalHandler={handleModalClose} />}
     </S.Container>
   );

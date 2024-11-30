@@ -23,6 +23,7 @@ export const ButtonWrapper = styled.div`
     display: flex;
     flex-direction: column;
     margin-right: 2.56rem;
+    cursor: pointer;
 `;
 
 export const Wrapper = styled.div`
