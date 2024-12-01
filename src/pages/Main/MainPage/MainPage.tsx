@@ -38,6 +38,7 @@ const MainPage = () => {
       if (!filterName) {
         // 기본값 == 모든 제품
         const response = await getAllProduct();
+        console.log(response);
         setProductList(response.length ? response : productDummyData);
       } else {
         // 필터가 선택된 경우

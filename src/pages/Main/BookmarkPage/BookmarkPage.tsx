@@ -43,7 +43,7 @@ const BookmarkPage = () => {
             duration={bookmark.duration}
             price={bookmark.price}
             // imageURL={bookmark.productThumbnail}
-            isMarked={true}
+            isMarked={bookmark.bookmarked}
           />
         ))}
       </S.Contents>
