@@ -66,6 +66,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (
+      profileImageFile &&
       name.length > 0 &&
       nicknameValid &&
       phoneNumber.length === 11 &&
@@ -77,7 +78,15 @@ const SignupPage = () => {
     } else {
       setIsAllFilled(false);
     }
-  }, [name, nicknameValid, phoneNumber, postalCode, address, detailAddress]);
+  }, [
+    name,
+    nicknameValid,
+    phoneNumber,
+    postalCode,
+    address,
+    detailAddress,
+    profileImageFile,
+  ]);
 
   const validateNickname = (nickname: string) =>
     /^[가-힣a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ]{3,10}$/.test(nickname);
