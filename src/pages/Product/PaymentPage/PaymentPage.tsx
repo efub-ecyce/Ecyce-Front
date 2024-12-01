@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import Header from '../../../components/PaymentPage/Header';
 import ProductComponent from '../../../components/PaymentPage/ProductComponent';
 import RequirementComponent from '../../../components/PaymentPage/RequirementComponent';
@@ -31,6 +32,13 @@ const PaymentPage = () => {
   };
 
   const btnTxt = `${(priceData.productPrice + priceData.deliveryCharge).toLocaleString()}원 결제하기`;
+
+  useEffect(()=>{ 
+    let script = document.querySelector(
+              `script[src="https://cdn.iamport.kr/v1/iamport.js"]`
+          );
+          
+  },[])
 
   return (
     <S.Container>
