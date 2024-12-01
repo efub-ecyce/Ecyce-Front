@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../../components/PaymentPage/Header';
 import ProductComponent from '../../../components/PaymentPage/ProductComponent';
 import RequirementComponent from '../../../components/PaymentPage/RequirementComponent';
@@ -12,13 +12,20 @@ import { getUserInfo, UserInfo } from '../../../api/user';
 const PaymentPage = () => {
 
   const { state } = useLocation();
-  const paymentData = state as {
-    seller: string;
-    title: string;
-    option: string;
-    price: number;
-    deliveryCharge: number;
-  };
+  const navigate = useNavigate();
+
+  const [paymentData, setPaymentData] = useState(() => ({
+    seller: state?.seller,
+    title: state?.title,
+    option: state?.option,
+    price: state?.price,
+    deliveryCharge: state?.deliveryCharge,
+    recipient: state?.recipient,
+    phoneNumber: state?.phoneNumber,
+    postCode: state?.postCode,
+    address: state?.address,
+    addressDetail: state?.addressDetail,
+  }));
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
@@ -38,7 +45,7 @@ const PaymentPage = () => {
         const userData = await getUserInfo();
         setUserInfo(userData);
       } catch (error) {
-        console.error('Failed to fetch user info:', error);
+        console.error('유저 정보 로드 실패', error);
       } finally {
         setLoading(false);
       }
@@ -54,6 +61,10 @@ const PaymentPage = () => {
   if (!userInfo) {
     return <div>회원 정보를 불러오지 못했습니다.</div>;
   }
+
+  const handleEditAddress = () => {
+    navigate('/payment/address', { state: { ...paymentData } });
+  };
 
   return (
     <S.Container>
@@ -72,6 +83,7 @@ const PaymentPage = () => {
         postCode={userInfo.postalCode || ''}
         address={userInfo.address1}
         addressDetail={userInfo.address2}
+        onEditAddress={handleEditAddress}
       />
       <PaymentInfoComponent 
         productPrice={paymentData.price}

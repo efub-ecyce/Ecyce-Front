@@ -50,9 +50,10 @@ export const patchUserInfo = async (
   userInfo: UserInfo,
   imageFile: File | null,
 ) => {
-  const { nickname, phoneNumber, postalCode, address1, address2, bio } =
+  const { name, nickname, phoneNumber, postalCode, address1, address2, bio } =
     userInfo;
   const filteredInfo = {
+    name,
     nickname,
     phoneNumber,
     bio,
