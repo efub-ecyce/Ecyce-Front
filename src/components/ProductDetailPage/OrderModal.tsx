@@ -4,6 +4,7 @@ import { ReactComponent as DrawerBtn } from '../../assets/ProductDetailPage/arro
 import { Button } from '../common/Button';
 import { ReactComponent as CloseBtn } from '../../assets/ProductDetailPage/close.svg';
 import { ProductProps } from '../../pages/Product/ProductDetailPage/ProductDetailPage';
+import { useNavigate } from 'react-router-dom';
 
 interface DrawerProps {
   modalHandler: (
@@ -14,6 +15,7 @@ interface DrawerProps {
 
 export const OrderModal = ({ modalHandler, productInfo }: DrawerProps) => {
   
+  const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<{
     optionName: string;
@@ -37,6 +39,21 @@ export const OrderModal = ({ modalHandler, productInfo }: DrawerProps) => {
 
   const handleOptionClose = () => {
     setSelectedOption(null);
+  };
+
+  const handlePurchase = () => {
+    if (selectedOption) {
+      const paymentData = {
+        seller: productInfo.sellerNickname,
+        title: productInfo.productName,
+        option: selectedOption.optionName,
+        price: productInfo.price + selectedOption.optionPrice,
+        deliveryCharge: productInfo.deliveryFee,
+      };
+      navigate('/payment', { state: paymentData });
+    } else {
+      alert('옵션을 선택해주세요.');
+    }
   };
 
   return (
@@ -77,7 +94,7 @@ export const OrderModal = ({ modalHandler, productInfo }: DrawerProps) => {
             </S.FinalPriceWrapper>
           </S.SelectedWrapper>
         )}
-        <S.ButtonWrapper>
+        <S.ButtonWrapper onClick={handlePurchase}>
           <Button isActive={true} text="구매하기" color="mint" />
         </S.ButtonWrapper>
       </S.Container>

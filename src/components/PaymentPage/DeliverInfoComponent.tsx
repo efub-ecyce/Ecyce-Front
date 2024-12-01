@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 interface AddressProps {
     recipient: string;
     phoneNumber: string;
-    postCode: number;
+    postCode: string;
     address: string;
     addressDetail: string;
 }
