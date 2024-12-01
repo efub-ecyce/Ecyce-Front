@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/common/Button';
 import DaumPostcode from 'react-daum-postcode';
 import Header from '../../../components/common/Header';
+import { patchUserInfo, UserInfo } from '../../../api/user';
 
 const EditAddressPage = () => {
   const [name, setName] = useState<string>('');
@@ -57,11 +58,28 @@ const EditAddressPage = () => {
   };
 
   const onClickButton = async () => {
-      if (isAllFilled) {
-        //api 코드 넣기
+    if (isAllFilled) {
+      try {
+        const userInfo: UserInfo = {
+          name,
+          nickname: '',
+          phoneNumber,
+          postalCode: postcode,
+          address1: address,
+          address2: detailAddress,
+        };
+
+        await patchUserInfo(userInfo, null);
+
         navigate('/payment');
-    };
-  }
+      } catch (error) {
+        console.error('배송지 변경 실패:', error);
+        alert('배송지 변경 중 문제가 발생했습니다. 다시 시도해주세요.');
+      }
+    } else {
+      alert('모든 입력란에 올바르게 입력해주세요.');
+    }
+  };
 
   return (
     <S.Container>
