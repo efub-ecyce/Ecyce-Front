@@ -67,13 +67,17 @@ const SalesDetailPage = () => {
       <S.HeaderWrapper>
         <Header title='판매 내역' />
       </S.HeaderWrapper>
-      <SectionOne />
-      <S.Bar />
-      <SectionTwo />
-      <S.Bar />
-      <SectionThree />
-      <S.Bar />
-      <SectionFour />
+      {typeof salesDetail.orderId === 'number' && (
+        <>
+          <SectionOne />
+          <S.Bar />
+          <SectionTwo />
+          <S.Bar />
+          <SectionThree />
+          <S.Bar />
+          <SectionFour />
+        </>
+      )}
     </S.Container>
   );
 };
