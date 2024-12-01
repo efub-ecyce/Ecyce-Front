@@ -11,6 +11,8 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postAccessTokenReissue } from '../api/oauth';
+import { userState } from '../store/userInfoAtom';
+import { useRecoilValue } from 'recoil';
 
 interface AuthProps {
   Page: () => JSX.Element;
@@ -21,6 +23,8 @@ const Auth = ({ Page, option }: AuthProps) => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const userInfo = useRecoilValue(userState);
 
   useEffect(() => {
     const checkIsLogin = async () => {
@@ -44,7 +48,7 @@ const Auth = ({ Page, option }: AuthProps) => {
     };
 
     checkIsLogin();
-  }, []);
+  }, [userInfo, navigate]);
 
   useEffect(() => {
     if (!isLoading) {
