@@ -9,7 +9,7 @@ export interface ProductProps {
   duration: number;
   price: number;
   isMarked: boolean;
-  productId: number;
+  productId?: number;
   // imageURL: string;
 }
 

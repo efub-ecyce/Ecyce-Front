@@ -1,88 +1,51 @@
+import React, { useState, useEffect } from 'react';
 import NavBar from '../../../components/common/NavBar';
 import ProductComponent1 from '../../../components/common/ProductComponent1';
 import Header from '../../../components/common/Header';
-import { useNavigate } from 'react-router-dom';
 import * as S from './BookmarkPage.style';
+import { getBookmarks } from '../../../api/bookmark';
+
+interface Bookmark {
+  productName: string;
+  duration: number;
+  price: number;
+  productThumbnail: string;
+  bookmarked: boolean;
+}
 
 const BookmarkPage = () => {
-  const productData = {
-    title: "청바지를 활용한 텀블러 가방",
-    term: 3,
-    price: 20000,
-    imageURL: "",
-    bookmarked: true,
-  };
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      try {
+        const data = await getBookmarks();
+        console.log(data)
+        setBookmarks(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchBookmarks();
+  }, []);
+  
   return (
     <S.Container>
       <S.Top>
         <Header title='관심목록'/>
       </S.Top>
       <S.Contents>
-        {/* 이거 나중에 map으로 꼭 바꿔라 ;;
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        />
-        <ProductComponent1
-          title={productData.title}
-          term={productData.term}
-          price={productData.price}
-          imageURL={productData.imageURL}
-          bookmarkedData={productData.bookmarked}
-        /> */}
+        {bookmarks.map((bookmark, index) => (
+          <ProductComponent1
+            key={index}
+            productName={bookmark.productName}
+            duration={bookmark.duration}
+            price={bookmark.price}
+            // imageURL={bookmark.productThumbnail}
+            isMarked={true}
+          />
+        ))}
       </S.Contents>
       <S.NavBar>
         <NavBar />

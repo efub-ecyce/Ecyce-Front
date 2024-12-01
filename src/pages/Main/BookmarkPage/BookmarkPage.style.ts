@@ -40,7 +40,8 @@ export const Contents = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     gap: 1rem;
     width: 100%;
-    justify-content: center;
+    min-height: 800px;
+    align-items: flex-start;
     overflow-y: auto;
     margin-top: calc(3.5rem);
     margin-bottom: 80px;
