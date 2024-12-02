@@ -85,3 +85,22 @@ export const patchConfirmOrder = async (orderId: number) => {
     throw error;
   }
 };
+
+export const postOrderInfo = async (
+        productId: number,
+        productOptionId: number,
+        orderCount: number,
+        request: string,
+    ) => {
+        try {
+        const res = await client.post(`/orders`, {
+          productId: productId,
+          productOptionId: productOptionId,
+          orderCount: orderCount,
+          request: request,
+        });
+        return res.data;
+        } catch (error) {
+        throw error;
+        }
+};

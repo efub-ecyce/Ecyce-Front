@@ -8,7 +8,7 @@ import PaymentInfoComponent from '../../../components/PaymentPage/PaymentInfoCom
 import { Button } from '../../../components/common/Button';
 import * as S from './PaymentPage.style';
 import { getUserInfo, UserInfo } from '../../../api/user';
-import { postPayInfo } from '../../../api/pay';
+import { postOrderInfo } from '../../../api/order';
 
 // declare global {
 //   interface Window {
@@ -101,8 +101,10 @@ const PaymentPage = () => {
 
   const [paymentData, setPaymentData] = useState(() => ({
     seller: state?.seller,
+    productId: state?.productId,
     title: state?.title,
     option: state?.option,
+    productOptionId: state?.optionId,
     price: state?.price,
     deliveryCharge: state?.deliveryCharge,
     recipient: state?.recipient,
@@ -114,6 +116,7 @@ const PaymentPage = () => {
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [request, setRequest] = useState('');
 
   const btnTxt = `${(paymentData.price + paymentData.deliveryCharge).toLocaleString()}원 결제하기`;
 
@@ -126,10 +129,12 @@ const PaymentPage = () => {
 
     IMP.init("imp87104862"); // 가맹점 식별코드
 
+    const merchant_uid = `order_${new Date().getTime()}`;
+
     const data = {
           pg: pgValue,
           pay_method: payMethod,
-          merchant_uid: `order_${new Date().getTime()}`,
+          merchant_uid: merchant_uid,
           name: paymentData.title,
           amount: (paymentData.price || 0) + (paymentData.deliveryCharge || 0),
           buyer_email: "",
@@ -139,10 +144,23 @@ const PaymentPage = () => {
           buyer_postcode: paymentData.postCode,
           m_redirect_url: "",
       }
-      IMP.request_pay(data, (res) => {
+      IMP.request_pay(data, async (res) => {
           if (res.success) {
             console.log("결제 성공")
             console.log("imp_uid:", res.imp_uid);
+
+            try {
+              const paymentResponse = await postOrderInfo(
+                paymentData.productId,
+                paymentData.productOptionId,
+                1,
+                request,
+              );
+              console.log("결제 정보 저장 성공:", paymentResponse);
+            } catch (error) {
+              console.error("결제 정보 저장 실패:", error);
+            }
+
             navigate('/payment/complete');
           } else {
               console.log("결제 실패:", res.error_msg);
@@ -208,7 +226,7 @@ const PaymentPage = () => {
         price={paymentData.price}
         imageURL={""}
       />
-      <RequirementComponent />
+      <RequirementComponent onChange={setRequest}/>
       <DeliverInfoComponent 
         recipient={userInfo.name}
         phoneNumber={userInfo.phoneNumber}

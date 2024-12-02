@@ -18,6 +18,7 @@ export const OrderModal = ({ modalHandler, productInfo }: DrawerProps) => {
   const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<{
+    optionId: number;
     optionName: string;
     optionPrice: number;
   } | null>(null);
@@ -32,8 +33,8 @@ export const OrderModal = ({ modalHandler, productInfo }: DrawerProps) => {
     setIsDrawerOpen((prevState) => !prevState);
   };
 
-  const handleOptionSelect = (optionName: string, optionPrice: number) => {
-    setSelectedOption({ optionName, optionPrice });
+  const handleOptionSelect = (optionId: number, optionName: string, optionPrice: number) => {
+    setSelectedOption({ optionId, optionName, optionPrice });
     setIsDrawerOpen(false);
   };
 
@@ -47,6 +48,8 @@ export const OrderModal = ({ modalHandler, productInfo }: DrawerProps) => {
         seller: productInfo.sellerNickname,
         title: productInfo.productName,
         option: selectedOption.optionName,
+        optionId: selectedOption.optionId,
+        productId: productInfo.productId,
         price: productInfo.price + selectedOption.optionPrice,
         deliveryCharge: productInfo.deliveryFee,
       };
@@ -67,7 +70,7 @@ export const OrderModal = ({ modalHandler, productInfo }: DrawerProps) => {
           {isDrawerOpen && productInfo.options.map((option) => (
             <S.OptionWrapper 
               key={option.optionId}
-              onClick={() => handleOptionSelect(option.optionName, option.optionPrice)}
+              onClick={() => handleOptionSelect(option.optionId, option.optionName, option.optionPrice)}
             >
               <S.Option>{option.optionName}</S.Option>
               <S.OptionPrice>+{option.optionPrice.toLocaleString()}원</S.OptionPrice>
