@@ -52,6 +52,7 @@ export const Image = styled.img`
   border-radius: 0.5rem;
 
   flex-shrink: 0;
+  object-fit: cover;
 `;
 
 export const Info = styled.div`

@@ -19,10 +19,7 @@ export interface HistoryProps {
   orderState: string;
   createdAt: string;
   totalPrice: number;
-  productImages?: {
-    productImageId?: number;
-    productImageUrl?: string;
-  };
+  productThumbnail: string;
 }
 
 const PurchaseHistoryPage = () => {
