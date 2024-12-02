@@ -143,10 +143,10 @@ const ChatPage = () => {
           <BackIcon />
         </S.IconWrapper>
         <S.Name>{otherUserName}</S.Name>
-        <S.IconWrapper onClick={e => modalHandler(e, 'open')}>
+        {/* <S.IconWrapper onClick={e => modalHandler(e, 'open')}>
           <MoreIcon />
         </S.IconWrapper>
-        {isModalOpen && <ChatModal />}
+        {isModalOpen && <ChatModal />} */}
       </S.Header>
       <MessageList messages={chatHistory} />
       <S.InputBar>
