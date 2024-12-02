@@ -3,6 +3,7 @@ import * as font from '../../styles/font';
 
 export const Container = styled.div<{ $isRead: boolean }>`
   display: flex;
+  position: relative;
 
   width: 98%;
   height: 7.25rem;
@@ -44,6 +45,10 @@ export const Time = styled.div`
   ${font.medium}
   font-size: 0.875rem;
   color: #889493;
-  margin-top: auto;
-  margin-left: auto;
+  /* margin-top: auto;
+  margin-left: auto; */
+  position: absolute;
+
+  right: 1.15rem;
+  bottom: 1.15rem;
 `;
