@@ -143,6 +143,7 @@ const PaymentPage = () => {
           if (res.success) {
             console.log("결제 성공")
             console.log("imp_uid:", res.imp_uid);
+            navigate('/payment/complete');
           } else {
               console.log("결제 실패:", res.error_msg);
           }
