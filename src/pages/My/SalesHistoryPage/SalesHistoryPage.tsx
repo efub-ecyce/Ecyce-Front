@@ -7,6 +7,8 @@ import { History } from '../../../components/HistoryPage/History';
 import NavBar from '../../../components/common/NavBar';
 import { HistoryProps } from '../PurchaseHistoryPage/PurchaseHistoryPage';
 import { getSalesHistory } from '../../../api/order';
+import { SalesDetailState } from '../SalesDetailPage/SalesDetailPage';
+import { useResetRecoilState } from 'recoil';
 
 const filterList = ['전체', '접수', '진행중', '완료'];
 
@@ -26,15 +28,23 @@ const SalesHistoryPage = () => {
   const [historyList, setHistoryList] = useState<HistoryProps[]>([]);
   const [filteredList, setFilteredList] = useState<HistoryProps[]>([]);
 
+  const resetDetail = useResetRecoilState(SalesDetailState);
+
   const isDateInRange = (date: string) => {
     const createdDate = new Date(date);
+    const _endDate = endDate ? new Date(endDate.getTime()) : null;
+    if (_endDate) {
+      _endDate.setDate(_endDate.getDate() + 1);
+    }
     return (
       (!startDate || createdDate >= startDate) &&
-      (!endDate || createdDate <= endDate)
+      (!_endDate || createdDate <= _endDate)
     );
   };
 
   useEffect(() => {
+    resetDetail();
+
     const getHistoryList = async () => {
       try {
         const response = await getSalesHistory();

@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 
 export interface SalesDetail {
   orderId: number;
+  productThumbnail: string;
   productName: string;
   productOption: string;
   orderCount: number;
@@ -67,13 +68,17 @@ const SalesDetailPage = () => {
       <S.HeaderWrapper>
         <Header title='판매 내역' />
       </S.HeaderWrapper>
-      <SectionOne />
-      <S.Bar />
-      <SectionTwo />
-      <S.Bar />
-      <SectionThree />
-      <S.Bar />
-      <SectionFour />
+      {typeof salesDetail.orderId === 'number' && (
+        <>
+          <SectionOne />
+          <S.Bar />
+          <SectionTwo />
+          <S.Bar />
+          <SectionThree />
+          <S.Bar />
+          <SectionFour />
+        </>
+      )}
     </S.Container>
   );
 };

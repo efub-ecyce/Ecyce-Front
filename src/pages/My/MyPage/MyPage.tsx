@@ -44,8 +44,8 @@ const MyPage = () => {
   const LogOut = () => {
     localStorage.removeItem('token');
     resetUserInfo();
-    setIsLOModalOpen(false);
     navigate('/login');
+    setIsLOModalOpen(false);
   };
 
   return (

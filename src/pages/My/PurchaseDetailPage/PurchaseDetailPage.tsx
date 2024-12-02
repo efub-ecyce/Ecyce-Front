@@ -71,22 +71,26 @@ const PurchaseDetailPage = () => {
         <Header title='구매 내역' />
       </S.HeaderWrapper>
 
-      <SectionOne />
-      <S.Bar />
-      {['제작대기', '제작중', '제작완료', '배송중', '구매확정'].includes(
-        purchaseDetail.orderState,
-      ) && (
+      {typeof purchaseDetail.orderId === 'number' && (
         <>
-          <AlertSection />
+          <SectionOne />
           <S.Bar />
+          {['제작대기', '제작중', '제작완료', '배송중', '구매확정'].includes(
+            purchaseDetail.orderState,
+          ) && (
+            <>
+              <AlertSection />
+              <S.Bar />
+            </>
+          )}
+
+          <SectionTwo />
+          <S.Bar />
+          <SectionThree />
+          <S.Bar />
+          <SectionFour />
         </>
       )}
-
-      <SectionTwo />
-      <S.Bar />
-      <SectionThree />
-      <S.Bar />
-      <SectionFour />
     </S.Container>
   );
 };

@@ -6,39 +6,10 @@ import { DatePickerBar } from '../../../components/HistoryPage/DatePickerBar';
 import { History } from '../../../components/HistoryPage/History';
 import NavBar from '../../../components/common/NavBar';
 import { getPurchaseHistory } from '../../../api/order';
+import { PurchaseDetailState } from '../PurchaseDetailPage/PurchaseDetailPage';
+import { ResetRecoilState, useResetRecoilState } from 'recoil';
 
 const filterList = ['전체', '진행중', '완료'];
-
-const dummyHistory = [
-  {
-    orderId: 1,
-    productName: '파우치 가방 리사이클링',
-    productOption: '텀블러 옵션 1',
-    orderCount: 1,
-    orderState: '접수완료',
-    createdAt: '2024-11-08T22:35:53.26533',
-    totalPrice: 15000, // 배송비 + 상품가격
-    productImages: {
-      productImageId: 1,
-      productImageUrl:
-        'https://karma-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/reviewImages/example1.jpg',
-    },
-  },
-  {
-    orderId: 1,
-    productName: '파우치 가방 리사이클링',
-    productOption: '텀블러 옵션 1',
-    orderCount: 1,
-    orderState: '접수완료',
-    createdAt: '2024-11-08T22:35:53.26533',
-    totalPrice: 15000, // 배송비 + 상품가격
-    productImages: {
-      productImageId: 1,
-      productImageUrl:
-        'https://karma-s3-bucket.s3.ap-northeast-2.amazonaws.com/images/reviewImages/example1.jpg',
-    },
-  },
-];
 
 export interface HistoryProps {
   orderId: number;
@@ -48,10 +19,7 @@ export interface HistoryProps {
   orderState: string;
   createdAt: string;
   totalPrice: number;
-  productImages?: {
-    productImageId?: number;
-    productImageUrl?: string;
-  };
+  productThumbnail: string;
 }
 
 const PurchaseHistoryPage = () => {
@@ -70,15 +38,22 @@ const PurchaseHistoryPage = () => {
   const [historyList, setHistoryList] = useState<HistoryProps[]>([]);
   const [filteredList, setFilteredList] = useState<HistoryProps[]>([]);
 
+  const resetDetail = useResetRecoilState(PurchaseDetailState);
+
   const isDateInRange = (date: string) => {
     const createdDate = new Date(date);
+    const _endDate = endDate ? new Date(endDate.getTime()) : null;
+    if (_endDate) {
+      _endDate.setDate(_endDate.getDate() + 1);
+    }
     return (
       (!startDate || createdDate >= startDate) &&
-      (!endDate || createdDate <= endDate)
+      (!_endDate || createdDate <= _endDate)
     );
   };
 
   useEffect(() => {
+    resetDetail();
     const getHistoryList = async () => {
       try {
         const response = await getPurchaseHistory();

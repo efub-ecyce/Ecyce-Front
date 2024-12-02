@@ -69,7 +69,7 @@ const ReviewWritePage = () => {
       <Header title='후기 작성' />
 
       <S.ProductInfo>
-        <S.Image />
+        <S.Image src={purchaseDetail.productThumbnail} />
         <S.TextInfo>
           <S.Name>{purchaseDetail.productName}</S.Name>
           <S.Options>{purchaseDetail.productOption}</S.Options>

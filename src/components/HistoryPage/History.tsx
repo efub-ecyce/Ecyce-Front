@@ -23,7 +23,7 @@ export const History = (props: HistoryProps) => {
         <S.State>{props.orderState}</S.State>
       </S.Header>
       <S.Content>
-        <S.Image src={props?.productImages?.productImageUrl || undefined} />
+        <S.Image src={props?.productThumbnail || undefined} />
         <S.Info>
           <S.Name>{props.productName}</S.Name>
           <S.Options>
