@@ -1,8 +1,7 @@
 import { clientNoAuth, client } from './client';
 
 const CLIENT_ID = `${process.env.REACT_APP_KAKAO_REST_API_KEY}`;
-const FRONT_DOMAIN = `http://localhost:3000`;
-const REDIRECT_URI = `${FRONT_DOMAIN}/login/oauth2/kakao`;
+const REDIRECT_URI = `${process.env.REACT_APP_FRONT_URL}/login/oauth2/kakao`;
 
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
