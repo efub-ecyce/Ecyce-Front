@@ -8,6 +8,7 @@ import PaymentInfoComponent from '../../../components/PaymentPage/PaymentInfoCom
 import { Button } from '../../../components/common/Button';
 import * as S from './PaymentPage.style';
 import { getUserInfo, UserInfo } from '../../../api/user';
+import { postPayInfo } from '../../../api/pay';
 
 // declare global {
 //   interface Window {
@@ -123,26 +124,27 @@ const PaymentPage = () => {
       return;
     }
 
-    IMP.init("iamport"); // 가맹점 식별코드
+    IMP.init("imp87104862"); // 가맹점 식별코드
 
     const data = {
           pg: pgValue,
           pay_method: payMethod,
-          merchant_uid: "",
+          merchant_uid: `order_${new Date().getTime()}`,
           name: paymentData.title,
           amount: (paymentData.price || 0) + (paymentData.deliveryCharge || 0),
           buyer_email: "",
           buyer_name: userInfo?.name,
           buyer_tel: paymentData.phoneNumber,
-          buyer_addr: (paymentData.address) + (paymentData.addressDetail),
+          buyer_addr: `${paymentData.address || ''} ${paymentData.addressDetail || ''}`,
           buyer_postcode: paymentData.postCode,
           m_redirect_url: "",
       }
       IMP.request_pay(data, (res) => {
           if (res.success) {
-          console.log("결제 성공")
+            console.log("결제 성공")
+            console.log("imp_uid:", res.imp_uid);
           } else {
-              console.log("결제 실패")
+              console.log("결제 실패:", res.error_msg);
           }
       });
     }
@@ -150,7 +152,21 @@ const PaymentPage = () => {
   useEffect(()=>{ 
     let script = document.querySelector(
               `script[src="https://cdn.iamport.kr/v1/iamport.js"]`
-          );
+    ) as HTMLScriptElement | null;
+
+    if (!script) {
+      script = document.createElement("script") as HTMLScriptElement;
+      script.src = "https://cdn.iamport.kr/v1/iamport.js";
+      script.async = true;
+      document.body.appendChild(script);
+
+    }
+
+    return () => {
+      if (script) {
+          document.body.removeChild(script);
+      }
+    };
           
   },[])
 
