@@ -118,7 +118,7 @@ const ProductDetailPage = () => {
           <ReviewContent productId={productInfo.productId} />
           <Footer 
             onPurchaseClick={handlePurchaseClick} 
-            productId={productInfo.productId}
+            productInfo={productInfo}
           />
         </>
       ) : (
