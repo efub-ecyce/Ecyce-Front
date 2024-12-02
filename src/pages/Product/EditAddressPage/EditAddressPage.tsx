@@ -1,19 +1,23 @@
 import * as S from './EditAddressPage.style';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/common/Button';
 import DaumPostcode from 'react-daum-postcode';
 import Header from '../../../components/common/Header';
+import { patchUserInfo, UserInfo } from '../../../api/user';
 
 const EditAddressPage = () => {
-  const [name, setName] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const { state } = useLocation();
+  const navigate = useNavigate();
+
+  const [name, setName] = useState<string>(state?.name || '');
+  const [phoneNumber, setPhoneNumber] = useState<string>(state?.phoneNumber || '');
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
 
   const [postcodeOpen, setPostcodeOpen] = useState<boolean>(false);
-  const [postcode, setPostcode] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
-  const [detailAddress, setDetailAddress] = useState<string>('');
+  const [postcode, setPostcode] = useState<string>(state?.postcode || '');
+  const [address, setAddress] = useState<string>(state?.address || '');
+  const [detailAddress, setDetailAddress] = useState<string>(state?.detailAddress || '');
 
   const handlePostcodeComplete = (data: any) => {
     // 우편번호 & 주소 업데이트
@@ -29,8 +33,6 @@ const EditAddressPage = () => {
   const handlePostcodeClose = () => {
     setPostcodeOpen(false);
   };
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -57,11 +59,29 @@ const EditAddressPage = () => {
   };
 
   const onClickButton = async () => {
-      if (isAllFilled) {
-        //api 코드 넣기
-        navigate('/payment');
-    };
-  }
+    if (isAllFilled) {
+      try {
+        const userInfo: UserInfo = {
+          name,
+          nickname: '',
+          phoneNumber,
+          postalCode: postcode,
+          address1: address,
+          address2: detailAddress,
+        };
+  
+        await patchUserInfo(userInfo, null);
+  
+        // 브라우저 히스토리로 이전 페이지로 이동
+        window.history.go(-1);
+      } catch (error) {
+        console.error('배송지 변경 실패:', error);
+        alert('배송지 변경 중 문제가 발생했습니다. 다시 시도해주세요.');
+      }
+    } else {
+      alert('모든 입력란에 올바르게 입력해주세요.');
+    }
+  };
 
   return (
     <S.Container>

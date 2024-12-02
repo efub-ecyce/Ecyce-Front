@@ -5,11 +5,10 @@ interface ProductProps {
     title: string;
     price: number;
     imageURL: string;
-    option1: number;
-    option2: number;
+    option: string;
 }
 
-const ProductComponent = ({seller, title, price, imageURL, option1, option2} : ProductProps) => {
+const ProductComponent = ({ seller, title, price, imageURL, option } : ProductProps) => {
     return (
         <S.Wrapper>
             <S.Title>주문 상품</S.Title>
@@ -20,13 +19,13 @@ const ProductComponent = ({seller, title, price, imageURL, option1, option2} : P
                     <S.TextWrapper>
                         <S.Title>{title}</S.Title>
                         <S.OptionWrapper>
-                            <S.Option>옵션1</S.Option>
-                            <S.Option>{option1}개</S.Option>
+                            <S.Option>{option}</S.Option>
+                            <S.Option>1개</S.Option>
                         </S.OptionWrapper>
-                        <S.OptionWrapper>
+                        {/* <S.OptionWrapper>
                             <S.Option>옵션2</S.Option>
                             <S.Option>{option2}개</S.Option>
-                        </S.OptionWrapper>
+                        </S.OptionWrapper> */}
                         <S.Title>{price.toLocaleString()}원</S.Title>
                     </S.TextWrapper>
                 </S.ContentWrapper>

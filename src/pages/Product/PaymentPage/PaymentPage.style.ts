@@ -19,3 +19,7 @@ export const Container = styled.div`
     padding: 0 1.28125rem;
     box-sizing: border-box;
 `;
+
+export const Wrapper = styled.div`
+    width: 100%;
+`;
