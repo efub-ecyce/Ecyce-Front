@@ -14,6 +14,7 @@ export interface ProductProps {
   price: number;
   productId: number;
   productName: string;
+  thumbnail: string;
 }
 
 const productDummyData: ProductProps[] = [
@@ -25,7 +26,7 @@ const productDummyData: ProductProps[] = [
     price: 20000,
     productId: 1,
     productName: "청바지를 활용한 텀블러 가방",
-    // imageURL: "",
+    thumbnail: "",
   },
 ];
 
@@ -77,7 +78,7 @@ const MainPage = () => {
             productName={product.productName}
             duration={product.duration}
             price={product.price}
-            // imageURL={product.imageURL}
+            thumbnail={product.thumbnail}
             isMarked={product.isMarked}
             productId={product.productId}
           />

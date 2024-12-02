@@ -10,10 +10,10 @@ export interface ProductProps {
   price: number;
   isMarked: boolean;
   productId: number;
-  // imageURL: string;
+  thumbnail: string;
 }
 
-const ProductComponent1 = ({ productName, duration, price, isMarked, productId }: ProductProps) => {
+const ProductComponent1 = ({ productName, duration, price, isMarked, productId, thumbnail }: ProductProps) => {
   const [bookmarked, setBookmarked] = useState(isMarked);
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const ProductComponent1 = ({ productName, duration, price, isMarked, productId }
   
   return (
     <S.Wrapper onClick={handleNavigate}>
-      <S.ProductPicture imageURL={"imageURL"}></S.ProductPicture>
+      <S.ProductPicture imageURL={thumbnail}></S.ProductPicture>
       <S.Title>{productName}</S.Title>
       <S.Term>제작 소요 기간 {duration}일</S.Term>
       <S.PNB>
