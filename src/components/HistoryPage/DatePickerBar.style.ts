@@ -14,6 +14,7 @@ export const Container = styled.div`
   height: 1.875rem;
 
   margin: 2.31rem 0;
+  flex-shrink: 0;
 `;
 
 export const StyledBox = styled.div`

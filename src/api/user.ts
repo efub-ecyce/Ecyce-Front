@@ -1,6 +1,5 @@
 import { client } from './client';
 
-
 export interface UserInfo {
   name: string;
   nickname: string;
@@ -82,8 +81,7 @@ export const patchUserInfo = async (
 
     const res2 = await client.patch('/user/address', addressInfo);
 
-    return res.data + res2.data;
-
+    return res.data;
   } catch (error) {
     throw error;
   }

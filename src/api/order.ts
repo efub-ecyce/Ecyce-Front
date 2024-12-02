@@ -64,11 +64,15 @@ export const patchCompleteOrder = async (orderId: number) => {
   }
 };
 
-export const patchShipOrder = async (orderId: number, invoice: string) => {
+export const patchShipOrder = async (
+  orderId: number,
+  comp: string,
+  invoice: string,
+) => {
   try {
-    const res = await client.patch(`/orders/${orderId}/ship`, {
-      invoiceNumber: invoice,
-    });
+    const res = await client.patch(
+      `/orders/${orderId}/ship?invoiceNumber=${invoice}&deliveryCompany=${comp}`,
+    );
   } catch (error) {
     throw error;
   }

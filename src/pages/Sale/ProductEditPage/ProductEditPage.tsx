@@ -1,15 +1,21 @@
 import * as S from '../ProductRegistPage/ProductRegistPage.style';
-import { ImageUpload } from '../../../components/common/ImageUpload';
+import {
+  ImageUpload,
+  ImageUploadWithNull,
+} from '../../../components/common/ImageUpload';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../../components/common/Header';
 import { OptionComponent } from '../../../components/ProductRegisterPage/OptionComponent';
 import { Button } from '../../../components/common/Button';
 import {
+  deleteImages,
   deleteOptions,
   getProductDetail,
+  patchPostImages,
   patchProduct,
   postOptions,
+  ProductImage,
   ProductInfo,
 } from '../../../api/product';
 
@@ -29,6 +35,8 @@ const extractProductData = (data: any) => {
     materialInfo,
     buyerNotice,
     options,
+    materialExample,
+    imgs,
   } = data;
 
   return {
@@ -44,12 +52,14 @@ const extractProductData = (data: any) => {
       optionName: opt.optionName,
       optionPrice: opt.optionPrice,
     })),
+    materialExample,
+    imgs,
   };
 };
 
 const ProductEditPage = () => {
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
-  const [productImgFile, setProductImgFile] = useState<File[]>([]);
+  const [productImgFile, setProductImgFile] = useState<Array<File | null>>([]);
   const [productImgPreview, setProductImgPreview] = useState<string[]>([]);
   const [materialImgFile, setMaterialImgFile] = useState<File[]>([]);
   const [materialImgPreview, setMaterialImgPreview] = useState<string[]>([]);
@@ -61,14 +71,18 @@ const ProductEditPage = () => {
     duration: undefined,
     deliveryFee: undefined,
     materialInfo: '',
+    materialExample: '',
     buyerNotice: '',
     options: [],
+    imgs: [],
   });
 
   const [prevOptions, setPrevOptions] = useState<
     { optionId: number; optionName: string; optionPrice: number }[]
   >([]);
   const [options, setOptions] = useState<Option_Client[]>([]);
+
+  const [prevImages, setPrevImages] = useState<ProductImage[]>([]);
 
   const navigate = useNavigate();
   const productId = useLocation().state.productId;
@@ -80,6 +94,11 @@ const ProductEditPage = () => {
         const extractedData = extractProductData(res);
         setProductData(extractedData);
         setPrevOptions(extractedData.options);
+        setPrevImages(extractedData.imgs);
+        setProductImgPreview(
+          extractedData.imgs.map((item: ProductImage) => item.productImgUrl),
+        );
+        setMaterialImgPreview([extractedData.materialExample]);
       } catch (error) {
         console.error(error);
       }
@@ -131,8 +150,8 @@ const ProductEditPage = () => {
             opt.optionName?.trim() !== '' && // optionName is not empty
             !!opt.optionPrice, // optionPrice is defined
         ) &&
-        productImgFile.length > 0 && // productImgFile has at least one file
-        materialImgFile.length > 0 // materialImgFile has at least one file
+        productImgPreview.length > 0 && // productImgFile has at least one file
+        materialImgPreview.length > 0 // materialImgFile has at least one file
       );
     };
 
@@ -167,15 +186,28 @@ const ProductEditPage = () => {
         materialInfo: productData.materialInfo,
         buyerNotice: productData.buyerNotice,
       };
+
+      const deletedImgs = prevImages
+        .filter(prev => !productImgPreview.includes(prev.productImgUrl))
+        .map(prev => prev.imgId);
+
+      console.log(deletedImgs);
       try {
-        const res = await patchProduct(
+        const res_product = await patchProduct(productId, patchData);
+
+        const res_patch_image = await patchPostImages(
           productId,
-          patchData,
-          productImgFile,
+          productImgFile.filter(item => item !== null) as File[],
           materialImgFile,
         );
 
-        const res2 = await Promise.all(
+        if (deletedImgs.length > 0) {
+          const res_delete_image = await Promise.all(
+            deletedImgs.map(imgId => deleteImages(productId, imgId)),
+          );
+        }
+
+        const res_add_option = await Promise.all(
           options.map(option =>
             postOptions(
               productId,
@@ -185,7 +217,7 @@ const ProductEditPage = () => {
           ),
         );
 
-        const res3 = await Promise.all(
+        const res_delete_option = await Promise.all(
           prevOptions.map(option => deleteOptions(productId, option.optionId)),
         );
 
@@ -200,7 +232,7 @@ const ProductEditPage = () => {
     <S.Container>
       <Header title='등록하기' />
       <S.Title>기본 정보</S.Title>
-      <ImageUpload
+      <ImageUploadWithNull
         id='product'
         imageNum={5}
         imgFile={productImgFile}

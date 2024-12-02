@@ -27,7 +27,7 @@ export const SectionThree = () => {
         <>
           <S.TableRow>
             <S.TableHeader>택배사</S.TableHeader>
-            <S.Data>{}</S.Data>
+            <S.Data>{purchaseDetail.deliveryCompany}</S.Data>
           </S.TableRow>
           <S.TableRow>
             <S.TableHeader>운송장번호</S.TableHeader>
