@@ -13,6 +13,7 @@ interface ArtistProduct {
   duration : number;
   productState : string;
   isMarked : boolean;
+  thumbnail : string;
 }
 
 const ProductList = () => {
@@ -53,7 +54,7 @@ const ProductList = () => {
             productName={product.productName}
             duration={product.duration}
             price={product.price}
-            // imageURL={product.imageURL}
+            thumbnail={product.thumbnail}
             isMarked={product.isMarked}
             productId={product.productId}
           />

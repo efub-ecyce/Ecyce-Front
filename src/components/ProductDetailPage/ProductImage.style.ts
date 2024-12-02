@@ -22,6 +22,10 @@ export const Top = styled.div`
     z-index: 2;
 `;
 
+export const BackBtn = styled.div`
+    cursor: pointer;
+`;
+
 export const ImgContainer = styled.div`
     width: 100%;
     height: 100%;
