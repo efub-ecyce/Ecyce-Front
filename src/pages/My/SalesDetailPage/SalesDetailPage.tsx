@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 
 export interface SalesDetail {
   orderId: number;
+  productThumbnail: string;
   productName: string;
   productOption: string;
   orderCount: number;

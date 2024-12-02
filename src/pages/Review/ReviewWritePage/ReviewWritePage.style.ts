@@ -30,6 +30,8 @@ export const ProductInfo = styled.div`
 export const Image = styled.img`
   width: 6.3125rem;
   height: 6.3125rem;
+
+  object-fit: cover;
 `;
 
 export const TextInfo = styled.div`
