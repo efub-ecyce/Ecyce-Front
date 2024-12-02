@@ -74,9 +74,9 @@ const ReviewPage = () => {
               userName={review.reviewerName}
               score={review.rating.toFixed(1)}
               content={review.content}
-              reviewImg1={""}
-              reviewImg2={""}
-              reviewImg3={""}
+              reviewImg1={review.reviewImages[0]}
+              reviewImg2={review.reviewImages[1]}
+              reviewImg3={review.reviewImages[2]}
               writtenDate={review.reviewDate}
               onClick={() => handleReviewClick(review)}
             />
@@ -94,9 +94,9 @@ const ReviewPage = () => {
               userName={selectedReview.reviewerName}
               score={selectedReview.rating.toFixed(1)}
               content={selectedReview.content}
-              reviewImg1={""}
-              reviewImg2={""}
-              reviewImg3={""}
+              reviewImg1={selectedReview.reviewImages[0]}
+              reviewImg2={selectedReview.reviewImages[1]}
+              reviewImg3={selectedReview.reviewImages[2]}
               writtenDate={selectedReview.reviewDate}
             />
           </S.DetailWrapper>

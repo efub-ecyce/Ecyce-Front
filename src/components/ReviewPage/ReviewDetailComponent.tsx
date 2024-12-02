@@ -4,15 +4,16 @@ import { ReactComponent as YellowStar } from '../../assets/ReviewPage/karma-logo
 import { ReactComponent as EmptyStar } from '../../assets/ReviewPage/karma-logo-gray.svg';
 import { ReactComponent as LeftArrow } from '../../assets/ReviewPage/arrow_key_left.svg';
 import { ReactComponent as RightArrow } from '../../assets/ReviewPage/arrow_key_right.svg';
+import type { ReviewImages } from '../ProfilePage/ReviewList';
 
 interface ReviewProps {
     profileImg: string;
     userName: string;
     score: string;
     content: string;
-    reviewImg1: string;
-    reviewImg2: string;
-    reviewImg3: string;
+    reviewImg1: ReviewImages;
+    reviewImg2: ReviewImages;
+    reviewImg3: ReviewImages;
     writtenDate: string;
 }
 
@@ -46,7 +47,7 @@ const ReviewDetailComponent = ({ profileImg, userName, score, content, reviewImg
             <S.ImagesWrapper>
                 <S.ArrowBtn><LeftArrow /></S.ArrowBtn>
                 <S.Image>
-                    {reviewImg1 ? <img src={reviewImg1} alt="Review Image 1" /> : null}
+                    {reviewImg1 ? <img src={reviewImg1.imageUrl} alt="Review Image 1" /> : null}
                 </S.Image>
                 <S.ArrowBtn><RightArrow /></S.ArrowBtn>
             </S.ImagesWrapper>
