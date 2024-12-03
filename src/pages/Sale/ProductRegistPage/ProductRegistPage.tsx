@@ -61,7 +61,7 @@ const ProductRegistPage = () => {
         options.every(
           opt =>
             opt.optionName?.trim() !== '' && // optionName is not empty
-            !!opt.optionPrice, // optionPrice is defined
+            opt.optionPrice !== undefined, // optionPrice is defined
         ) &&
         productImgFile.length > 0 && // productImgFile has at least one file
         materialImgFile.length > 0 // materialImgFile has at least one file
