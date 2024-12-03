@@ -18,7 +18,7 @@ export interface ProfileInfo {
 
 // const ProfileData: ProfileInfo = {
 //   userId: 1886,
-//   nickname: "이끼끼상점",  
+//   nickname: "이끼끼상점",
 //   email: "abc@mail.com",
 //   profileImage: "",
 //   phoneNumber: "01012345678",
@@ -28,9 +28,11 @@ export interface ProfileInfo {
 // }
 
 const ProfilePage = () => {
-  const {userId} = useParams<{ userId: string }>();
+  const { userId } = useParams<{ userId: string }>();
   const [artistInfo, setArtistInfo] = useState<ProfileInfo | null>(null);
-  const [selectedTab, setSelectedTab] = useState<'상품 리스트' | '후기'>('상품 리스트');
+  const [selectedTab, setSelectedTab] = useState<'상품 리스트' | '후기'>(
+    '상품 리스트',
+  );
 
   useEffect(() => {
     const fetchArtistInfo = async () => {
@@ -52,16 +54,17 @@ const ProfilePage = () => {
 
   return (
     <>
-      <ProfileCard 
+      <ProfileCard
+        userId={artistInfo.userId}
         profileImg={artistInfo.profileImage}
         userName={artistInfo.nickname}
         score={artistInfo.averageRating}
         content={artistInfo.bio}
       />
-      <FilterTab selectedTab={selectedTab} onTabClick={setSelectedTab} /> {/* 상태 전달 */}
+      <FilterTab selectedTab={selectedTab} onTabClick={setSelectedTab} />{' '}
+      {/* 상태 전달 */}
       {selectedTab === '상품 리스트' && <ProductList />}
       {selectedTab === '후기' && <ReviewList />}
-
     </>
   );
 };
