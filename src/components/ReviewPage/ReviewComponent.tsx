@@ -2,15 +2,16 @@ import * as S from './ReviewComponent.style';
 import { ReactComponent as ProfileImg } from '../../assets/ReviewPage/default-profile.svg';
 import { ReactComponent as YellowStar } from '../../assets/ReviewPage/karma-logo-yellow.svg';
 import { ReactComponent as EmptyStar } from '../../assets/ReviewPage/karma-logo-gray.svg';
+import type { ReviewImages } from '../ProfilePage/ReviewList';
 
 interface ReviewProps {
     profileImg: string;
     userName: string;
     score: string;
     content: string;
-    reviewImg1: string;
-    reviewImg2: string;
-    reviewImg3: string;
+    reviewImg1: ReviewImages;
+    reviewImg2: ReviewImages;
+    reviewImg3: ReviewImages;
     writtenDate: string;
     onClick?: () => void;
 }
@@ -42,19 +43,19 @@ const ReviewComponent = ({ profileImg, userName, score, content, reviewImg1, rev
                 </S.StarsWrapper>
             </S.ProfileWrapper>
             <S.ReviewText>{content}</S.ReviewText>
-            {/* <S.ImagesWrapper>
+            <S.ImagesWrapper>
                 <S.Image1>
-                    {reviewImg1 ? <img src={reviewImg1} alt="Review Image 1" /> : null}
+                    {reviewImg1 ? <img src={reviewImg1.imageUrl} alt="Review Image 1" /> : null}
                 </S.Image1>
                 <S.SmallImagesWrapper>
                     <S.Image2>
-                        {reviewImg2 ? <img src={reviewImg2} alt="Review Image 2" /> : null}
+                        {reviewImg2 ? <img src={reviewImg2.imageUrl} alt="Review Image 2" /> : null}
                     </S.Image2>
                     <S.Image3>
-                        {reviewImg3 ? <img src={reviewImg3} alt="Review Image 3" /> : null}
+                        {reviewImg3 ? <img src={reviewImg3.imageUrl} alt="Review Image 3" /> : null}
                     </S.Image3>
                 </S.SmallImagesWrapper>
-            </S.ImagesWrapper> */}
+            </S.ImagesWrapper>
             <S.WrittenDate>{writtenDate}</S.WrittenDate>
         </S.Wrapper>
     );

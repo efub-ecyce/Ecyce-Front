@@ -61,7 +61,7 @@ const ChatPage = () => {
     console.log('액세스 토큰 : ', accessToken);
 
     const client = new Client({
-      brokerURL: 'wss://api.ecyce-karma.n-e.kr/ws',
+      brokerURL: `${process.env.REACT_APP_WEBSOCKET_URL}`,
       reconnectDelay: 5000,
       debug: str => {
         console.log(str); // 디버깅 로그 확인

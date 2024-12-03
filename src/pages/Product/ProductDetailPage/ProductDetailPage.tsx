@@ -8,7 +8,7 @@ import { OrderModal } from '../../../components/ProductDetailPage/OrderModal';
 import { getProductDetail } from '../../../api/product';
 import { useParams } from 'react-router-dom';
 
-interface ProductProps {
+export interface ProductProps {
   productId: number;
   userId: number;
   sellerNickname: string;
@@ -72,7 +72,7 @@ const ProductDetailPage = () => {
     const getProductInfo = async () => {
       try {
         const response = await getProductDetail(productId);
-        console.log(response);
+        console.log(response.options);
         if (!response || response.length === 0) {
           setProductInfo(productDummyData[0]);
         } else {
@@ -118,13 +118,15 @@ const ProductDetailPage = () => {
           <ReviewContent productId={productInfo.productId} />
           <Footer 
             onPurchaseClick={handlePurchaseClick} 
-            productId={productInfo.productId}
+            productInfo={productInfo}
           />
         </>
       ) : (
         <div>로딩 중</div>
       )}
-      {isOrderModalOpen && <OrderModal modalHandler={handleModalClose} />}
+      {isOrderModalOpen && productInfo && (
+        <OrderModal modalHandler={handleModalClose} productInfo={productInfo} />
+      )}
     </S.Container>
   );
 };

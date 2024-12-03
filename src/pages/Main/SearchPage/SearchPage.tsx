@@ -15,6 +15,7 @@ interface ResultProps {
   duration: number;
   productState: string;
   isMarked: boolean;
+  thumbnail: string;
 }
 
 const SearchPage = () => {
@@ -59,6 +60,7 @@ const SearchPage = () => {
             productId={product.productId}
             productName={product.productName}
             duration={product.duration}
+            thumbnail={product.thumbnail}
             price={product.price}
             isMarked={product.isMarked}
           />

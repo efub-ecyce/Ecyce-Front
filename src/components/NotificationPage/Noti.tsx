@@ -2,36 +2,59 @@ import * as S from './Noti.style';
 import { ReactComponent as ShipIcon } from '../../assets/NotificationPage/local_shipping.svg';
 import { ReactComponent as BoxIcon } from '../../assets/NotificationPage/inventory_more.svg';
 import { ReactComponent as CheckIcon } from '../../assets/NotificationPage/chat_check.svg';
+import { ReactComponent as RefuseIcon } from '../../assets/NotificationPage/chat_close.svg';
+import { useNavigate } from 'react-router-dom';
+import { notiProps } from '../../api/notice';
 
-interface NotiProps {
-  isRead: boolean;
-  type: string;
-  title: string;
-  subtitle: string;
-  time: string;
-}
+export const Noti = ({
+  orderId,
+  orderState,
+  productName,
+  noticeContent,
+  updatedAt,
+}: notiProps) => {
+  const navigate = useNavigate();
 
-export const Noti = ({ isRead, type, title, subtitle, time }: NotiProps) => {
   const renderIcon = () => {
-    switch (type) {
-      case 'ship':
+    switch (orderState) {
+      case '배송중':
         return <ShipIcon />;
-      case 'box':
+      case '접수완료':
         return <BoxIcon />;
-      case 'check':
+      case '제작대기':
         return <CheckIcon />;
+      case '주문거절':
+        return <RefuseIcon />;
       default:
         return null;
     }
   };
 
+  const formatTimeStamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  const navigateDetail = () => {
+    switch (orderState) {
+      case '접수완료':
+        navigate(`/sales/${orderId}`);
+        return;
+      default:
+        navigate(`/purchase/${orderId}`);
+        return;
+    }
+  };
+
   return (
-    <S.Container $isRead={isRead}>
+    <S.Container $isRead={false} onClick={navigateDetail}>
       <S.IconWrapper>{renderIcon()}</S.IconWrapper>
       <S.InfoContainer>
-        <S.Title>{title}</S.Title>
-        <S.Subtitle>{subtitle}</S.Subtitle>
-        <S.Time>{time}</S.Time>
+        <S.Title>{noticeContent}</S.Title>
+        <S.Subtitle>{productName}</S.Subtitle>
+        <S.Time>{formatTimeStamp(updatedAt)}</S.Time>
       </S.InfoContainer>
     </S.Container>
   );
