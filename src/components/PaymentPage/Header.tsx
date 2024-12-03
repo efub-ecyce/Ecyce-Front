@@ -7,7 +7,9 @@ const Header = () => {
 
   return (
     <S.Wrapper>
-      <S.Btn onClick={() => navigate(-1)}><CloseIcon /></S.Btn>
+      <S.Btn onClick={() => navigate(-1)}>
+        <CloseIcon />
+      </S.Btn>
       <S.Title>결제</S.Title>
     </S.Wrapper>
   );

@@ -20,14 +20,14 @@ interface ResultProps {
 
 const SearchPage = () => {
   const [productList, setProductList] = useState<ResultProps[]>([]);
-  const [searchWord, setSearchWord] = useState<string>("");
+  const [searchWord, setSearchWord] = useState<string>('');
 
   const fetchAllProducts = async () => {
     try {
       const response = await getAllProduct();
       setProductList(response);
     } catch (error) {
-      console.error("Failed to fetch all products:", error);
+      console.error('Failed to fetch all products:', error);
     }
   };
 
@@ -36,12 +36,12 @@ const SearchPage = () => {
       const response = await getSearchResult(word);
       setProductList(response);
     } catch (error) {
-      console.error("Failed to fetch search results:", error);
+      console.error('Failed to fetch search results:', error);
     }
   };
 
   useEffect(() => {
-    if (searchWord.trim() === "") {
+    if (searchWord.trim() === '') {
       fetchAllProducts();
     } else {
       fetchSearchResults(searchWord);
@@ -54,7 +54,7 @@ const SearchPage = () => {
         <SearchBar onSearch={setSearchWord} /> {/* 검색어 업데이트 */}
       </S.Top>
       <S.Contents>
-        {productList.map((product) => (
+        {productList.map(product => (
           <ProductComponent1
             key={product.productId}
             productId={product.productId}

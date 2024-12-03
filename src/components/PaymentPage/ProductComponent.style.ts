@@ -3,18 +3,17 @@ import * as font from '../../styles/font';
 
 export const Wrapper = styled.div`
   width: 100%;
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    @media only screen and (min-width: 768px) {
-        width: 768px;
-        margin: 0 auto;
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
   }
 
   height: 12.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
   background-color: var(--white02);
 `;
 
@@ -22,9 +21,9 @@ export const ProductWrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
 
-    @media only screen and (min-width: 768px) {
-        width: 768px;
-        margin: 0 auto;
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
   }
 
   border-radius: 0.625rem;
@@ -55,11 +54,11 @@ export const Title = styled.div`
   color: var(--black02);
   font-size: 20px;
   width: 100%;
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    @media only screen and (min-width: 768px) {
-        width: 768px;
-        margin: 0 auto;
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
   }
 `;
 
@@ -69,7 +68,8 @@ export const ProductPicture = styled.div<{ imageURL: string }>`
   align-self: stretch;
   flex-shrink: 0;
   border-radius: 0.5rem;
-  background: ${({ imageURL }) => `url(${imageURL})`} lightgray 50% / cover no-repeat;
+  background: ${({ imageURL }) => `url(${imageURL})`} lightgray 50% / cover
+    no-repeat;
   margin-bottom: 0.56rem;
 `;
 

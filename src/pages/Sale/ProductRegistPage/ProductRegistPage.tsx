@@ -54,14 +54,14 @@ const ProductRegistPage = () => {
         !!price && // price is defined
         content?.trim() !== '' && // content is not empty
         !!duration && // duration is defined
-        !!deliveryFee && // deliveryFee is defined
+        deliveryFee !== undefined && // deliveryFee is defined
         materialInfo?.trim() !== '' && // materialInfo is not empty
         buyerNotice?.trim() !== '' && // buyerNotice is not empty
         options.length > 0 && // options array is not empty
         options.every(
           opt =>
             opt.optionName?.trim() !== '' && // optionName is not empty
-            !!opt.optionPrice, // optionPrice is defined
+            opt.optionPrice !== undefined, // optionPrice is defined
         ) &&
         productImgFile.length > 0 && // productImgFile has at least one file
         materialImgFile.length > 0 // materialImgFile has at least one file

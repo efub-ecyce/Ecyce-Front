@@ -16,24 +16,34 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
 
   return (
     <S.Wrapper>
-      <S.FilterIcon><FilterIcon /></S.FilterIcon>
+      <S.FilterIcon>
+        <FilterIcon />
+      </S.FilterIcon>
       {/* 기본값 (getAllProduct 호출) */}
       <S.Btn
         active={!activeBtn}
         onClick={() => handleBtnClick(null as unknown as string)}
-      >전체</S.Btn>
+      >
+        전체
+      </S.Btn>
       <S.Btn
         active={activeBtn === '후기순'}
         onClick={() => handleBtnClick('후기순')}
-      >후기순</S.Btn>
+      >
+        후기순
+      </S.Btn>
       <S.Btn
         active={activeBtn === '북마크순'}
         onClick={() => handleBtnClick('북마크순')}
-      >북마크순</S.Btn>
+      >
+        북마크순
+      </S.Btn>
       <S.Btn
         active={activeBtn === '최신순'}
         onClick={() => handleBtnClick('최신순')}
-      >최신순</S.Btn>
+      >
+        최신순
+      </S.Btn>
     </S.Wrapper>
   );
 };
