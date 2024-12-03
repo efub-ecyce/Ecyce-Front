@@ -26,12 +26,18 @@ export interface ProductProps {
   materialInfo: string;
   buyerNotice: string;
   options: Option[];
+  imgs: Image[];
 }
 
 interface Option {
   optionId: number;
   optionName: string;
   optionPrice: number;
+}
+
+interface Image {
+  imgId: number;
+  productImgUrl: string;
 }
 
 const ProductImgData = {
@@ -63,6 +69,7 @@ const productDummyData: ProductProps[] = [
       { optionId: 2, optionName: 'M 사이즈', optionPrice: 2000 },
       { optionId: 3, optionName: 'S 사이즈', optionPrice: 1000 },
     ],
+    imgs: [{ imgId: 0, productImgUrl: '' }],
   },
 ];
 
@@ -111,11 +118,11 @@ const ProductDetailPage = () => {
 
       <S.ContentContainer>
         <ProductImage
-          reviewImg1={ProductImgData.reviewImg1}
-          reviewImg2={ProductImgData.reviewImg2}
-          reviewImg3={ProductImgData.reviewImg3}
-          reviewImg4={ProductImgData.reviewImg4}
-          reviewImg5={ProductImgData.reviewImg5}
+          reviewImg1={productInfo?.imgs[0].productImgUrl as string}
+          reviewImg2={productInfo?.imgs[0].productImgUrl as string}
+          reviewImg3={productInfo?.imgs[0].productImgUrl as string}
+          reviewImg4={productInfo?.imgs[0].productImgUrl as string}
+          reviewImg5={productInfo?.imgs[0].productImgUrl as string}
         />
         {productInfo ? (
           <>
