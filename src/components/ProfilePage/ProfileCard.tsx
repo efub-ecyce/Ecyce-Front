@@ -72,9 +72,7 @@ const ProfileCard = ({
       </S.BackgroundLogo>
       <S.ContentWrapper>
         <S.ProfileWrapper>
-          <S.ProfileImg>
-            <Profile />
-          </S.ProfileImg>
+          <S.ProfileImg src={profileImg} />
           <S.UserName>{userName}</S.UserName>
         </S.ProfileWrapper>
         <S.Bio>{content}</S.Bio>
