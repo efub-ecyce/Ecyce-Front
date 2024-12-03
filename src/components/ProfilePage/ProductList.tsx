@@ -5,15 +5,15 @@ import { useParams } from 'react-router-dom';
 import { getArtistProducts } from '../../api/artist';
 
 interface ArtistProduct {
-  productId : number;
-  userId : number;
-  nickname : string;
-  productName : string;
-  price : number;
-  duration : number;
-  productState : string;
-  isMarked : boolean;
-  thumbnail : string;
+  productId: number;
+  userId: number;
+  nickname: string;
+  productName: string;
+  price: number;
+  duration: number;
+  productState: string;
+  isMarked: boolean;
+  thumbnail: string;
 }
 
 const ProductList = () => {

@@ -6,93 +6,97 @@ import ReviewDetailComponent from '../../components/ReviewPage/ReviewDetailCompo
 import { getArtistReviews } from '../../api/artist';
 
 interface ArtistReview {
-    reviewId : number;
-    reviewer: string;
-    reviewContent: string;
-    reviewDate: string;
-    reviewImages: ReviewImages[];
+  reviewId: number;
+  reviewerName: string;
+  content: string;
+  reviewDate: string;
+  reviewImages: ReviewImages[];
+  userImage: string;
+  rating: number;
 }
 
 export interface ReviewImages {
-    imageId: number;
-    imageUrl: string;
+  imageId: number;
+  imageUrl: string;
 }
 
 const ReviewList = () => {
-    const { userId } = useParams<{ userId: string }>();
-    const [reviewList, setReviewList] = useState<ArtistReview[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [selectedReview, setSelectedReview] = useState<ArtistReview | null>(null);
+  const { userId } = useParams<{ userId: string }>();
+  const [reviewList, setReviewList] = useState<ArtistReview[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [selectedReview, setSelectedReview] = useState<ArtistReview | null>(
+    null,
+  );
 
-    const handleReviewClick = (review: ArtistReview) => {
-        setSelectedReview(review);
+  const handleReviewClick = (review: ArtistReview) => {
+    setSelectedReview(review);
+  };
+
+  const handleOverlayClick = () => {
+    setSelectedReview(null);
+  };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      if (!userId) return;
+      try {
+        const response = await getArtistReviews(Number(userId));
+        setReviewList(response);
+      } catch (error) {
+        console.error('Failed to fetch reviews:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    const handleOverlayClick = () => {
-        setSelectedReview(null);
-    };
+    fetchReviews();
+  }, [userId]);
 
-    useEffect(() => {
-        const fetchReviews = async () => {
-            if (!userId) return;
-            try {
-                const response = await getArtistReviews(Number(userId));
-                setReviewList(response);
-            } catch (error) {
-                console.error('Failed to fetch reviews:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+  if (isLoading) {
+    return <S.Notice>로딩 중</S.Notice>;
+  }
 
-        fetchReviews();
-    }, [userId]);
+  if (reviewList.length === 0) {
+    return <S.Notice>등록된 리뷰가 없습니다.</S.Notice>;
+  }
 
-    if (isLoading) {
-        return <S.Notice>로딩 중</S.Notice>;
-    }
+  return (
+    <S.Container>
+      <S.Contents>
+        {reviewList.map(review => (
+          <ReviewComponent
+            key={review.reviewId}
+            profileImg={review.userImage} // 이미지 데이터 추가 처리하기
+            userName={review.reviewerName}
+            score={review.rating}
+            content={review.content}
+            reviewImg1={review.reviewImages[0] || ''}
+            reviewImg2={review.reviewImages[1] || ''}
+            reviewImg3={review.reviewImages[2] || ''}
+            writtenDate={review.reviewDate}
+            onClick={() => handleReviewClick(review)}
+          />
+        ))}
+      </S.Contents>
 
-    if (reviewList.length === 0) {
-        return <S.Notice>등록된 리뷰가 없습니다.</S.Notice>;
-    }
-
-    return (
-        <S.Container>
-            <S.Contents>
-                {reviewList.map((review) => (
-                    <ReviewComponent
-                        key={review.reviewId}
-                        profileImg="" // 이미지 데이터 추가 처리하기
-                        userName={review.reviewer}
-                        score={"5.0"}
-                        content={review.reviewContent}
-                        reviewImg1={review.reviewImages[0] || ""}
-                        reviewImg2={review.reviewImages[1] || ""}
-                        reviewImg3={review.reviewImages[2] || ""}
-                        writtenDate={review.reviewDate}
-                        onClick={() => handleReviewClick(review)}
-                    />
-                ))}
-            </S.Contents>
-
-            {selectedReview && (
-                <S.Overlay onClick={handleOverlayClick}>
-                    <S.DetailWrapper onClick={(e) => e.stopPropagation()}>
-                        <ReviewDetailComponent
-                            profileImg="" // 이미지 데이터 추가 처리하기
-                            userName={selectedReview.reviewer}
-                            score={"5.0"}
-                            content={selectedReview.reviewContent}
-                            reviewImg1={selectedReview.reviewImages[0]}
-                            reviewImg2={selectedReview.reviewImages[1]}
-                            reviewImg3={selectedReview.reviewImages[2]}
-                            writtenDate={selectedReview.reviewDate}
-                        />
-                    </S.DetailWrapper>
-                </S.Overlay>
-            )}
-        </S.Container>
-    );
+      {selectedReview && (
+        <S.Overlay onClick={handleOverlayClick}>
+          <S.DetailWrapper onClick={e => e.stopPropagation()}>
+            <ReviewDetailComponent
+              profileImg='' // 이미지 데이터 추가 처리하기
+              userName={selectedReview.reviewerName}
+              score={selectedReview.rating}
+              content={selectedReview.content}
+              reviewImg1={selectedReview.reviewImages[0]}
+              reviewImg2={selectedReview.reviewImages[1]}
+              reviewImg3={selectedReview.reviewImages[2]}
+              writtenDate={selectedReview.reviewDate}
+            />
+          </S.DetailWrapper>
+        </S.Overlay>
+      )}
+    </S.Container>
+  );
 };
 
 export default ReviewList;

@@ -1,91 +1,95 @@
 import styled from 'styled-components';
-import * as font from '../../../styles/font'
+import * as font from '../../../styles/font';
 
 export const Container = styled.div`
-    width: 100%;
-    height: 100vh;
-    background-color: #fafafb;
+  width: 100%;
+  height: 100vh;
+  background-color: #fafafb;
 
-    @media only screen and (min-width: 768px) {
-        width: 768px;
-        margin: 0 auto;
-    }
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
+  }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 
-    padding: 0 1.28125rem;
-    box-sizing: border-box;
+  padding: 0 1.28125rem;
+  box-sizing: border-box;
 
-    position: relative;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Top = styled.div`
-    width: 100%;
-    position: absolute;
-    top: 0;
-    flex-shrink: 0;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  flex-shrink: 0;
 `;
 
 export const NavBar = styled.div`
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    z-index: 10;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
 `;
 
 export const Contents = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    height: 75vh;
-    justify-content: flex-start;
-    align-items: center;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  height: 75vh;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto;
 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Overlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
 `;
 
 export const DetailWrapper = styled.div`
-    width: 90%;
-    max-width: 768px;
-    padding: 1rem;
-    border-radius: 10px;
+  width: 90%;
+  max-width: 768px;
+  padding: 1rem;
+  border-radius: 10px;
 `;
 
 export const Notice = styled.div`
-    ${font.medium}
-    color: var(--gray01);
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%;
+  ${font.medium}
+  color: var(--gray01);
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
 
-    width: 100%;
-    height: 30vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

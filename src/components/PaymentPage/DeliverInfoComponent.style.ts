@@ -3,18 +3,17 @@ import * as font from '../../styles/font';
 
 export const Wrapper = styled.div`
   width: 100%;
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    @media only screen and (min-width: 768px) {
-        width: 768px;
-        margin: 0 auto;
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
   }
 
   height: 12.8rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1rem;
   background-color: var(--white02);
 `;
 
@@ -23,11 +22,11 @@ export const Title = styled.div`
   color: var(--black02);
   font-size: 20px;
   width: 100%;
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    @media only screen and (min-width: 768px) {
-        width: 768px;
-        margin: 0 auto;
+  @media only screen and (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
   }
 `;
 
@@ -45,7 +44,7 @@ export const Btn = styled.div`
 export const Line = styled.div`
   width: 100%;
   height: 0.01875rem;
-  background: #C1D1D1;
+  background: #c1d1d1;
   margin-top: 0.6rem;
 `;
 
@@ -57,10 +56,13 @@ export const IndexText = styled.div`
 `;
 
 export const Text = styled.div`
-  width: 20rem;
+  width: 16rem;
   ${font.light}
   color: var(--black00);
   font-size: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export const TextWrapper = styled.div`
