@@ -6,8 +6,16 @@ import Header from '../../../components/ReviewPage/Header';
 import Filter from '../../../components/ReviewPage/Filter';
 import * as S from './ReviewPage.style';
 import ReviewDetailComponent from '../../../components/ReviewPage/ReviewDetailComponent';
-import { getProductReviews, getReviewsRating, getReviewsOldest, getReviewsLatest } from '../../../api/review';
-import type { ReviewData, ReviewImages } from '../../../components/ProductDetailPage/ReviewContent';
+import {
+  getProductReviews,
+  getReviewsRating,
+  getReviewsOldest,
+  getReviewsLatest,
+} from '../../../api/review';
+import type {
+  ReviewData,
+  ReviewImages,
+} from '../../../components/ProductDetailPage/ReviewContent';
 
 const ReviewPage = () => {
   const { productId } = useParams() as { productId: string };
@@ -59,28 +67,27 @@ const ReviewPage = () => {
     setSelectedReview(null);
   };
 
-
   return (
     <S.Container>
       <S.Top>
-        <Header title="후기" num={reviews.length} />
-        <Filter onFilterChange={setActiveFilter}/>
+        <Header title='후기' num={reviews.length} />
+        <Filter onFilterChange={setActiveFilter} />
       </S.Top>
       <S.Contents>
         {reviews.map((review, index) => (
-            <ReviewComponent
-              key={index}
-              profileImg={""}
-              userName={review.reviewerName}
-              score={review.rating.toFixed(1)}
-              content={review.content}
-              reviewImg1={review.reviewImages[0]}
-              reviewImg2={review.reviewImages[1]}
-              reviewImg3={review.reviewImages[2]}
-              writtenDate={review.reviewDate}
-              onClick={() => handleReviewClick(review)}
-            />
-          ))}
+          <ReviewComponent
+            key={index}
+            profileImg={review.userImage}
+            userName={review.reviewerName}
+            score={Number(review.rating.toFixed(1))}
+            content={review.content}
+            reviewImg1={review.reviewImages[0]}
+            reviewImg2={review.reviewImages[1]}
+            reviewImg3={review.reviewImages[2]}
+            writtenDate={review.reviewDate}
+            onClick={() => handleReviewClick(review)}
+          />
+        ))}
       </S.Contents>
       <S.NavBar>
         <NavBar />
@@ -88,11 +95,11 @@ const ReviewPage = () => {
 
       {selectedReview && (
         <S.Overlay onClick={handleOverlayClick}>
-          <S.DetailWrapper onClick={(e) => e.stopPropagation()}>
+          <S.DetailWrapper onClick={e => e.stopPropagation()}>
             <ReviewDetailComponent
-              profileImg={""}
+              profileImg={selectedReview.userImage}
               userName={selectedReview.reviewerName}
-              score={selectedReview.rating.toFixed(1)}
+              score={Number(selectedReview.rating.toFixed(1))}
               content={selectedReview.content}
               reviewImg1={selectedReview.reviewImages[0]}
               reviewImg2={selectedReview.reviewImages[1]}

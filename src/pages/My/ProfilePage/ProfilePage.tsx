@@ -5,6 +5,7 @@ import FilterTab from '../../../components/ProfilePage/FilterTab';
 import ProductList from '../../../components/ProfilePage/ProductList';
 import ReviewList from '../../../components/ProfilePage/ReviewList';
 import { getArtistInfo } from '../../../api/artist';
+import * as S from './ProfilePage.style';
 
 export interface ProfileInfo {
   userId: number;
@@ -53,19 +54,21 @@ const ProfilePage = () => {
   }
 
   return (
-    <>
-      <ProfileCard
-        userId={artistInfo.userId}
-        profileImg={artistInfo.profileImage}
-        userName={artistInfo.nickname}
-        score={artistInfo.averageRating}
-        content={artistInfo.bio}
-      />
+    <S.Container>
+      <S.CardWrapper>
+        <ProfileCard
+          userId={artistInfo.userId}
+          profileImg={artistInfo.profileImage}
+          userName={artistInfo.nickname}
+          score={artistInfo.averageRating}
+          content={artistInfo.bio}
+        />
+      </S.CardWrapper>
       <FilterTab selectedTab={selectedTab} onTabClick={setSelectedTab} />{' '}
       {/* 상태 전달 */}
       {selectedTab === '상품 리스트' && <ProductList />}
       {selectedTab === '후기' && <ReviewList />}
-    </>
+    </S.Container>
   );
 };
 

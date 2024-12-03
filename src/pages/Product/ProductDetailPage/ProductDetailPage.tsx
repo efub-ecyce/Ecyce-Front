@@ -14,6 +14,7 @@ export interface ProductProps {
   productId: number;
   userId: number;
   sellerNickname: string;
+  sellerProfileImg: string;
   productName: string;
   isMarked: boolean;
   price: number;
@@ -46,6 +47,7 @@ const productDummyData: ProductProps[] = [
     productId: 1,
     userId: 1,
     sellerNickname: '이화여대1886',
+    sellerProfileImg: '',
     productName: '더미데이터 리사이클링',
     isMarked: false,
     price: 18000,
@@ -120,6 +122,7 @@ const ProductDetailPage = () => {
             <DetailContent
               userId={productInfo.userId}
               userName={productInfo.sellerNickname}
+              profileImg={productInfo.sellerProfileImg}
               title={productInfo.productName}
               price={productInfo.price}
               material={productInfo.materialInfo}
