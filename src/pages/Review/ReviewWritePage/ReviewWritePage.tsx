@@ -85,7 +85,7 @@ const ReviewWritePage = () => {
       </S.StarContainer>
       <ImageUpload
         id='review'
-        imageNum={5}
+        imageNum={3}
         imgFile={imgFile}
         setImgFile={setImgFile}
         imgPreview={imgPreview}
